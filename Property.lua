@@ -8,7 +8,7 @@
 local Property = {}
 setmetatable(Property, {
     __call = function (cls, ...)
-        return Property.new(cls, ...)
+        return cls.new(...)
     end
 })
 
