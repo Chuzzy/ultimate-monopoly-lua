@@ -30,6 +30,18 @@ end
 --- Calculate the rent on this property.
 ---@return integer
 function Property:rent()
-    
+    if not self.owner then
+        return 0
+    else
+        if self.group == "rail" then
+            return self.rent_values[self.owner.railroadCount()]
+        elseif self.group == "cab" then
+            return self.rent_values[self.owner.cabCompanyCount()]
+        elseif self.group == "utility" then
+            return self.rent_values[self.owner.utilityCount()]
+        else
+            -- Calculate rent for any normal property here
+        end
+    end
 end
 
