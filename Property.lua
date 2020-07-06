@@ -8,11 +8,6 @@
 ---@field owner Player
 local Property = {}
 Property.__index = Property
-setmetatable(Property, {
-    __call = function (cls, ...)
-        return cls.new(...)
-    end
-})
 
 --- Create a new Property.
 ---@param cost integer
