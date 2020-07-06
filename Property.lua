@@ -44,7 +44,7 @@ function Property:rent(dice_total)
             if self.improvements == -1 then -- If property is mortgaged
                 return 0 -- No rent for mortgaged properties
             elseif self.improvements > 1 then -- If property has buildings
-                return self.rent_values[self.improvements] 
+                return self.rent_values[self.improvements]
             else
                 local unimproved_rent = self.rent_values[0]
                 -- TODO: Calculate double/triple rent if necessary
