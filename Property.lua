@@ -4,6 +4,7 @@
 ---@field group string
 ---@field rent_values table
 ---@field improvement_cost integer
+---@field improvements integer
 ---@field owner Player
 local Property = {}
 Property.__index = Property
@@ -25,6 +26,7 @@ function Property.new(cost, group, rent_values, improvement_cost)
     self.group = group
     self.rent_values = rent_values
     self.improvement_cost = improvement_cost
+    self.improvements = 0
     return self
 end
 
