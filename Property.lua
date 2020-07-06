@@ -1,5 +1,6 @@
 --- A property in Ultimate Monopoly.
 ---@class Property
+---@field name string
 ---@field cost integer
 ---@field group string
 ---@field rent_values table
@@ -10,13 +11,15 @@ local Property = {}
 Property.__index = Property
 
 --- Create a new Property.
+---@param name string
 ---@param cost integer
 ---@param group string
 ---@param rent_values table
 ---@param improvement_cost integer
 ---@return Property
-function Property.new(cost, group, rent_values, improvement_cost)
+function Property.new(name, cost, group, rent_values, improvement_cost)
     local self = setmetatable({}, Property)
+    self.name = name
     self.cost = cost
     self.group = group
     self.rent_values = rent_values
