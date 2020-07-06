@@ -6,7 +6,7 @@
 local Debt = {}
 Debt.__index = Debt
 function Debt:__tostring()
-    return (self.debtor.name or "The Bank") .. " owes " .. (self.creditor.name or "The Bank") .. " $" .. self.amount
+    return (self.debtor and self.debtor.name or "The Bank") .. " owes " .. (self.creditor and self.creditor.name or "The Bank") .. " $" .. self.amount
 end
 
 --- Creates a new Debt.
