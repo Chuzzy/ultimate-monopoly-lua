@@ -37,9 +37,11 @@ function Property:rent()
         return 0
     else
         if self.group == "rail" then
-            return self.rent_values[self.owner.railroadCount()]
+            local rent_multiplier = self.improvements + 1
+            return self.rent_values[self.owner.railroadCount()] * rent_multiplier
         elseif self.group == "cab" then
-            return self.rent_values[self.owner.cabCompanyCount()]
+            local rent_multiplier = self.improvements + 1
+            return self.rent_values[self.owner.cabCompanyCount()] * rent_multiplier
         elseif self.group == "utility" then
             return self.rent_values[self.owner.utilityCount()]
         else
