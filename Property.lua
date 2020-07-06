@@ -49,7 +49,7 @@ function Property:rent(dice_total)
                 local unimproved_rent = self.rent_values[0]
                 -- TODO: Calculate double/triple rent if necessary
                 return unimproved_rent
-            end            
+            end
         end
     end
 end
