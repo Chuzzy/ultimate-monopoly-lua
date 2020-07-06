@@ -41,7 +41,7 @@ function Property:rent()
         elseif self.group == "utility" then
             return self.rent_values[self.owner.utilityCount()]
         else
-            -- Calculate rent for any normal property here
+            -- TODO: Calculate rent for any normal property here
         end
     end
 end
