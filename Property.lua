@@ -6,6 +6,7 @@
 ---@field improvement_cost integer
 ---@field owner Player
 local Property = {}
+Property.__index = Property
 setmetatable(Property, {
     __call = function (cls, ...)
         return cls.new(...)
