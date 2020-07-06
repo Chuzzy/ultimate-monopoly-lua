@@ -5,6 +5,9 @@
 ---@field amount integer
 local Debt = {}
 Debt.__index = Debt
+function Debt:__tostring()
+    return (self.debtor.name or "The Bank") .. " owes " .. (self.creditor.name or "The Bank") .. " $" .. self.amount
+end
 
 --- Creates a new Debt.
 ---@param debtor Player
@@ -20,8 +23,4 @@ function Debt.new(debtor, creditor, amount)
     end
     self.amount = amount
     return self
-end
-
-function Debt:__tostring()
-    return (self.debtor.name or "The Bank") .. " owes " .. (self.creditor.name or "The Bank") .. " $" .. self.amount
 end
