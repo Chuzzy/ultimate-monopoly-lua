@@ -21,6 +21,9 @@ function Debt.new(debtor, creditor, amount)
     if not debtor and not creditor then
         error("debtor and creditor cannot both be nil", 2)
     end
+    if amount < 1 then
+        error("amount must be larger than 1", 2)
+    end
     self.amount = amount
     return self
 end
