@@ -4,9 +4,9 @@ local ActionCard = {}
 ActionCard.__index = ActionCard
 
 --- Create a new Action Card.
----@param name any
----@param game any
----@param action function(function)
+---@param name string
+---@param game Game
+---@param action function
 ---@return ActionCard
 function ActionCard.new(name, game, action)
     local self = setmetatable({}, ActionCard)
