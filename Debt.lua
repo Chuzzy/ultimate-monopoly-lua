@@ -14,6 +14,7 @@ end
 ---@param debtor Player
 ---@param creditor Player
 ---@param amount integer
+---@param reason string
 ---@return Debt
 function Debt.new(debtor, creditor, amount, reason)
     local self = setmetatable({}, Debt)
