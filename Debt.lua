@@ -3,10 +3,11 @@
 ---@field debtor Player
 ---@field creditor Player
 ---@field amount integer
+---@field reason string
 local Debt = {}
 Debt.__index = Debt
 function Debt:__tostring()
-    return (self.debtor and self.debtor.name or "The Bank") .. " owes " .. (self.creditor and self.creditor.name or "The Bank") .. " $" .. self.amount
+    return (self.debtor and self.debtor.name or "The Bank") .. " owes " .. (self.creditor and self.creditor.name or "The Bank") .. " $" .. self.amount .. " " .. (self.reason or "")
 end
 
 --- Creates a new Debt.
@@ -14,7 +15,7 @@ end
 ---@param creditor Player
 ---@param amount integer
 ---@return Debt
-function Debt.new(debtor, creditor, amount)
+function Debt.new(debtor, creditor, amount, reason)
     local self = setmetatable({}, Debt)
     self.debtor = debtor
     self.creditor = creditor
@@ -25,5 +26,6 @@ function Debt.new(debtor, creditor, amount)
         error("amount must be larger than 1", 2)
     end
     self.amount = amount
+    self.reason = reason
     return self
 end
