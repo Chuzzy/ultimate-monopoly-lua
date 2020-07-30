@@ -1,7 +1,7 @@
 --- A space on the Ultimate Monopoly board.
 ---@class Space
 ---@field name string
----@field game Game
+---@field action function
 ---@field prevName string
 ---@field nextName string
 ---@field outerName string
@@ -9,3 +9,12 @@
 local Space = {}
 Space.__index = Space
 
+function Space.new(name, prev, next, outer, inner, action)
+    local self = setmetatable({}, Space)
+    self.name = name
+    self.prevName = prev
+    self.nextName = next
+    self.outerName = outer
+    self.innerName = inner
+    self.action = action
+end
