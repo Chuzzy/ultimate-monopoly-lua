@@ -18,3 +18,10 @@ function Space.new(name, prev, next, outer, inner, action)
     self.innerName = inner
     self.action = action
 end
+
+--- Performs the action on this space.
+---@param player Player
+---@param params table
+function Space:act(player, params)
+    self.action(self, player, params)
+end
