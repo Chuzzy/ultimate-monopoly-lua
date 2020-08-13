@@ -24,6 +24,7 @@ function Space.new(name, prev, next, outer, inner, action)
     self.outerName = outer
     self.innerName = inner
     self.action = action
+    return self
 end
 
 --- Performs the action on this space.
