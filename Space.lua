@@ -2,27 +2,27 @@
 ---@class Space
 ---@field name string
 ---@field action function
----@field prevName string
----@field nextName string
----@field outerName string
----@field innerName string
+---@field prev Space
+---@field next Space
+---@field outer Space
+---@field inner Space
 local Space = {}
 Space.__index = Space
 
 --- Create a new Space.
----@param name any
----@param prev string
----@param next string
----@param outer string
----@param inner string
+---@param name string
+---@param prev Space
+---@param next Space
+---@param outer Space
+---@param inner Space
 ---@param action function
 function Space.new(name, prev, next, outer, inner, action)
     local self = setmetatable({}, Space)
     self.name = name
-    self.prevName = prev
-    self.nextName = next
-    self.outerName = outer
-    self.innerName = inner
+    self.prev = prev
+    self.next = next
+    self.outer = outer
+    self.inner = inner
     self.action = action
     return self
 end
