@@ -33,3 +33,4 @@ end
 function Space:act(player, params)
     self.action(self, player, params)
 end
+return Space
