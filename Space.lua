@@ -11,18 +11,10 @@ Space.__index = Space
 
 --- Create a new Space.
 ---@param name string
----@param prev Space
----@param next Space
----@param outer Space
----@param inner Space
 ---@param action function
-function Space.new(name, prev, next, outer, inner, action)
+function Space.new(name, action)
     local self = setmetatable({}, Space)
     self.name = name
-    self.prev = prev
-    self.next = next
-    self.outer = outer
-    self.inner = inner
     self.action = action
     return self
 end
