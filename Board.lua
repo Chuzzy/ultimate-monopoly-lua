@@ -149,6 +149,53 @@ function Board.new()
     end
 
     local mid_track = Ordered()
+    -- Bottom side
+    createGoSpace(mid_track)
+    createPropertySpace(mid_track, names.medit)
+    createChestSpace(mid_track)
+    createPropertySpace(mid_track, names.baltic)
+    createIncomeTaxSpace(mid_track)
+    createTransitStationSpace(mid_track, names.reading, true)
+    createPropertySpace(mid_track, names.oriental)
+    createChanceSpace(mid_track)
+    createPropertySpace(mid_track, names.vermont)
+    createPropertySpace(mid_track, names.connecticut)
+
+    --Left side
+    createJustVisitingSpace(mid_track)
+    createPropertySpace(mid_track, names.charles)
+    createPropertySpace(mid_track, names.elec)
+    createPropertySpace(mid_track, names.states)
+    createPropertySpace(mid_track, names.virginia)
+    createTransitStationSpace(mid_track, names.pennsylrr, false)
+    createPropertySpace(mid_track, names.charles)
+    createChestSpace(mid_track)
+    createPropertySpace(mid_track, names.tennessee)
+    createPropertySpace(mid_track, names.newyork)
+
+    -- Top side
+    createFreeParkingSpace(mid_track)
+    createPropertySpace(mid_track, names.kentucky)
+    createChanceSpace(mid_track)
+    createPropertySpace(mid_track, names.indiana)
+    createPropertySpace(mid_track, names.illinois)
+    createTransitStationSpace(mid_track, names.bno, true)
+    createPropertySpace(mid_track, names.atlantic)
+    createPropertySpace(mid_track, names.vermont)
+    createPropertySpace(mid_track, names.water)
+    createPropertySpace(mid_track, names.marvin)
+
+    --Right side
+    createGoToJailSpace(mid_track)
+    createPropertySpace(mid_track, names.pacific)
+    createPropertySpace(mid_track, names.carolina)
+    createChestSpace(mid_track)
+    createPropertySpace(mid_track, names.pennsyl)
+    createTransitStationSpace(mid_track, names.short, false)
+    createChanceSpace(mid_track)
+    createPropertySpace(mid_track, names.park)
+    createLuxuryTaxSpace(mid_track)
+    createPropertySpace(mid_track, names.boardwalk)
 
     for key in pairs(mid_track) do print(key) end
 
