@@ -103,6 +103,13 @@ function Board.new()
         end
     end
 
+    local function createBusTicketSpace(track)
+        local name = names.bus .. getTicketId()
+        track[name] = function(space, player, params)
+            print("Bus ticket.")
+        end
+    end
+
     ---@param track table
     local function createJustVisitingSpace(track)
         local name = names.visit
