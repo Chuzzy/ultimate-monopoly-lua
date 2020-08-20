@@ -87,6 +87,13 @@ function Board.new()
         end
     end
 
+    local function createIncomeTaxSpace(track)
+        local name = names.income
+        track[name] = function (space, player, params)
+            print("Taxes due.")
+        end
+    end
+
     ---@param track table
     local function createChestSpace(track)
         local name = names.chest .. getChestId()
