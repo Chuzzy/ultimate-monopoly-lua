@@ -54,11 +54,10 @@ function Board.new()
     end
 
     ---@param track table
-    ---@param name string
-    ---@param amount integer
-    local function createMoneySpace(track, name, amount)
+    local function createGoSpace(track)
+        local name = "Go"
         track[name] = function(space, player, params)
-            print("Money function: " .. amount)
+            print("Landed on go.")
         end
     end
 
