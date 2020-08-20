@@ -35,22 +35,21 @@ function Board.new()
         self.spaces[space_name].next = self.spaces[after_name]
     end
 
+    local chance_space_count, chest_space_count, ticket_space_count = 0, 0, 0
+
     local function getChanceId()
-        ChanceSpaceCount = 0
-        ChanceSpaceCount = ChanceSpaceCount + 1
-        return " " .. ChanceSpaceCount
+        chance_space_count = chance_space_count + 1
+        return " " .. chance_space_count
     end
 
     local function getChestId()
-        CommunityChestSpaceCount = 0
-        CommunityChestSpaceCount = CommunityChestSpaceCount + 1
-        return " " .. CommunityChestSpaceCount
+        chest_space_count = chest_space_count + 1
+        return " " .. chest_space_count
     end
 
     local function getTicketId()
-        BusTicketSpaceCount = 0
-        BusTicketSpaceCount = BusTicketSpaceCount + 1
-        return " " .. BusTicketSpaceCount
+        ticket_space_count = ticket_space_count + 1
+        return " " .. ticket_space_count
     end
 
     ---@param track table
