@@ -161,7 +161,7 @@ function Board.new()
     createPropertyPrototype(mid_track, names.vermont)
     createPropertyPrototype(mid_track, names.connecticut)
 
-    --Left side
+    -- Left side
     createJustVisitingPrototype(mid_track)
     createPropertyPrototype(mid_track, names.charles)
     createPropertyPrototype(mid_track, names.elec)
@@ -185,7 +185,7 @@ function Board.new()
     createPropertyPrototype(mid_track, names.water)
     createPropertyPrototype(mid_track, names.marvin)
 
-    --Right side
+    -- Right side
     createGoToJailPrototype(mid_track)
     createPropertyPrototype(mid_track, names.pacific)
     createPropertyPrototype(mid_track, names.carolina)
