@@ -94,6 +94,13 @@ function Board.new()
         end
     end
 
+    local function createLuxuryTaxSpace(track)
+        local name = names.luxury
+        track[name] = function(space, player, params)
+            print("Good ol' Uncle Sam.")
+        end
+    end
+
     ---@param track table
     local function createChestSpace(track)
         local name = names.chest .. getChestId()
