@@ -55,7 +55,7 @@ function Board.new()
 
     ---@param track table
     local function createGoSpace(track)
-        local name = "Go"
+        local name = names.go
         track[name] = function(space, player, params)
             print("Landed on go.")
         end
@@ -105,7 +105,7 @@ function Board.new()
 
     ---@param track table
     local function createJustVisitingSpace(track)
-        local name = "Just Visiting"
+        local name = names.visit
         track[name] = function(space, player, params)
             print("Just Visiting")
         end
@@ -113,7 +113,7 @@ function Board.new()
 
     ---@param track table
     local function createFreeParkingSpace(track)
-        local name = "Free Parking"
+        local name = names.parking
         track[name] = function(space, player, params)
             print("Free Parking. Beep beep.")
         end
@@ -121,7 +121,7 @@ function Board.new()
 
     ---@param track table
     local function createGoToJailSpace(track)
-        local name = "Go To Jail"
+        local name = names.jail
         track[name] = function(space, player, params)
             print("GO TO JAIL")
         end
