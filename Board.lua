@@ -44,7 +44,7 @@ function Board.new()
     local function getChestId()
         CommunityChestSpaceCount = 0
         CommunityChestSpaceCount = CommunityChestSpaceCount + 1
-        return " " .. CommunityChestSpaceCount + 1
+        return " " .. CommunityChestSpaceCount
     end
 
     local function getTicketId()
