@@ -54,7 +54,7 @@ function Board.new()
     end
 
     ---@param track table
-    local function createGoSpace(track)
+    local function createGoPrototype(track)
         local name = names.go
         track[name] = function(space, player, params)
             print("Landed on go.")
@@ -63,7 +63,7 @@ function Board.new()
 
     ---@param track table
     ---@param name string
-    local function createPropertySpace(track, name)
+    local function createPropertyPrototype(track, name)
         track[name] = function(space, player, params)
             print("Property function: " .. space)
         end
@@ -72,7 +72,7 @@ function Board.new()
     ---@param track table
     ---@param name string
     ---@param is_inner boolean
-    local function createTransitStationSpace(track, name, is_inner)
+    local function createTransitStationPrototype(track, name, is_inner)
         local prefix = is_inner and " Inner" or " Outer"
         track[name .. prefix] = function(space, player, params)
             print("Here's your travel voucher, " .. player.name)
@@ -81,20 +81,20 @@ function Board.new()
 
     ---@param track table
     ---@param name string
-    local function createCabCompanySpace(track, name)
+    local function createCabCompanyPrototype(track, name)
         track[name] = function(space, player, params)
             print("Taxi!")
         end
     end
 
-    local function createIncomeTaxSpace(track)
+    local function createIncomeTaxPrototype(track)
         local name = names.income
         track[name] = function (space, player, params)
             print("Taxes due.")
         end
     end
 
-    local function createLuxuryTaxSpace(track)
+    local function createLuxuryTaxPrototype(track)
         local name = names.luxury
         track[name] = function(space, player, params)
             print("Good ol' Uncle Sam.")
@@ -102,7 +102,7 @@ function Board.new()
     end
 
     ---@param track table
-    local function createChestSpace(track)
+    local function createChestPrototype(track)
         local name = names.chest .. getChestId()
         track[name] = function(space, player, params)
             print("Community Chest says...")
@@ -110,14 +110,14 @@ function Board.new()
     end
 
     ---@param track table
-    local function createChanceSpace(track)
+    local function createChancePrototype(track)
         local name = names.chance .. getChanceId()
         track[name] = function(space, player, params)
             print("Feeling lucky?")
         end
     end
 
-    local function createBusTicketSpace(track)
+    local function createBusTicketPrototype(track)
         local name = names.bus .. getTicketId()
         track[name] = function(space, player, params)
             print("Bus ticket.")
@@ -125,7 +125,7 @@ function Board.new()
     end
 
     ---@param track table
-    local function createJustVisitingSpace(track)
+    local function createJustVisitingPrototype(track)
         local name = names.visit
         track[name] = function(space, player, params)
             print("Just Visiting")
@@ -133,7 +133,7 @@ function Board.new()
     end
 
     ---@param track table
-    local function createFreeParkingSpace(track)
+    local function createFreeParkingPrototype(track)
         local name = names.parking
         track[name] = function(space, player, params)
             print("Free Parking. Beep beep.")
@@ -141,7 +141,7 @@ function Board.new()
     end
 
     ---@param track table
-    local function createGoToJailSpace(track)
+    local function createGoToJailPrototype(track)
         local name = names.jail
         track[name] = function(space, player, params)
             print("GO TO JAIL")
@@ -150,52 +150,52 @@ function Board.new()
 
     local mid_track = Ordered()
     -- Bottom side
-    createGoSpace(mid_track)
-    createPropertySpace(mid_track, names.medit)
-    createChestSpace(mid_track)
-    createPropertySpace(mid_track, names.baltic)
-    createIncomeTaxSpace(mid_track)
-    createTransitStationSpace(mid_track, names.reading, true)
-    createPropertySpace(mid_track, names.oriental)
-    createChanceSpace(mid_track)
-    createPropertySpace(mid_track, names.vermont)
-    createPropertySpace(mid_track, names.connecticut)
+    createGoPrototype(mid_track)
+    createPropertyPrototype(mid_track, names.medit)
+    createChestPrototype(mid_track)
+    createPropertyPrototype(mid_track, names.baltic)
+    createIncomeTaxPrototype(mid_track)
+    createTransitStationPrototype(mid_track, names.reading, true)
+    createPropertyPrototype(mid_track, names.oriental)
+    createChancePrototype(mid_track)
+    createPropertyPrototype(mid_track, names.vermont)
+    createPropertyPrototype(mid_track, names.connecticut)
 
     --Left side
-    createJustVisitingSpace(mid_track)
-    createPropertySpace(mid_track, names.charles)
-    createPropertySpace(mid_track, names.elec)
-    createPropertySpace(mid_track, names.states)
-    createPropertySpace(mid_track, names.virginia)
-    createTransitStationSpace(mid_track, names.pennsylrr, false)
-    createPropertySpace(mid_track, names.charles)
-    createChestSpace(mid_track)
-    createPropertySpace(mid_track, names.tennessee)
-    createPropertySpace(mid_track, names.newyork)
+    createJustVisitingPrototype(mid_track)
+    createPropertyPrototype(mid_track, names.charles)
+    createPropertyPrototype(mid_track, names.elec)
+    createPropertyPrototype(mid_track, names.states)
+    createPropertyPrototype(mid_track, names.virginia)
+    createTransitStationPrototype(mid_track, names.pennsylrr, false)
+    createPropertyPrototype(mid_track, names.charles)
+    createChestPrototype(mid_track)
+    createPropertyPrototype(mid_track, names.tennessee)
+    createPropertyPrototype(mid_track, names.newyork)
 
     -- Top side
-    createFreeParkingSpace(mid_track)
-    createPropertySpace(mid_track, names.kentucky)
-    createChanceSpace(mid_track)
-    createPropertySpace(mid_track, names.indiana)
-    createPropertySpace(mid_track, names.illinois)
-    createTransitStationSpace(mid_track, names.bno, true)
-    createPropertySpace(mid_track, names.atlantic)
-    createPropertySpace(mid_track, names.vermont)
-    createPropertySpace(mid_track, names.water)
-    createPropertySpace(mid_track, names.marvin)
+    createFreeParkingPrototype(mid_track)
+    createPropertyPrototype(mid_track, names.kentucky)
+    createChancePrototype(mid_track)
+    createPropertyPrototype(mid_track, names.indiana)
+    createPropertyPrototype(mid_track, names.illinois)
+    createTransitStationPrototype(mid_track, names.bno, true)
+    createPropertyPrototype(mid_track, names.atlantic)
+    createPropertyPrototype(mid_track, names.vermont)
+    createPropertyPrototype(mid_track, names.water)
+    createPropertyPrototype(mid_track, names.marvin)
 
     --Right side
-    createGoToJailSpace(mid_track)
-    createPropertySpace(mid_track, names.pacific)
-    createPropertySpace(mid_track, names.carolina)
-    createChestSpace(mid_track)
-    createPropertySpace(mid_track, names.pennsyl)
-    createTransitStationSpace(mid_track, names.short, false)
-    createChanceSpace(mid_track)
-    createPropertySpace(mid_track, names.park)
-    createLuxuryTaxSpace(mid_track)
-    createPropertySpace(mid_track, names.boardwalk)
+    createGoToJailPrototype(mid_track)
+    createPropertyPrototype(mid_track, names.pacific)
+    createPropertyPrototype(mid_track, names.carolina)
+    createChestPrototype(mid_track)
+    createPropertyPrototype(mid_track, names.pennsyl)
+    createTransitStationPrototype(mid_track, names.short, false)
+    createChancePrototype(mid_track)
+    createPropertyPrototype(mid_track, names.park)
+    createLuxuryTaxPrototype(mid_track)
+    createPropertyPrototype(mid_track, names.boardwalk)
 
     for key in pairs(mid_track) do print(key) end
 
