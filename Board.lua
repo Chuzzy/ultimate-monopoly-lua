@@ -104,7 +104,7 @@ function Board.new()
 
     ---@param track table
     local function createChanceSpace(track)
-        local name = names.chest .. getChanceId()
+        local name = names.chance .. getChanceId()
         track[name] = function(space, player, params)
             print("Feeling lucky?")
         end
