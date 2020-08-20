@@ -100,7 +100,7 @@ Names = {
 
     -- Transit stations
     reading = "Reading Railroad",
-    pennyslyrr = "Pennsylvania Railroad",
+    pennsylrr = "Pennsylvania Railroad",
     bno = "B&O Railroad",
     short = "Short Line",
 
