@@ -73,8 +73,8 @@ function Board.new()
     ---@param name string
     ---@param is_inner boolean
     local function createTransitStationPrototype(track, name, is_inner)
-        local prefix = is_inner and " Inner" or " Outer"
-        track[name .. prefix] = function(space, player, params)
+        local suffix = is_inner and " Inner" or " Outer"
+        track[name .. suffix] = function(space, player, params)
             print("Here's your travel voucher, " .. player.name)
         end
     end
