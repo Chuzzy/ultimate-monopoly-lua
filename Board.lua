@@ -225,6 +225,104 @@ function Board.new()
     createLuxuryTaxPrototype(mid_track)
     createPropertyPrototype(mid_track, names.boardwalk)
 
+    local outer_track = {}
+    -- Bottom side
+    createStockExchangePrototype(outer_track)
+    createPropertyPrototype(outer_track, names.lake)
+    createChestPrototype(outer_track)
+    createPropertyPrototype(outer_track, names.nicollet)
+    createPropertyPrototype(outer_track, names.hennepin)
+    createBusTicketPrototype(outer_track)
+    createCabCompanyPrototype(outer_track, names.checker)
+    createTransitStationPrototype(outer_track, names.reading, false)
+    createPropertyPrototype(outer_track, names.esplanade)
+    createPropertyPrototype(outer_track, names.canal)
+    createChancePrototype(outer_track)
+    createPropertyPrototype(outer_track, names.cable)
+    createPropertyPrototype(outer_track, names.magazine)
+    createPropertyPrototype(outer_track, names.bourbon)
+
+    -- Left side
+    createHollandTunnelPrototype(outer_track, false)
+    createAuctionPrototype(outer_track)
+    createPropertyPrototype(outer_track, names.katy)
+    createPropertyPrototype(outer_track, names.westheimer)
+    createPropertyPrototype(outer_track, names.isp)
+    createPropertyPrototype(outer_track, names.kirby)
+    createPropertyPrototype(outer_track, names.cullen)
+    createChancePrototype(outer_track)
+    createCabCompanyPrototype(outer_track, names.black)
+    createPropertyPrototype(outer_track, names.dekalb)
+    createChestPrototype(outer_track)
+    createPropertyPrototype(outer_track, names.andrew)
+    createPropertyPrototype(outer_track, names.decatur)
+    createPropertyPrototype(outer_track, names.peach)
+
+    -- Top side
+    createPayDayPrototype(outer_track)
+    createPropertyPrototype(outer_track, names.randolph)
+    createChancePrototype(outer_track)
+    createPropertyPrototype(outer_track, names.shore)
+    createPropertyPrototype(outer_track, names.wacker)
+    createPropertyPrototype(outer_track, names.michigan)
+    createCabCompanyPrototype(outer_track, names.yellow)
+    createTransitStationPrototype(outer_track, names.bno, false)
+    createChestPrototype(outer_track)
+    createPropertyPrototype(outer_track, names.south)
+    createPropertyPrototype(outer_track, names.west)
+    createPropertyPrototype(outer_track, names.trash)
+    createPropertyPrototype(outer_track, names.north)
+    createPropertyPrototype(outer_track, names.square)
+
+    -- Right side
+    createSubwayPrototype(outer_track, names.subway)
+    createPropertyPrototype(outer_track, names.southst)
+    createPropertyPrototype(outer_track, names.broad)
+    createPropertyPrototype(outer_track, names.walnut)
+    createChestPrototype(outer_track)
+    createPropertyPrototype(outer_track, names.market)
+    createBusTicketPrototype(outer_track)
+    createPropertyPrototype(outer_track, names.sewer)
+    createCabCompanyPrototype(outer_track, names.ute)
+    createBirthdayPrototype(outer_track)
+    createPropertyPrototype(outer_track, names.mulholland)
+    createPropertyPrototype(outer_track, names.ventura)
+    createChancePrototype(outer_track)
+    createPropertyPrototype(outer_track, names.rodeo)
+
+    local inner_track = {}
+    -- Bottom side
+    createSqueezePlayPrototype(inner_track)
+    createPropertyPrototype(inner_track, names.embarca)
+    createPropertyPrototype(inner_track, names.fisher)
+    createPropertyPrototype(inner_track, names.tel)
+    createChestPrototype(inner_track)
+    createPropertyPrototype(inner_track, names.beacon)
+
+    -- Left side
+    createBonusPrototype(inner_track)
+    createPropertyPrototype(inner_track, names.boylston)
+    createPropertyPrototype(inner_track, names.newbury)
+    createTransitStationPrototype(inner_track, names.pennsylrr, true)
+    createPropertyPrototype(inner_track, names.fifth)
+    createPropertyPrototype(inner_track, names.madison)
+
+    -- Top side
+    createRollThreePrototype(inner_track)
+    createPropertyPrototype(inner_track, names.wall)
+    createTaxRefundPrototype(inner_track)
+    createPropertyPrototype(inner_track, names.gas)
+    createChancePrototype(inner_track)
+    createPropertyPrototype(inner_track, names.florida)
+
+    -- Right side
+    createHollandTunnelPrototype(inner_track, true)
+    createPropertyPrototype(inner_track, names.miami)
+    createPropertyPrototype(inner_track, names.biscayne)
+    createTransitStationPrototype(inner_track, names.short, true)
+    createReverseDirectionPrototype(inner_track)
+    createPropertyPrototype(inner_track, names.lombard)
+
     for i, data in ipairs(mid_track) do print(data.name) end
 
     return self
