@@ -62,6 +62,106 @@ function Board.new()
         })
     end
 
+    local function createBonusPrototype(track)
+        table.insert(track, {
+            name = names.bonus,
+            action = function(space, player, params)
+                print("Dosh!")
+            end
+        })
+    end
+
+    local function createSqueezePlayPrototype(track)
+        table.insert(track, {
+            name = names.squeeze,
+            action = function(space, player, params)
+                print("Lucky you!")
+            end
+        })
+    end
+
+    local function createRollThreePrototype(track)
+        table.insert(track, {
+            name = names.roll3,
+            action = function(space, player, params)
+                print("Roll the dice to win some cash.")
+            end
+        })
+    end
+
+    local function createTaxRefundPrototype(track)
+        table.insert(track, {
+            name = names.refund,
+            action = function(space, player, params)
+                print("Here you go!")
+            end
+        })
+    end
+
+    local function createReverseDirectionPrototype(track)
+        table.insert(track, {
+            name = names.reverse,
+            action = function(space, player, params)
+                print("Moving backwards.")
+            end
+        })
+    end
+
+    local function createPayDayPrototype(track)
+        table.insert(track, {
+            name = names.payday,
+            action = function(space, player, params)
+                print("It's PAYDAY!")
+            end
+        })
+    end
+
+    local function createStockExchangePrototype(track)
+        table.insert(track, {
+            name = names.stock,
+            action = function(space, player, params)
+                print("Buy! Buy! Sell! Sell!")
+            end
+        })
+    end
+
+    local function createAuctionPrototype(track)
+        table.insert(track, {
+            name = names.auction,
+            action = function(space, player, params)
+                print("Sold to the highest bidder.")
+            end
+        })
+    end
+
+    local function createBirthdayPrototype(track)
+        table.insert(track, {
+            name = names.birthday,
+            action = function(space, player, params)
+                print("Happy birthday!")
+            end
+        })
+    end
+
+    local function createSubwayPrototype(track)
+        table.insert(track, {
+            name = names.subway,
+            action = function(space, player, params)
+                print("Going round the underground.")
+            end
+        })
+    end
+
+    local function createHollandTunnelPrototype(track, is_inner)
+        local suffix = is_inner and " Inner" or " Outer"
+        table.insert(track, {
+            name = names.holland .. suffix,
+            action = function(space, player, params)
+                print("Holland!")
+            end
+        })
+    end
+
     ---@param track table
     ---@param name string
     local function createPropertyPrototype(track, name)
