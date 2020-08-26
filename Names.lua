@@ -138,7 +138,7 @@ Names = {
 
     -- Other event spaces
     auction = "Auction",
-    birthday = "Birthday Gift"
-
+    birthday = "Birthday Gift",
+    reverse = "Reverse Direction"
 }
 return Names
