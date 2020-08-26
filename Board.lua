@@ -79,7 +79,7 @@ function Board.new()
     local function createTransitStationPrototype(track, name, is_inner)
         local suffix = is_inner and " Inner" or " Outer"
         table.insert(track, {
-            name = name,
+            name = name .. suffix,
             action = function(space, player, params)
                 print("Here's your travel voucher, " .. player.name)
             end
