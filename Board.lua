@@ -6,7 +6,6 @@ local Board = {}
 Board.__index = Board
 
 Space = require("Space")
-Ordered = require("Ordered")
 
 function Board.new()
     local self = setmetatable({}, Board)
