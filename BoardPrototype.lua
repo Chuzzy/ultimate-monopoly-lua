@@ -364,4 +364,4 @@ createTransitStationPrototype(inner_track, names.short, true)
 createReverseDirectionPrototype(inner_track)
 createPropertyPrototype(inner_track, names.lombard)
 
-return mid_track, outer_track, inner_track
+return {middle = mid_track, outer = outer_track, inner = inner_track}
