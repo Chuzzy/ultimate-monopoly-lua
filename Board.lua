@@ -423,8 +423,6 @@ function Board.new()
     createReverseDirectionPrototype(inner_track)
     createPropertyPrototype(inner_track, names.lombard)
 
-    for i, data in ipairs(mid_track) do print(data.name) end
-
     return self
 end
 
