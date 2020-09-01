@@ -6,6 +6,7 @@ local Board = {}
 Board.__index = Board
 
 Space = require("Space")
+Prototypes = require("BoardPrototype")
 
 function Board.new()
     local self = setmetatable({}, Board)
