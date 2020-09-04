@@ -113,14 +113,16 @@ local function createHollandTunnelPrototype(track, is_inner)
     })
 end
 
+local function propertyAction(space, player, name)
+    print("Property function: " .. space)
+end
+
 ---@param track table
 ---@param name string
 local function createPropertyPrototype(track, name)
     table.insert(track, {
         name = name,
-        action = function(space, player, params)
-            print("Property function: " .. space)
-        end
+        action = propertyAction
     })
 end
 
