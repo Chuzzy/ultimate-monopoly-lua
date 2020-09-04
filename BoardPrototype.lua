@@ -163,14 +163,16 @@ local function createLuxuryTaxPrototype(track)
     })
 end
 
+local function chestAction(space, player, params)
+    print("Community Chest says...")
+end
+
 ---@param track table
 local function createChestPrototype(track)
     local chest_id = getChestId()
     table.insert(track, {
         name = names.chest .. chest_id,
-        action = function(space, player, params)
-            print("Community Chest says...")
-        end
+        action = chestAction
     })
 end
 
