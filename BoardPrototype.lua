@@ -177,12 +177,16 @@ local function createChestPrototype(track)
     })
 end
 
+local function chanceAction(space, player, params)
+    print("Feeling lucky?")
+end
+
 ---@param track table
 local function createChancePrototype(track)
     local chance_id = getChanceId()
     table.insert(track, {
         name = names.chance .. chance_id,
-        action = function(space, player, params) print("Feeling lucky?") end
+        action = chanceAction
     })
 end
 
