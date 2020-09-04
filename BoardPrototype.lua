@@ -120,10 +120,7 @@ end
 ---@param track table
 ---@param name string
 local function createPropertyPrototype(track, name)
-    table.insert(track, {
-        name = name,
-        action = propertyAction
-    })
+    table.insert(track, {name = name, action = propertyAction})
 end
 
 ---@param track table
@@ -190,10 +187,14 @@ local function createChancePrototype(track)
     })
 end
 
+local function busTicketAction(space, player, params)
+    print("Bus ticket.")
+end
+
 local function createBusTicketPrototype(track)
     table.insert(track, {
         name = names.bus .. getTicketId(),
-        action = function(space, player, params) print("Bus ticket.") end
+        action = busTicketAction
     })
 end
 
