@@ -138,14 +138,16 @@ local function createTransitStationPrototype(track, name, is_inner)
     })
 end
 
+local function cabCompanyAction(space, player, params)
+    print("Taxi!") -- Putting this here so formatter doesn't screw it up
+end
+
 ---@param track table
 ---@param name string
 local function createCabCompanyPrototype(track, name)
     table.insert(track, {
         name = name,
-        action = function(space, player, params)
-            print("Taxi!") -- Putting this here so formatter doesn't screw it up
-        end
+        action = cabCompanyAction
     })
 end
 
