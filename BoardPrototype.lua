@@ -364,4 +364,26 @@ createTransitStationPrototype(inner_track, names.short, true)
 createReverseDirectionPrototype(inner_track)
 createPropertyPrototype(inner_track, names.lombard)
 
-return {middle = mid_track, outer = outer_track, inner = inner_track}
+---Maps outer track spaces to middle track spaces by index.
+local outer_to_middle_mappings = {
+    01, 01, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 11, -- Bottom side
+    11, 11, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 21, -- Left side
+    21, 21, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 31, -- Top side
+    31, 31, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 01, 01 -- Right side
+}
+
+-- Maps middle track spaces to inner track spaces by index.
+local middle_to_inner_mappings = {
+    01, 01, 01, 02, 03, 04, 05, 06, 07, 07, -- Bottom side
+    07, 07, 07, 08, 09, 10, 11, 12, 13, 13, -- Left side
+    13, 13, 13, 14, 15, 16, 17, 18, 19, 19, -- Top side
+    19, 19, 19, 20, 21, 22, 23, 24, 01, 01 -- Right side
+}
+
+return {
+    middle = mid_track,
+    outer = outer_track,
+    inner = inner_track,
+    outer_to_middle = outer_to_middle_mappings,
+    middle_to_inner = middle_to_inner_mappings
+}
