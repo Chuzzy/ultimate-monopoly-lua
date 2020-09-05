@@ -329,7 +329,7 @@ createPropertyPrototype(outer_track, names.north)
 createPropertyPrototype(outer_track, names.square)
 
 -- Right side
-createSubwayPrototype(outer_track, names.subway)
+createSubwayPrototype(outer_track)
 createPropertyPrototype(outer_track, names.southst)
 createPropertyPrototype(outer_track, names.broad)
 createPropertyPrototype(outer_track, names.walnut)
