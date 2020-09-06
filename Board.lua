@@ -34,6 +34,19 @@ function Board.new()
         self.spaces[space_name].next = self.spaces[after_name]
     end
 
+    --- Links together an entire track using prototype data.
+    ---@param track table
+    local function linkPrototypeTrack(track)
+        for i, space in pairs(track) do
+            local next_space = track[(i % #track) + 1]
+            linkConsecutiveSpaces(space.name, next_space.name, space.action, next_space.action)
+        end
+    end
+
+    linkPrototypeTrack(Prototypes.middle)
+    linkPrototypeTrack(Prototypes.outer)
+    linkPrototypeTrack(Prototypes.inner)
+
     return self
 end
 
