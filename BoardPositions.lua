@@ -63,12 +63,23 @@ local main_pos = {
 
     -- Bottom Inner Track
     [Names.squeeze] = {5.17, 2.47, -5.17},
+    [Names.embarca] = {2.97, 2.01, -5.17},
+    [Names.fisher] = {1.50, 2.01, -5.17},
+    [Names.tel] = {0.00, 2.01, -5.17},
+    [Names.chest] = {-1.51, 2.01, -5.17}, -- TODO: which chest?
+    [Names.beacon] = {-2.97, 2.01, -5.17},
 
     -- Left Inner Track
     [Names.bonus] = {-5.17, 2.47, -5.17},
 
     -- Top Inner Track
     [Names.roll3] = {-5.17, 2.47, 5.17},
+    [Names.wall] = {-2.95, 2.01, 5.17},
+    [Names.refund] = {-1.49, 2.01, 5.18},
+    [Names.gas] = {0.00, 2.01, 5.17},
+    [Names.chance] = {1.50, 2.01, 5.17}, -- TODO: which chance?
+    [Names.florida] = {2.97, 2.01, 5.17},
+
 
     -- Right Inner Track
     [Names.holland .. " Inner"] = {5.17, 2.47, 5.17}
