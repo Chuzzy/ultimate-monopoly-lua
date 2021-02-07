@@ -71,6 +71,11 @@ local main_pos = {
 
     -- Left Inner Track
     [Names.bonus] = {-5.17, 2.47, -5.17},
+    [Names.boylston] = {-5.17, 2.01, -2.96},
+    [Names.newbury] = {-5.17, 2.01, -1.49},
+    [Names.pennsylrr .. " Inner"] = {-5.17, 2.01, 0.00},
+    [Names.fifth] = {-5.17, 2.01, 1.49},
+    [Names.madison] = {-5.17, 2.01, 2.96},
 
     -- Top Inner Track
     [Names.roll3] = {-5.17, 2.47, 5.17},
@@ -80,15 +85,15 @@ local main_pos = {
     [Names.chance] = {1.50, 2.01, 5.17}, -- TODO: which chance?
     [Names.florida] = {2.97, 2.01, 5.17},
 
-
     -- Right Inner Track
-    [Names.holland .. " Inner"] = {5.17, 2.47, 5.17}
+    [Names.holland .. " Inner"] = {5.17, 2.47, 5.17},
+    [Names.miami] = {5.17, 2.01, -2.96},
+    [Names.biscayne] = {5.17, 2.01, -1.49},
+    [Names.short .. " Inner"] = {5.17, 2.01, 0.00},
+    [Names.reverse] = {5.17, 2.01, 1.49},
+    [Names.lombard] = {5.17, 2.01, 2.96}
 }
 
-local direction = {
-    
-}
+local direction = {}
 
-return {
-    main = main_pos
-}
+return {main = main_pos}
