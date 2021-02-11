@@ -89,19 +89,3 @@ function Board.new()
 
     return self
 end
-
-B = Board.new()
-
-while true do
-    io.write("Input a space: ")
-    local space = io.read()
-    if not B.spaces[space] then
-        print("Does not exist")
-    else
-        print("Behind is ", B.spaces[space].prev.name)
-        print("Ahead is ", B.spaces[space].next.name)
-        print("Inside is ", B.spaces[space].inner and B.spaces[space].inner.name)
-        print("Outside is ", B.spaces[space].outer and B.spaces[space].outer.name)
-    end
-end
-
