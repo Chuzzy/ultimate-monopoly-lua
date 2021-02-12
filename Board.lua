@@ -89,3 +89,23 @@ function Board.new()
 
     return self
 end
+
+---Returns the spaces traversed for a particular dice roll.
+---@param start Space
+---@param roll number
+---@return table
+function Board:diceRoll(start, roll)
+    local is_even_roll = roll % 2 == 0
+    local visited_spaces = {}
+    local current_space = start
+
+    for i = roll, 1, -1 do
+        current_space = current_space.next
+        table.insert(visited_spaces, current_space)
+
+        if is_even_roll then
+        end
+    end
+
+    return visited_spaces
+end
