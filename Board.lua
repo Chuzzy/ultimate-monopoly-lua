@@ -14,19 +14,23 @@ function Board.new()
     self.spaces = {}
 
     --- Creates a forward link between two spaces.
-    ---@param space_name string
-    ---@param after_name string
-    ---@param space_action function
-    ---@param after_action function
-    local function linkConsecutiveSpaces(space_name, after_name, space_action,
-                                         after_action)
+    ---@param space_prototype table
+    ---@param after_prototype table
+    local function linkConsecutiveSpaces(space_prototype, after_prototype)
+        local space_name = space_prototype.name
+        local space_action = space_prototype.action
+        local after_name = after_prototype.name
+        local after_action = after_prototype.action
+
         -- Create a space if space_name doesn't exist yet
         if not self.spaces[space_name] then
             self.spaces[space_name] = Space.new(space_name, space_action)
+            self.spaces[space_name].is_transit_station = space_prototype.is_transit_station or false
         end
         -- Create another space if after_name doesn't exist yet
         if not self.spaces[after_name] then
             self.spaces[after_name] = Space.new(after_name, after_action)
+            self.spaces[after_name].is_transit_station = after_prototype.is_transit_station or false
         end
         -- Make the "after" space point backwards to the current space
         self.spaces[after_name].prev = self.spaces[space_name]
