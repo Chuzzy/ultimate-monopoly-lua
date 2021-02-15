@@ -14,19 +14,23 @@ function Board.new()
     self.spaces = {}
 
     --- Creates a forward link between two spaces.
-    ---@param space_name string
-    ---@param after_name string
-    ---@param space_action function
-    ---@param after_action function
-    local function linkConsecutiveSpaces(space_name, after_name, space_action,
-                                         after_action)
+    ---@param space_prototype table
+    ---@param after_prototype table
+    local function linkConsecutiveSpaces(space_prototype, after_prototype)
+        local space_name = space_prototype.name
+        local space_action = space_prototype.action
+        local after_name = after_prototype.name
+        local after_action = after_prototype.action
+
         -- Create a space if space_name doesn't exist yet
         if not self.spaces[space_name] then
             self.spaces[space_name] = Space.new(space_name, space_action)
+            self.spaces[space_name].is_transit_station = space_prototype.is_transit_station or false
         end
         -- Create another space if after_name doesn't exist yet
         if not self.spaces[after_name] then
             self.spaces[after_name] = Space.new(after_name, after_action)
+            self.spaces[after_name].is_transit_station = after_prototype.is_transit_station or false
         end
         -- Make the "after" space point backwards to the current space
         self.spaces[after_name].prev = self.spaces[space_name]
@@ -90,18 +94,22 @@ function Board.new()
     return self
 end
 
-B = Board.new()
+---Returns the spaces traversed for a particular dice roll.
+---@param start Space
+---@param roll number
+---@return table
+function Board:diceRoll(start, roll)
+    local is_even_roll = roll % 2 == 0
+    local visited_spaces = {}
+    local current_space = start
 
-while true do
-    io.write("Input a space: ")
-    local space = io.read()
-    if not B.spaces[space] then
-        print("Does not exist")
-    else
-        print("Behind is ", B.spaces[space].prev.name)
-        print("Ahead is ", B.spaces[space].next.name)
-        print("Inside is ", B.spaces[space].inner and B.spaces[space].inner.name)
-        print("Outside is ", B.spaces[space].outer and B.spaces[space].outer.name)
+    for i = roll, 1, -1 do
+        current_space = current_space.next
+        table.insert(visited_spaces, current_space)
+
+        if is_even_roll then
+        end
     end
-end
 
+    return visited_spaces
+end

@@ -134,6 +134,7 @@ local function createTransitStationPrototype(track, name, is_inner)
     local suffix = is_inner and " Inner" or " Outer"
     table.insert(track, {
         name = name .. suffix,
+        is_transit_station = true,
         action = transitStationAction
     })
 end

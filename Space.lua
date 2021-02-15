@@ -2,6 +2,7 @@
 ---@class Space
 ---@field name string
 ---@field action function
+---@field is_transit_station boolean
 ---@field camera_pos table
 ---@field occupant_positions table
 ---@field direction string
