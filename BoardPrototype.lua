@@ -264,7 +264,7 @@ createPropertyPrototype(mid_track, Names.indiana)
 createPropertyPrototype(mid_track, Names.illinois)
 createTransitStationPrototype(mid_track, Names.bno, true)
 createPropertyPrototype(mid_track, Names.atlantic)
-createPropertyPrototype(mid_track, Names.vermont)
+createPropertyPrototype(mid_track, Names.ventnor)
 createPropertyPrototype(mid_track, Names.water)
 createPropertyPrototype(mid_track, Names.marvin)
 
