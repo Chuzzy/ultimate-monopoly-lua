@@ -51,22 +51,74 @@ local main_pos = {
 
     -- Bottom Outer Track
     [Names.stock] = {11.58, 2.47, -11.58},
+    [Names.lake] = {9.26, 2.01, -11.58},
+    [Names.chest .. " 4"] = {7.72, 2.01, -11.58},
+    [Names.nicollet] = {6.17, 2.01, -11.58},
+    [Names.hennepin] = {4.63, 2.01, -11.58},
+    [Names.bus .. " 1"] = {3.09, 2.01, -11.58},
+    [Names.checker] = {1.55, 2.01, -11.58},
+    [Names.reading .. " Outer"] = {0.00, 2.01, -11.58},
+    [Names.esplanade] = {-1.55, 2.01, -11.58},
+    [Names.canal] = {-3.09, 2.01, -11.58},
+    [Names.chance .. " 4"] = {-4.63, 2.01, -11.58},
+    [Names.cable] = {-6.18, 2.01, -11.58},
+    [Names.magazine] = {-7.72, 2.01, -11.58},
+    [Names.bourbon] = {-9.26, 2.01, -11.58},
 
     -- Left Outer Track
     [Names.holland .. " Outer"] = {-11.58, 2.47, -11.58},
+    [Names.auction] = {-11.58, 2.01, -9.26},
+    [Names.katy] = {-11.58, 2.01, -7.72},
+    [Names.westheimer] = {-11.58, 2.01, -6.17},
+    [Names.isp] = {-11.58, 2.01, -4.63},
+    [Names.kirby] = {-11.58, 2.01, -3.09},
+    [Names.cullen] = {-11.58, 2.01, -1.58},
+    [Names.chance .. " 5"] = {-11.58, 2.01, 0.00},
+    [Names.black] = {-11.58, 2.01, 1.58},
+    [Names.dekalb] = {-11.58, 2.01, 3.09},
+    [Names.chest .. " 5"] = {-11.58, 2.01, 4.63},
+    [Names.andrew] = {-11.58, 2.01, 6.17},
+    [Names.decatur] = {-11.58, 2.01, 7.72},
+    [Names.peach] = {-11.58, 2.01, 9.26},
 
     -- Top Outer Track
     [Names.payday] = {-11.58, 2.47, 11.58},
+    [Names.randolph] = {-9.26, 2.01, 11.58},
+    [Names.chance .. " 6"] = {-7.72, 2.01, 11.58},
+    [Names.shore] = {-6.17, 2.01, 11.58},
+    [Names.wacker] = {-4.63, 2.01, 11.58},
+    [Names.michigan] = {-3.09, 2.01, 11.58},
+    [Names.yellow] = {-1.55, 2.01, 11.58},
+    [Names.bno .. " Outer"] = {0.00, 2.01, 11.58},
+    [Names.chest .. " 6"] = {1.55, 2.01, 11.58},
+    [Names.south] = {3.09, 2.01, 11.58},
+    [Names.west] = {4.63, 2.01, 11.58},
+    [Names.trash] = {6.18, 2.01, 11.58},
+    [Names.north] = {7.72, 2.01, 11.58},
+    [Names.square] = {9.26, 2.01, 11.58},
 
     -- Right Outer Track
     [Names.subway] = {11.58, 2.47, 11.58},
+    [Names.southst] = {11.58, 2.01, 9.26},
+    [Names.broad] = {11.58, 2.01, 7.72},
+    [Names.walnut] = {11.58, 2.01, 6.17},
+    [Names.chest .. " 7"] = {11.58, 2.01, 4.63},
+    [Names.market] = {11.58, 2.01, 3.09},
+    [Names.bus .. " 2"] = {11.58, 2.01, 1.58},
+    [Names.sewer] = {11.58, 2.01, 0.00},
+    [Names.ute] = {11.58, 2.01, -1.58},
+    [Names.birthday] = {11.58, 2.01, -3.09},
+    [Names.mulholland] = {11.58, 2.01, -4.63},
+    [Names.ventura] = {11.58, 2.01, -6.17},
+    [Names.chance .. " 7"] = {11.58, 2.01, -7.72},
+    [Names.rodeo] = {11.58, 2.01, -9.26},
 
     -- Bottom Inner Track
     [Names.squeeze] = {5.17, 2.47, -5.17},
     [Names.embarca] = {2.97, 2.01, -5.17},
     [Names.fisher] = {1.50, 2.01, -5.17},
     [Names.tel] = {0.00, 2.01, -5.17},
-    [Names.chest] = {-1.51, 2.01, -5.17}, -- TODO: which chest?
+    [Names.chest .. " 8"] = {-1.51, 2.01, -5.17},
     [Names.beacon] = {-2.97, 2.01, -5.17},
 
     -- Left Inner Track
@@ -82,7 +134,7 @@ local main_pos = {
     [Names.wall] = {-2.95, 2.01, 5.17},
     [Names.refund] = {-1.49, 2.01, 5.18},
     [Names.gas] = {0.00, 2.01, 5.17},
-    [Names.chance] = {1.50, 2.01, 5.17}, -- TODO: which chance?
+    [Names.chance .. " 8"] = {1.50, 2.01, 5.17},
     [Names.florida] = {2.97, 2.01, 5.17},
 
     -- Right Inner Track
