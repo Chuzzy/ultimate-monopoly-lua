@@ -2,7 +2,7 @@
 ---@class Space
 ---@field name string
 ---@field action function
----@field is_transit_station boolean
+---@field transit_type number
 ---@field camera_pos table
 ---@field occupant_positions table
 ---@field direction string
@@ -18,14 +18,16 @@ Space.__index = Space
 --- Create a new Space.
 ---@param name string
 ---@param action function
+---@param transit_type number
 ---@param camera_pos table
 ---@param occupant_positions table
 ---@param direction string
 ---@param building_pos table
 ---@param house_positions table
-function Space.new(name, action, camera_pos, occupant_positions, direction, building_pos, house_positions)
+function Space.new(name, transit_type, action, camera_pos, occupant_positions, direction, building_pos, house_positions)
     local self = setmetatable({}, Space)
     self.name = name
+    self.transit_type = transit_type
     self.action = action
     self.camera_pos = camera_pos
     self.occupant_positions = occupant_positions

@@ -18,19 +18,19 @@ function Board.new()
     ---@param after_prototype table
     local function linkConsecutiveSpaces(space_prototype, after_prototype)
         local space_name = space_prototype.name
+        local space_transit = space_prototype.transit_type
         local space_action = space_prototype.action
         local after_name = after_prototype.name
+        local after_transit = after_prototype.transit_type
         local after_action = after_prototype.action
 
         -- Create a space if space_name doesn't exist yet
         if not self.spaces[space_name] then
-            self.spaces[space_name] = Space.new(space_name, space_action)
-            self.spaces[space_name].is_transit_station = space_prototype.is_transit_station or false
+            self.spaces[space_name] = Space.new(space_name, space_transit, space_action)
         end
         -- Create another space if after_name doesn't exist yet
         if not self.spaces[after_name] then
-            self.spaces[after_name] = Space.new(after_name, after_action)
-            self.spaces[after_name].is_transit_station = after_prototype.is_transit_station or false
+            self.spaces[after_name] = Space.new(after_name, after_transit, after_action)
         end
         -- Make the "after" space point backwards to the current space
         self.spaces[after_name].prev = self.spaces[space_name]
