@@ -12,7 +12,7 @@
 ---@field next Space
 ---@field outer Space
 ---@field inner Space
-local Space = {}
+Space = {}
 Space.__index = Space
 
 --- Create a new Space.
@@ -43,4 +43,3 @@ end
 function Space:act(player, params)
     self.action(self, player, params)
 end
-return Space

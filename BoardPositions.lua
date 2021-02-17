@@ -1,4 +1,4 @@
-Names = require("Names")
+require("Names")
 
 local main_pos = {
     -- Bottom Middle Track
@@ -148,4 +148,4 @@ local main_pos = {
 
 local direction = {}
 
-return {main = main_pos}
+BoardPositions = {main = main_pos}

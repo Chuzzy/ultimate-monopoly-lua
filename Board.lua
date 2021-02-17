@@ -2,11 +2,11 @@
 ---@class Board
 ---@field game Game
 ---@field spaces table
-local Board = {}
+Board = {}
 Board.__index = Board
 
-Space = require("Space")
-Prototypes = require("BoardPrototype")
+require("Space")
+require("BoardPrototype")
 
 function Board.new()
     local self = setmetatable({}, Board)
@@ -49,9 +49,9 @@ function Board.new()
 
     -- Create the Space objects and use them to populate the spaces field
     -- and link the spaces between each other
-    linkPrototypeTrack(Prototypes.middle)
-    linkPrototypeTrack(Prototypes.outer)
-    linkPrototypeTrack(Prototypes.inner)
+    linkPrototypeTrack(BoardPrototype.middle)
+    linkPrototypeTrack(BoardPrototype.outer)
+    linkPrototypeTrack(BoardPrototype.inner)
 
     --- Creates an inter-track link between two spaces using prototype data.
     ---@param space_name string
@@ -76,8 +76,8 @@ function Board.new()
     end
 
     -- Link the space objects
-    linkBetweenPrototypeTracks(Prototypes.outer, Prototypes.middle, Prototypes.outer_to_middle)
-    linkBetweenPrototypeTracks(Prototypes.middle, Prototypes.inner, Prototypes.middle_to_inner)
+    linkBetweenPrototypeTracks(BoardPrototype.outer, BoardPrototype.middle, BoardPrototype.outer_to_middle)
+    linkBetweenPrototypeTracks(BoardPrototype.middle, BoardPrototype.inner, BoardPrototype.middle_to_inner)
 
     -- Fix edge cases where the corner squares on middle track have incorrect `outer` fields
     self.spaces[Names.go].outer = self.spaces[Names.stock]

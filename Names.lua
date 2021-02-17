@@ -141,4 +141,3 @@ Names = {
     birthday = "Birthday Gift",
     reverse = "Reverse Direction"
 }
-return Names

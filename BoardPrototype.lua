@@ -1,4 +1,4 @@
-local names = require("Names")
+require("Names")
 
 local chance_space_count, chest_space_count, ticket_space_count = 0, 0, 0
 
@@ -20,28 +20,28 @@ end
 ---@param track table
 local function createGoPrototype(track)
     table.insert(track, {
-        name = names.go,
+        name = Names.go,
         action = function(space, player, params) print("Landed on go.") end
     })
 end
 
 local function createBonusPrototype(track)
     table.insert(track, {
-        name = names.bonus,
+        name = Names.bonus,
         action = function(space, player, params) print("Dosh!") end
     })
 end
 
 local function createSqueezePlayPrototype(track)
     table.insert(track, {
-        name = names.squeeze,
+        name = Names.squeeze,
         action = function(space, player, params) print("Lucky you!") end
     })
 end
 
 local function createRollThreePrototype(track)
     table.insert(track, {
-        name = names.roll3,
+        name = Names.roll3,
         action = function(space, player, params)
             print("Roll the dice to win some cash.")
         end
@@ -50,14 +50,14 @@ end
 
 local function createTaxRefundPrototype(track)
     table.insert(track, {
-        name = names.refund,
+        name = Names.refund,
         action = function(space, player, params) print("Here you go!") end
     })
 end
 
 local function createReverseDirectionPrototype(track)
     table.insert(track, {
-        name = names.reverse,
+        name = Names.reverse,
         action = function(space, player, params)
             print("Moving backwards.")
         end
@@ -66,14 +66,14 @@ end
 
 local function createPayDayPrototype(track)
     table.insert(track, {
-        name = names.payday,
+        name = Names.payday,
         action = function(space, player, params) print("It's PAYDAY!") end
     })
 end
 
 local function createStockExchangePrototype(track)
     table.insert(track, {
-        name = names.stock,
+        name = Names.stock,
         action = function(space, player, params)
             print("Buy! Buy! Sell! Sell!")
         end
@@ -82,7 +82,7 @@ end
 
 local function createAuctionPrototype(track)
     table.insert(track, {
-        name = names.auction,
+        name = Names.auction,
         action = function(space, player, params)
             print("Sold to the highest bidder.")
         end
@@ -91,14 +91,14 @@ end
 
 local function createBirthdayPrototype(track)
     table.insert(track, {
-        name = names.birthday,
+        name = Names.birthday,
         action = function(space, player, params) print("Happy birthday!") end
     })
 end
 
 local function createSubwayPrototype(track)
     table.insert(track, {
-        name = names.subway,
+        name = Names.subway,
         action = function(space, player, params)
             print("Going round the underground.")
         end
@@ -108,7 +108,7 @@ end
 local function createHollandTunnelPrototype(track, is_inner)
     local suffix = is_inner and " Inner" or " Outer"
     table.insert(track, {
-        name = names.holland .. suffix,
+        name = Names.holland .. suffix,
         action = function(space, player, params) print("Holland!") end
     })
 end
@@ -154,14 +154,14 @@ end
 
 local function createIncomeTaxPrototype(track)
     table.insert(track, {
-        name = names.income,
+        name = Names.income,
         action = function(space, player, params) print("Taxes due.") end
     })
 end
 
 local function createLuxuryTaxPrototype(track)
     table.insert(track, {
-        name = names.luxury,
+        name = Names.luxury,
         action = function(space, player, params)
             print("Good ol' Uncle Sam.")
         end
@@ -176,7 +176,7 @@ end
 local function createChestPrototype(track)
     local chest_id = getChestId()
     table.insert(track, {
-        name = names.chest .. chest_id,
+        name = Names.chest .. chest_id,
         action = chestAction
     })
 end
@@ -189,7 +189,7 @@ end
 local function createChancePrototype(track)
     local chance_id = getChanceId()
     table.insert(track, {
-        name = names.chance .. chance_id,
+        name = Names.chance .. chance_id,
         action = chanceAction
     })
 end
@@ -200,7 +200,7 @@ end
 
 local function createBusTicketPrototype(track)
     table.insert(track, {
-        name = names.bus .. getTicketId(),
+        name = Names.bus .. getTicketId(),
         action = busTicketAction
     })
 end
@@ -208,7 +208,7 @@ end
 ---@param track table
 local function createJustVisitingPrototype(track)
     table.insert(track, {
-        name = names.visit,
+        name = Names.visit,
         action = function(space, player, params) print("Just Visiting") end
     })
 end
@@ -216,7 +216,7 @@ end
 ---@param track table
 local function createFreeParkingPrototype(track)
     table.insert(track, {
-        name = names.parking,
+        name = Names.parking,
         action = function(space, player, params)
             print("Free Parking. Beep beep.")
         end
@@ -226,7 +226,7 @@ end
 ---@param track table
 local function createGoToJailPrototype(track)
     table.insert(track, {
-        name = names.malloy,
+        name = Names.malloy,
         action = function(space, player, params) print("GO TO JAIL") end
     })
 end
@@ -234,149 +234,149 @@ end
 local mid_track = {}
 -- Bottom side
 createGoPrototype(mid_track)
-createPropertyPrototype(mid_track, names.medit)
+createPropertyPrototype(mid_track, Names.medit)
 createChestPrototype(mid_track)
-createPropertyPrototype(mid_track, names.baltic)
+createPropertyPrototype(mid_track, Names.baltic)
 createIncomeTaxPrototype(mid_track)
-createTransitStationPrototype(mid_track, names.reading, true)
-createPropertyPrototype(mid_track, names.oriental)
+createTransitStationPrototype(mid_track, Names.reading, true)
+createPropertyPrototype(mid_track, Names.oriental)
 createChancePrototype(mid_track)
-createPropertyPrototype(mid_track, names.vermont)
-createPropertyPrototype(mid_track, names.connecticut)
+createPropertyPrototype(mid_track, Names.vermont)
+createPropertyPrototype(mid_track, Names.connecticut)
 
 -- Left side
 createJustVisitingPrototype(mid_track)
-createPropertyPrototype(mid_track, names.charles)
-createPropertyPrototype(mid_track, names.elec)
-createPropertyPrototype(mid_track, names.states)
-createPropertyPrototype(mid_track, names.virginia)
-createTransitStationPrototype(mid_track, names.pennsylrr, false)
-createPropertyPrototype(mid_track, names.james)
+createPropertyPrototype(mid_track, Names.charles)
+createPropertyPrototype(mid_track, Names.elec)
+createPropertyPrototype(mid_track, Names.states)
+createPropertyPrototype(mid_track, Names.virginia)
+createTransitStationPrototype(mid_track, Names.pennsylrr, false)
+createPropertyPrototype(mid_track, Names.james)
 createChestPrototype(mid_track)
-createPropertyPrototype(mid_track, names.tennessee)
-createPropertyPrototype(mid_track, names.newyork)
+createPropertyPrototype(mid_track, Names.tennessee)
+createPropertyPrototype(mid_track, Names.newyork)
 
 -- Top side
 createFreeParkingPrototype(mid_track)
-createPropertyPrototype(mid_track, names.kentucky)
+createPropertyPrototype(mid_track, Names.kentucky)
 createChancePrototype(mid_track)
-createPropertyPrototype(mid_track, names.indiana)
-createPropertyPrototype(mid_track, names.illinois)
-createTransitStationPrototype(mid_track, names.bno, true)
-createPropertyPrototype(mid_track, names.atlantic)
-createPropertyPrototype(mid_track, names.vermont)
-createPropertyPrototype(mid_track, names.water)
-createPropertyPrototype(mid_track, names.marvin)
+createPropertyPrototype(mid_track, Names.indiana)
+createPropertyPrototype(mid_track, Names.illinois)
+createTransitStationPrototype(mid_track, Names.bno, true)
+createPropertyPrototype(mid_track, Names.atlantic)
+createPropertyPrototype(mid_track, Names.vermont)
+createPropertyPrototype(mid_track, Names.water)
+createPropertyPrototype(mid_track, Names.marvin)
 
 -- Right side
 createGoToJailPrototype(mid_track)
-createPropertyPrototype(mid_track, names.pacific)
-createPropertyPrototype(mid_track, names.carolina)
+createPropertyPrototype(mid_track, Names.pacific)
+createPropertyPrototype(mid_track, Names.carolina)
 createChestPrototype(mid_track)
-createPropertyPrototype(mid_track, names.pennsyl)
-createTransitStationPrototype(mid_track, names.short, false)
+createPropertyPrototype(mid_track, Names.pennsyl)
+createTransitStationPrototype(mid_track, Names.short, false)
 createChancePrototype(mid_track)
-createPropertyPrototype(mid_track, names.park)
+createPropertyPrototype(mid_track, Names.park)
 createLuxuryTaxPrototype(mid_track)
-createPropertyPrototype(mid_track, names.boardwalk)
+createPropertyPrototype(mid_track, Names.boardwalk)
 
 local outer_track = {}
 -- Bottom side
 createStockExchangePrototype(outer_track)
-createPropertyPrototype(outer_track, names.lake)
+createPropertyPrototype(outer_track, Names.lake)
 createChestPrototype(outer_track)
-createPropertyPrototype(outer_track, names.nicollet)
-createPropertyPrototype(outer_track, names.hennepin)
+createPropertyPrototype(outer_track, Names.nicollet)
+createPropertyPrototype(outer_track, Names.hennepin)
 createBusTicketPrototype(outer_track)
-createCabCompanyPrototype(outer_track, names.checker)
-createTransitStationPrototype(outer_track, names.reading, false)
-createPropertyPrototype(outer_track, names.esplanade)
-createPropertyPrototype(outer_track, names.canal)
+createCabCompanyPrototype(outer_track, Names.checker)
+createTransitStationPrototype(outer_track, Names.reading, false)
+createPropertyPrototype(outer_track, Names.esplanade)
+createPropertyPrototype(outer_track, Names.canal)
 createChancePrototype(outer_track)
-createPropertyPrototype(outer_track, names.cable)
-createPropertyPrototype(outer_track, names.magazine)
-createPropertyPrototype(outer_track, names.bourbon)
+createPropertyPrototype(outer_track, Names.cable)
+createPropertyPrototype(outer_track, Names.magazine)
+createPropertyPrototype(outer_track, Names.bourbon)
 
 -- Left side
 createHollandTunnelPrototype(outer_track, false)
 createAuctionPrototype(outer_track)
-createPropertyPrototype(outer_track, names.katy)
-createPropertyPrototype(outer_track, names.westheimer)
-createPropertyPrototype(outer_track, names.isp)
-createPropertyPrototype(outer_track, names.kirby)
-createPropertyPrototype(outer_track, names.cullen)
+createPropertyPrototype(outer_track, Names.katy)
+createPropertyPrototype(outer_track, Names.westheimer)
+createPropertyPrototype(outer_track, Names.isp)
+createPropertyPrototype(outer_track, Names.kirby)
+createPropertyPrototype(outer_track, Names.cullen)
 createChancePrototype(outer_track)
-createCabCompanyPrototype(outer_track, names.black)
-createPropertyPrototype(outer_track, names.dekalb)
+createCabCompanyPrototype(outer_track, Names.black)
+createPropertyPrototype(outer_track, Names.dekalb)
 createChestPrototype(outer_track)
-createPropertyPrototype(outer_track, names.andrew)
-createPropertyPrototype(outer_track, names.decatur)
-createPropertyPrototype(outer_track, names.peach)
+createPropertyPrototype(outer_track, Names.andrew)
+createPropertyPrototype(outer_track, Names.decatur)
+createPropertyPrototype(outer_track, Names.peach)
 
 -- Top side
 createPayDayPrototype(outer_track)
-createPropertyPrototype(outer_track, names.randolph)
+createPropertyPrototype(outer_track, Names.randolph)
 createChancePrototype(outer_track)
-createPropertyPrototype(outer_track, names.shore)
-createPropertyPrototype(outer_track, names.wacker)
-createPropertyPrototype(outer_track, names.michigan)
-createCabCompanyPrototype(outer_track, names.yellow)
-createTransitStationPrototype(outer_track, names.bno, false)
+createPropertyPrototype(outer_track, Names.shore)
+createPropertyPrototype(outer_track, Names.wacker)
+createPropertyPrototype(outer_track, Names.michigan)
+createCabCompanyPrototype(outer_track, Names.yellow)
+createTransitStationPrototype(outer_track, Names.bno, false)
 createChestPrototype(outer_track)
-createPropertyPrototype(outer_track, names.south)
-createPropertyPrototype(outer_track, names.west)
-createPropertyPrototype(outer_track, names.trash)
-createPropertyPrototype(outer_track, names.north)
-createPropertyPrototype(outer_track, names.square)
+createPropertyPrototype(outer_track, Names.south)
+createPropertyPrototype(outer_track, Names.west)
+createPropertyPrototype(outer_track, Names.trash)
+createPropertyPrototype(outer_track, Names.north)
+createPropertyPrototype(outer_track, Names.square)
 
 -- Right side
 createSubwayPrototype(outer_track)
-createPropertyPrototype(outer_track, names.southst)
-createPropertyPrototype(outer_track, names.broad)
-createPropertyPrototype(outer_track, names.walnut)
+createPropertyPrototype(outer_track, Names.southst)
+createPropertyPrototype(outer_track, Names.broad)
+createPropertyPrototype(outer_track, Names.walnut)
 createChestPrototype(outer_track)
-createPropertyPrototype(outer_track, names.market)
+createPropertyPrototype(outer_track, Names.market)
 createBusTicketPrototype(outer_track)
-createPropertyPrototype(outer_track, names.sewer)
-createCabCompanyPrototype(outer_track, names.ute)
+createPropertyPrototype(outer_track, Names.sewer)
+createCabCompanyPrototype(outer_track, Names.ute)
 createBirthdayPrototype(outer_track)
-createPropertyPrototype(outer_track, names.mulholland)
-createPropertyPrototype(outer_track, names.ventura)
+createPropertyPrototype(outer_track, Names.mulholland)
+createPropertyPrototype(outer_track, Names.ventura)
 createChancePrototype(outer_track)
-createPropertyPrototype(outer_track, names.rodeo)
+createPropertyPrototype(outer_track, Names.rodeo)
 
 local inner_track = {}
 -- Bottom side
 createSqueezePlayPrototype(inner_track)
-createPropertyPrototype(inner_track, names.embarca)
-createPropertyPrototype(inner_track, names.fisher)
-createPropertyPrototype(inner_track, names.tel)
+createPropertyPrototype(inner_track, Names.embarca)
+createPropertyPrototype(inner_track, Names.fisher)
+createPropertyPrototype(inner_track, Names.tel)
 createChestPrototype(inner_track)
-createPropertyPrototype(inner_track, names.beacon)
+createPropertyPrototype(inner_track, Names.beacon)
 
 -- Left side
 createBonusPrototype(inner_track)
-createPropertyPrototype(inner_track, names.boylston)
-createPropertyPrototype(inner_track, names.newbury)
-createTransitStationPrototype(inner_track, names.pennsylrr, true)
-createPropertyPrototype(inner_track, names.fifth)
-createPropertyPrototype(inner_track, names.madison)
+createPropertyPrototype(inner_track, Names.boylston)
+createPropertyPrototype(inner_track, Names.newbury)
+createTransitStationPrototype(inner_track, Names.pennsylrr, true)
+createPropertyPrototype(inner_track, Names.fifth)
+createPropertyPrototype(inner_track, Names.madison)
 
 -- Top side
 createRollThreePrototype(inner_track)
-createPropertyPrototype(inner_track, names.wall)
+createPropertyPrototype(inner_track, Names.wall)
 createTaxRefundPrototype(inner_track)
-createPropertyPrototype(inner_track, names.gas)
+createPropertyPrototype(inner_track, Names.gas)
 createChancePrototype(inner_track)
-createPropertyPrototype(inner_track, names.florida)
+createPropertyPrototype(inner_track, Names.florida)
 
 -- Right side
 createHollandTunnelPrototype(inner_track, true)
-createPropertyPrototype(inner_track, names.miami)
-createPropertyPrototype(inner_track, names.biscayne)
-createTransitStationPrototype(inner_track, names.short, true)
+createPropertyPrototype(inner_track, Names.miami)
+createPropertyPrototype(inner_track, Names.biscayne)
+createTransitStationPrototype(inner_track, Names.short, true)
 createReverseDirectionPrototype(inner_track)
-createPropertyPrototype(inner_track, names.lombard)
+createPropertyPrototype(inner_track, Names.lombard)
 
 ---Maps outer track spaces to middle track spaces by index.
 local outer_to_middle_mappings = {
@@ -394,7 +394,7 @@ local middle_to_inner_mappings = {
     19, 19, 19, 20, 21, 22, 23, 24, 01, 01 -- Right side
 }
 
-return {
+BoardPrototype = {
     middle = mid_track,
     outer = outer_track,
     inner = inner_track,
