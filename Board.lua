@@ -43,7 +43,7 @@ function Board.new()
     local function linkPrototypeTrack(track)
         for i, space in pairs(track) do
             local next_space = track[(i % #track) + 1]
-            linkConsecutiveSpaces(space.name, next_space.name, space.action, next_space.action)
+            linkConsecutiveSpaces(space, next_space)
         end
     end
 
