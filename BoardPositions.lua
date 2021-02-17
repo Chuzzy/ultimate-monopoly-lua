@@ -33,7 +33,7 @@ local main_pos = {
     [Names.illinois] = {-1.54, 2.01, 8.35},
     [Names.bno .. " Inner"] = {0.00, 2.01, 8.35},
     [Names.atlantic] = {1.53, 2.01, 8.35},
-    [Names.ventura] = {3.03, 2.01, 8.35},
+    [Names.ventnor] = {3.03, 2.01, 8.35},
     [Names.water] = {4.55, 2.01, 8.35},
     [Names.marvin] = {6.07, 2.01, 8.35},
 
