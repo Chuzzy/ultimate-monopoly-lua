@@ -7,6 +7,7 @@ Board.__index = Board
 
 require("Space")
 require("BoardPrototype")
+require("BoardPositions")
 
 function Board.new()
     local self = setmetatable({}, Board)
@@ -20,17 +21,19 @@ function Board.new()
         local space_name = space_prototype.name
         local space_transit = space_prototype.transit_type
         local space_action = space_prototype.action
+        local space_pos = BoardPositions.main[space_name]
         local after_name = after_prototype.name
         local after_transit = after_prototype.transit_type
         local after_action = after_prototype.action
+        local after_pos = BoardPositions.main[after_name]
 
         -- Create a space if space_name doesn't exist yet
         if not self.spaces[space_name] then
-            self.spaces[space_name] = Space.new(space_name, space_transit, space_action)
+            self.spaces[space_name] = Space.new(space_name, space_transit, space_action, space_pos)
         end
         -- Create another space if after_name doesn't exist yet
         if not self.spaces[after_name] then
-            self.spaces[after_name] = Space.new(after_name, after_transit, after_action)
+            self.spaces[after_name] = Space.new(after_name, after_transit, after_action, after_pos)
         end
         -- Make the "after" space point backwards to the current space
         self.spaces[after_name].prev = self.spaces[space_name]
@@ -97,7 +100,7 @@ end
 ---Returns the spaces traversed for a particular dice roll.
 ---@param start Space
 ---@param roll number
----@return table
+---@return table*
 function Board:diceRoll(start, roll)
     local is_even_roll = roll % 2 == 0
     local visited_spaces = {}
@@ -107,7 +110,20 @@ function Board:diceRoll(start, roll)
         current_space = current_space.next
         table.insert(visited_spaces, current_space)
 
+        -- Change tracks when passing through a transit station
+        -- if an even number was rolled
         if is_even_roll then
+            if current_space.transit_type == 1 then
+                -- This space is an innermost transit station
+                -- Move to the outer space
+                current_space = current_space.outer
+                table.insert(visited_spaces, current_space)
+            elseif current_space.transit_type == 0 then
+                -- This space is an outermost transit station
+                -- Move to the inner space
+                current_space = current_space.inner
+                table.insert(visited_spaces, current_space)
+            end
         end
     end
 
