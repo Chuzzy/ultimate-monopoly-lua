@@ -100,9 +100,9 @@ end
 ---Returns the spaces traversed for a particular dice roll.
 ---@param start Space
 ---@param roll number
----@param reverse boolean
+---@param backwards boolean
 ---@return table*
-function Board:diceRoll(start, roll, reverse)
+function Board:diceRoll(start, roll, backwards)
     local is_even_roll = roll % 2 == 0
     local visited_spaces = {}
     local current_space = start
@@ -118,7 +118,11 @@ function Board:diceRoll(start, roll, reverse)
     end
 
     for i = roll, 1, -1 do
-        current_space = current_space.next
+        if backwards then
+            current_space = current_space.prev
+        else 
+            current_space = current_space.next
+        end
         table.insert(visited_spaces, current_space)
 
         -- Change tracks when passing through a transit station
