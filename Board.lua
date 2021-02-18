@@ -105,6 +105,16 @@ function Board:diceRoll(start, roll)
     local is_even_roll = roll % 2 == 0
     local visited_spaces = {}
     local current_space = start
+    -- If beginning from a transit station,
+    -- move to the outer track if even roll
+    -- Otherwise, move to the inner track
+    if current_space.transit_type then
+        if is_even_roll and current_space.transit_type == 1 then
+            current_space = current_space.outer
+        elseif not is_even_roll and current_space.transit_type == 0 then
+            current_space = current_space.inner
+        end
+    end
 
     for i = roll, 1, -1 do
         current_space = current_space.next
