@@ -120,7 +120,7 @@ function Board:diceRoll(start, roll, backwards)
     for i = roll, 1, -1 do
         if backwards then
             current_space = current_space.prev
-        else 
+        else
             current_space = current_space.next
         end
         table.insert(visited_spaces, current_space)
