@@ -100,8 +100,9 @@ end
 ---Returns the spaces traversed for a particular dice roll.
 ---@param start Space
 ---@param roll number
+---@param reverse boolean
 ---@return table*
-function Board:diceRoll(start, roll)
+function Board:diceRoll(start, roll, reverse)
     local is_even_roll = roll % 2 == 0
     local visited_spaces = {}
     local current_space = start
