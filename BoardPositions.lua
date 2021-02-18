@@ -43,7 +43,7 @@ local main_pos = {
     [Names.carolina] = {8.33, 2.01, 4.56},
     [Names.chest .. " 3"] = {8.33, 2.01, 3.04},
     [Names.pennsyl] = {8.33, 2.01, 1.53},
-    [Names.short] = {8.33, 2.01, 0.00},
+    [Names.short .. " Outer"] = {8.33, 2.01, 0.00},
     [Names.chance .. " 3"] = {8.33, 2.01, -1.53},
     [Names.park] = {8.33, 2.01, -3.03},
     [Names.luxury] = {8.33, 2.01, -4.55},
@@ -139,11 +139,11 @@ local main_pos = {
 
     -- Right Inner Track
     [Names.holland .. " Inner"] = {5.17, 2.47, 5.17},
-    [Names.miami] = {5.17, 2.01, -2.96},
-    [Names.biscayne] = {5.17, 2.01, -1.49},
+    [Names.miami] = {5.17, 2.01, 2.96},
+    [Names.biscayne] = {5.17, 2.01, 1.49},
     [Names.short .. " Inner"] = {5.17, 2.01, 0.00},
-    [Names.reverse] = {5.17, 2.01, 1.49},
-    [Names.lombard] = {5.17, 2.01, 2.96}
+    [Names.reverse] = {5.17, 2.01, -1.49},
+    [Names.lombard] = {5.17, 2.01, -2.96}
 }
 
 local direction = {}
