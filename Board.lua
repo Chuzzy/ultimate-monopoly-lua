@@ -103,6 +103,7 @@ end
 ---@param backwards boolean
 ---@return table*
 function Board:diceRoll(start, roll, backwards)
+    -- TODO: Add memoisation
     local is_even_roll = roll % 2 == 0
     local visited_spaces = {}
     local current_space = start
