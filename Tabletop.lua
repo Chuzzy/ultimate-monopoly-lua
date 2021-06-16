@@ -82,8 +82,19 @@ function createAllBoardButtons()
                 table.insert(mutated_btns, space.inner.name)
             end ]]
             for h, GUID in ipairs({GUIDs.tokens.car, GUIDs.tokens.cannon, GUIDs.tokens.lantern, GUIDs.tokens.moneybag, GUIDs.tokens.shoe, GUIDs.tokens.horse, GUIDs.tokens.thimble, GUIDs.tokens.train, GUIDs.tokens.hat, GUIDs.tokens.wheelbarrow}) do
-                local final_position = Vector(space.camera_pos):add(Vector(BoardPositions.token.normal.top[h]))
-                getObjectFromGUID(GUID).setPositionSmooth(final_position, false, true)
+                local function moveTo(side, dir)
+                    getObjectFromGUID(GUID).setPositionSmooth(Vector(space.camera_pos):add(Vector(BoardPositions.token.normal[side][h])), false, true)
+                    getObjectFromGUID(GUID).setRotation(dir)
+                end
+                if BoardPositions.direction[space.name] == Direction.LEFT then
+                    moveTo("bottom", {0, 0, 0})
+                elseif BoardPositions.direction[space.name] == Direction.UP then
+                    moveTo("left", {0, 90, 0})
+                elseif BoardPositions.direction[space.name] == Direction.RIGHT then
+                    moveTo("top", {0, 180, 0})
+                elseif BoardPositions.direction[space.name] == Direction.DOWN then
+                    moveTo("right", {0, 270, 0})
+                end
             end
         end
 
