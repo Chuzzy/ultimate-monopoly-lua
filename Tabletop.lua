@@ -159,7 +159,7 @@ function spawnAvatarOnSpace(color, space_name)
         rotation = {x = 0, y = 180, z = 0}
     })
     WebRequest.get("https://steamcommunity.com/profiles/" .. player_id .. "?xml=1",
-    function (response) 
+    function (response)
         local regex = "<avatarFull><!%[CDATA%[([%w%p]+)%]%]></avatarFull>"
         local image_url = assert(response.text:match(regex), "Unable to fetch the steam avatar of " .. Player[color].steam_name)
         customCard.setCustomObject({
