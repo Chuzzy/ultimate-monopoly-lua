@@ -1,5 +1,6 @@
 require("GUIDs")
 require("Board")
+require("BoardPositions")
 
 local board = Board.new()
 local board_btns = {}
@@ -80,6 +81,10 @@ function createAllBoardButtons()
                 colorBoardButton(space.inner.name, Color.Pink)
                 table.insert(mutated_btns, space.inner.name)
             end ]]
+            for h, GUID in ipairs({GUIDs.tokens.car, GUIDs.tokens.cannon, GUIDs.tokens.lantern, GUIDs.tokens.moneybag, GUIDs.tokens.shoe, GUIDs.tokens.horse, GUIDs.tokens.thimble, GUIDs.tokens.train, GUIDs.tokens.hat, GUIDs.tokens.wheelbarrow}) do
+                local final_position = Vector(space.camera_pos):add(Vector(BoardPositions.token.normal.top[h]))
+                getObjectFromGUID(GUID).setPositionSmooth(final_position, false, true)
+            end
         end
 
         Gameboard.createButton({
@@ -143,6 +148,27 @@ function triggerPoliceLights()
     toggleLights()
     Wait.time(toggleLights, 0.5, 14)
     Wait.time(normalLight, 7)
+end
+
+function spawnAvatarOnSpace(color, space_name)
+    local player_id = Player[color].steam_id
+
+    customCard = spawnObject({
+        type = "Card",
+        position = {x = 0, y = 5, z = 0},
+        rotation = {x = 0, y = 180, z = 0}
+    })
+    WebRequest.get("https://steamcommunity.com/profiles/" .. player_id .. "?xml=1",
+    function (response) 
+        local regex = "<avatarFull><!%[CDATA%[([%w%p]+)%]%]></avatarFull>"
+        local image_url = assert(response.text:match(regex), "Unable to fetch the steam avatar of " .. Player[color].steam_name)
+        customCard.setCustomObject({
+            face = image_url,
+            back = image_url
+        })
+        customCard.addForce({rng(-10, 10), rng(5, 20), rng(-10 ,10)})
+        customCard.addTorque({rng(-10, 10), rng(0, 10), rng(-10 ,10)})
+    end)
 end
 
 function lookAtJail(color)
