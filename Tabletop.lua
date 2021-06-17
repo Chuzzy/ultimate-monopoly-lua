@@ -82,19 +82,8 @@ function createAllBoardButtons()
                 table.insert(mutated_btns, space.inner.name)
             end ]]
             for h, GUID in ipairs({GUIDs.tokens.car, GUIDs.tokens.cannon, GUIDs.tokens.lantern, GUIDs.tokens.moneybag, GUIDs.tokens.shoe, GUIDs.tokens.horse, GUIDs.tokens.thimble, GUIDs.tokens.train, GUIDs.tokens.hat, GUIDs.tokens.wheelbarrow}) do
-                local function moveTo(side, dir)
-                    getObjectFromGUID(GUID).setPositionSmooth(Vector(space.camera_pos):add(Vector(BoardPositions.token[side][h])), false, true)
-                    getObjectFromGUID(GUID).setRotation(dir)
-                end
-                if BoardPositions.direction[space.name] == Direction.LEFT then
-                    moveTo("bottom", {0, 0, 0})
-                elseif BoardPositions.direction[space.name] == Direction.UP then
-                    moveTo("left", {0, 90, 0})
-                elseif BoardPositions.direction[space.name] == Direction.RIGHT then
-                    moveTo("top", {0, 180, 0})
-                elseif BoardPositions.direction[space.name] == Direction.DOWN then
-                    moveTo("right", {0, 270, 0})
-                end
+                getObjectFromGUID(GUID).setPositionSmooth(Vector(space.occupant_positions[h]), false, true)
+                getObjectFromGUID(GUID).setRotation(Vector(space.direction.vector))
             end
             spawnAvatarOnSpace(player_color, space.name)
         end
@@ -105,7 +94,7 @@ function createAllBoardButtons()
             label = name,
             font_size = 35,
             position = Vector(space.camera_pos):scale(board_scale_vector),
-            rotation = {0, 0, 0},
+            rotation = space.direction.vector,
             tooltip = name,
             width = 300,
             height = 300
@@ -164,11 +153,11 @@ end
 
 function spawnAvatarOnSpace(color, space_name)
     local player_id = Player[color].steam_id
-
+    local space = board.spaces[space_name]
     customCard = spawnObject({
         type = "Card",
-        position = Vector(board.spaces[space_name].camera_pos) + Vector(BoardPositions.avatar.right),
-        rotation = board.spaces[space_name].direction.vector,
+        position = Vector(space.avatar_pos),
+        rotation = Vector(space.direction.clockwise().clockwise().vector),
         sound = false,
         scale = {0.25, 1, 0.25}
     })
