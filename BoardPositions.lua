@@ -313,11 +313,28 @@ local token_pos = {
         {0.0, 1, -0.4}, {0.0, 1, 0.4}, {0.4, 1, -0.4}, {0.4, 1, 0.4},
         {-0.4, 1, -0.4}, {-0.4, 1, 0.4}, {0.8, 1, -0.4}, {0.8, 1, 0.4},
         {-0.8, 1, -0.4}, {-0.8, 1, 0.4}
-    },
-    --TODO: Just Visiting and In Jail positions
+    }
+    -- TODO: Just Visiting and In Jail positions
 }
 
-local avatar_pos = {}
+local avatar_pos = {
+    bottom = {-0.35, 0, -1.11},
+    left = {-1.11, 0, 0.35},
+    top = {0.35, 0, 1.11},
+    right = {1.11, 0, -0.35}
+}
+
+local coord_mt = {
+    __add = function(a, b) return {a[1] + b[1], a[2] + b[2], a[3] + b[3]} end
+}
+
+for _, positions in pairs(token_pos) do
+    for _, position in pairs(positions) do setmetatable(position, coord_mt) end
+end
+
+for _, positions in pairs(avatar_pos) do
+    for _, position in pairs(positions) do setmetatable(position, coord_mt) end
+end
 
 BoardPositions = {
     main = main_pos,
