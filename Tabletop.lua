@@ -179,6 +179,8 @@ local function rollDieRoutine(die)
     local z = die_launch_radius * math.sin(angle)
 
     -- Move the die to that position
+    die.setLock(false)
+    die.setScale({1, 1, 1})
     die.setPosition({x, 11.3, z})
 
     -- Calculate launch angle - opposite initial angle
@@ -198,25 +200,57 @@ local function rollDieRoutine(die)
             Utils.randomFloat(0, 20)
         })
     end)
+end
+
+local function speedDieString()
+    local value = getObjectFromGUID(GUIDs.dice.speedie).getValue()
+    if value == 6 then
+        return "Bus"
+    elseif value == 5 or value == 4 then
+        return "Mr. Monopoly"
+    else
+        return value
+    end
+end
+
+local function rollRegularDice()
+    local normaldie1 = getObjectFromGUID(GUIDs.dice.normal1)
+    local normaldie2 = getObjectFromGUID(GUIDs.dice.normal2)
+    local speeddie = getObjectFromGUID(GUIDs.dice.speedie)
+    rollDieRoutine(normaldie1)
+    rollDieRoutine(normaldie2)
+    rollDieRoutine(speeddie)
 
     -- Notify of the number
     Wait.frames(function()
         Wait.condition(function()
-            broadcastToAll("You rolled a " .. die.getValue())
-            die.interactable = true
-        end, function() return die.resting end, 7, function()
+            normaldie1.scale(2)
+            normaldie2.scale(2)
+            speeddie.scale(2)
+            normaldie1.setPositionSmooth({-2, 3.5, 0}, false)
+            normaldie2.setPositionSmooth({0, 3.5, 0}, false)
+            speeddie.setPositionSmooth({2, 3.5, 0}, false)
+            broadcastToAll("Rolled " .. normaldie1.getValue() .. ", " .. normaldie2.getValue() .. " and " .. speedDieString())
+            Wait.frames(function()
+                normaldie1.setLock(true)
+                normaldie2.setLock(true)
+                speeddie.setLock(true)
+                normaldie2.interactable = true
+            end)
+        end, function()
+            return
+                normaldie1.resting and normaldie2.resting and speeddie.resting
+        end, 7, function()
             broadcastToAll("Could not get the die result", "Red")
-            die.interactable = true
+            normaldie2.interactable = true
         end)
     end)
 end
 
 function onObjectPickUp(player_color, object)
-    if false and Utils.equalsAny(object.getGUID(), GUIDs.dice) then
+    if Utils.equalsAny(object.getGUID(), GUIDs.dice) then
         if player_color == "White" then
-            rollDieRoutine(getObjectFromGUID(GUIDs.dice.normal1))
-            rollDieRoutine(getObjectFromGUID(GUIDs.dice.normal2))
-            rollDieRoutine(getObjectFromGUID(GUIDs.dice.speedie))
+            rollRegularDice()
             object.drop()
         else
             broadcastToColor("Not your turn", player_color, "Red")
