@@ -83,7 +83,7 @@ function createAllBoardButtons()
             end ]]
             for h, GUID in ipairs({GUIDs.tokens.car, GUIDs.tokens.cannon, GUIDs.tokens.lantern, GUIDs.tokens.moneybag, GUIDs.tokens.shoe, GUIDs.tokens.horse, GUIDs.tokens.thimble, GUIDs.tokens.train, GUIDs.tokens.hat, GUIDs.tokens.wheelbarrow}) do
                 local function moveTo(side, dir)
-                    getObjectFromGUID(GUID).setPositionSmooth(Vector(space.camera_pos):add(Vector(BoardPositions.token.normal[side][h])), false, true)
+                    getObjectFromGUID(GUID).setPositionSmooth(Vector(space.camera_pos):add(Vector(BoardPositions.token[side][h])), false, true)
                     getObjectFromGUID(GUID).setRotation(dir)
                 end
                 if BoardPositions.direction[space.name] == Direction.LEFT then
