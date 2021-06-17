@@ -1,11 +1,11 @@
 require("GUIDs")
 require("Board")
 require("BoardPositions")
+require("Utils")
 
 local board = Board.new()
 local board_btns = {}
 local mutated_btns = {}
-
 
 function onLoad()
     -- triggerPoliceLights()
@@ -34,7 +34,8 @@ function createAllBoardButtons()
             end
             ]]
             local roll = 12
-            local visited_spaces = board:diceRoll(board.spaces[name], roll, false)
+            local visited_spaces = board:diceRoll(board.spaces[name], roll,
+                                                  false)
             local current_index = 1
             local last_space_was_transit = false
             local transit_count = 0
@@ -50,7 +51,8 @@ function createAllBoardButtons()
                     last_space_was_transit = false
                 end
 
-                labelBoardButton(current_space.name, "" .. current_index - transit_count)
+                labelBoardButton(current_space.name,
+                                 "" .. current_index - transit_count)
                 colorBoardButton(current_space.name, Color.Blue)
 
                 if current_index < #visited_spaces then
@@ -81,9 +83,17 @@ function createAllBoardButtons()
                 colorBoardButton(space.inner.name, Color.Pink)
                 table.insert(mutated_btns, space.inner.name)
             end ]]
-            for h, GUID in ipairs({GUIDs.tokens.car, GUIDs.tokens.cannon, GUIDs.tokens.lantern, GUIDs.tokens.moneybag, GUIDs.tokens.shoe, GUIDs.tokens.horse, GUIDs.tokens.thimble, GUIDs.tokens.train, GUIDs.tokens.hat, GUIDs.tokens.wheelbarrow}) do
-                getObjectFromGUID(GUID).setPositionSmooth(Vector(space.occupant_positions[h]), false, true)
-                getObjectFromGUID(GUID).setRotation(Vector(space.direction.vector))
+            for h, GUID in ipairs({
+                GUIDs.tokens.car, GUIDs.tokens.cannon, GUIDs.tokens.lantern,
+                GUIDs.tokens.moneybag, GUIDs.tokens.shoe, GUIDs.tokens.horse,
+                GUIDs.tokens.thimble, GUIDs.tokens.train, GUIDs.tokens.hat,
+                GUIDs.tokens.wheelbarrow
+            }) do
+                getObjectFromGUID(GUID).setPositionSmooth(Vector(
+                                                              space.occupant_positions[h]),
+                                                          false, true)
+                getObjectFromGUID(GUID).setRotation(
+                    Vector(space.direction.vector))
             end
             spawnAvatarOnSpace(player_color, space.name)
         end
@@ -122,7 +132,11 @@ function colorBoardButton(name, new_color)
 end
 
 function labelBoardButton(name, new_text)
-    Gameboard.editButton({index = board_btns[name], label = new_text, font_size = 100})
+    Gameboard.editButton({
+        index = board_btns[name],
+        label = new_text,
+        font_size = 100
+    })
     mutated_btns[name] = true
 end
 
@@ -149,6 +163,65 @@ function triggerPoliceLights()
     toggleLights()
     Wait.time(toggleLights, 0.5, 14)
     Wait.time(normalLight, 7)
+end
+
+local die_launch_radius = 15
+
+local function rollDieRoutine(die)
+    local twopi = 2 * math.pi
+
+    -- First, generate a random angle
+    local angle = math.random() * 2 * twopi
+
+    -- Calculate position based on the angle
+    local x = die_launch_radius * math.cos(angle)
+    local z = die_launch_radius * math.sin(angle)
+
+    -- Move the die to that position
+    die.setPosition({x, 11.3, z})
+
+    -- Calculate launch angle - opposite initial angle
+    -- This way the die is launched towards the center
+    local launch = (angle + math.pi) % twopi
+
+    -- Calculate launch vector coords
+    local launch_x = die_launch_radius * math.cos(launch)
+    local launch_z = die_launch_radius * math.sin(launch)
+
+    -- Launch the die
+    Wait.frames(function()
+        die.interactable = false
+        die.addForce({launch_x, 1, launch_z})
+        die.addTorque({
+            Utils.randomFloat(0, 20), Utils.randomFloat(0, 20),
+            Utils.randomFloat(0, 20)
+        })
+    end)
+
+    -- Notify of the number
+    Wait.frames(function()
+        Wait.condition(function()
+            broadcastToAll("You rolled a " .. die.getValue())
+            die.interactable = true
+        end, function() return die.resting end, 7, function()
+            broadcastToAll("Could not get the die result", "Red")
+            die.interactable = true
+        end)
+    end)
+end
+
+function onObjectPickUp(player_color, object)
+    if false and Utils.equalsAny(object.getGUID(), GUIDs.dice) then
+        if player_color == "White" then
+            rollDieRoutine(getObjectFromGUID(GUIDs.dice.normal1))
+            rollDieRoutine(getObjectFromGUID(GUIDs.dice.normal2))
+            rollDieRoutine(getObjectFromGUID(GUIDs.dice.speedie))
+            object.drop()
+        else
+            broadcastToColor("Not your turn", player_color, "Red")
+            object.drop()
+        end
+    end
 end
 
 function spawnAvatarOnSpace(color, space_name)
