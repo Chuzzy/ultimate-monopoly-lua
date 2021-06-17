@@ -234,15 +234,15 @@ function spawnAvatarOnSpace(color, space_name)
         sound = false,
         scale = {0.25, 1, 0.25}
     })
-    WebRequest.get("https://steamcommunity.com/profiles/" .. player_id .. "?xml=1",
-    --TODO: Fallback when the steam avatar can't be fetched
-    function (response)
+    WebRequest.get("https://steamcommunity.com/profiles/" .. player_id ..
+                       "?xml=1",
+    -- TODO: Fallback when the steam avatar can't be fetched
+                   function(response)
         local regex = "<avatarFull><!%[CDATA%[([%w%p]+)%]%]></avatarFull>"
-        local image_url = assert(response.text:match(regex), "Unable to fetch the steam avatar of " .. Player[color].steam_name)
-        customCard.setCustomObject({
-            face = image_url,
-            back = image_url
-        })
+        local image_url = assert(response.text:match(regex),
+                                 "Unable to fetch the steam avatar of " ..
+                                     Player[color].steam_name)
+        customCard.setCustomObject({face = image_url, back = image_url})
     end)
 end
 
