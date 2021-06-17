@@ -339,5 +339,6 @@ end
 BoardPositions = {
     main = main_pos,
     token = token_pos,
-    direction = token_direction
+    direction = token_direction,
+    avatar = avatar_pos
 }
