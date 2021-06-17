@@ -7,4 +7,15 @@ Utils = {
     randomFloat = function(lower, upper)
         return lower + math.random() * (upper - lower)
     end,
+    ---Determines whether thing matches any of the following arguments.
+    ---@param thing any the thing to test equality for
+    ---@return boolean success
+    equalsAny = function (thing, ...)
+        for _, other in ipairs(table.pack(...)) do
+            if thing == other then
+                return true
+            end
+        end
+        return false
+    end,
 }
