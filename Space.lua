@@ -5,7 +5,7 @@
 ---@field transit_type number
 ---@field camera_pos table
 ---@field occupant_positions table
----@field direction string
+---@field direction Direction
 ---@field building_pos table
 ---@field house_positions table
 ---@field prev Space
@@ -21,7 +21,7 @@ Space.__index = Space
 ---@param transit_type number
 ---@param camera_pos table
 ---@param occupant_positions table
----@param direction string
+---@param direction Direction
 ---@param building_pos table
 ---@param house_positions table
 function Space.new(name, transit_type, action, camera_pos, occupant_positions, direction, building_pos, house_positions)
