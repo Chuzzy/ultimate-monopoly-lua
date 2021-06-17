@@ -18,7 +18,7 @@ Utils = {
         else
             args = table.pack(...)
         end
-        for _, other in ipairs(args) do
+        for _, other in pairs(args) do
             if thing == other then
                 return true
             end
