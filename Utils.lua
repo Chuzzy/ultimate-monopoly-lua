@@ -12,7 +12,13 @@ Utils = {
     ---@vararg table an array of things to test equality against
     ---@return boolean success
     equalsAny = function (thing, ...)
-        for _, other in ipairs(table.pack(...)) do
+        local args
+        if type(select(1, ...)) == "table" then
+            args = select(1, ...)
+        else
+            args = table.pack(...)
+        end
+        for _, other in ipairs(args) do
             if thing == other then
                 return true
             end
