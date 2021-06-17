@@ -154,7 +154,7 @@ end
 function spawnAvatarOnSpace(color, space_name)
     local player_id = Player[color].steam_id
     local space = board.spaces[space_name]
-    customCard = spawnObject({
+    local customCard = spawnObject({
         type = "Card",
         position = Vector(space.avatar_pos),
         rotation = Vector(space.direction.clockwise().clockwise().vector),
