@@ -332,9 +332,7 @@ for _, positions in pairs(token_pos) do
     for _, position in pairs(positions) do setmetatable(position, coord_mt) end
 end
 
-for _, positions in pairs(avatar_pos) do
-    for _, position in pairs(positions) do setmetatable(position, coord_mt) end
-end
+for _, position in pairs(avatar_pos) do setmetatable(position, coord_mt) end
 
 BoardPositions = {
     main = main_pos,
