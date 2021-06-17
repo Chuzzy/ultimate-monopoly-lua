@@ -22,7 +22,7 @@ function createAllBoardButtons()
         local board_scale_vector = Vector(0.63, 0.3, -0.63)
 
         -- Create a global function for the space event
-        _G[name .. "_click"] = function()
+        _G[name .. "_click"] = function(_, player_color)
             resetBoardButtons()
             colorBoardButton(name, Color.Green)
             --[[
@@ -96,6 +96,7 @@ function createAllBoardButtons()
                     moveTo("right", {0, 270, 0})
                 end
             end
+            spawnAvatarOnSpace(player_color, space.name)
         end
 
         Gameboard.createButton({
@@ -166,8 +167,9 @@ function spawnAvatarOnSpace(color, space_name)
 
     customCard = spawnObject({
         type = "Card",
-        position = Vector(board.spaces[space_name].camera_pos),
-        rotation = {x = 0, y = 180, z = 0},
+        position = Vector(board.spaces[space_name].camera_pos) + Vector(BoardPositions.avatar.right),
+        rotation = board.spaces[space_name].direction.vector,
+        sound = false,
         scale = {0.25, 1, 0.25}
     })
     WebRequest.get("https://steamcommunity.com/profiles/" .. player_id .. "?xml=1",
