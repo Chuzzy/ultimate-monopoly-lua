@@ -10,6 +10,7 @@ local mutated_btns = {}
 function onLoad()
     -- triggerPoliceLights()
     Gameboard = getObjectFromGUID(GUIDs.gameboard)
+    Gameboard.interactable = false
     createAllBoardButtons()
 end
 
