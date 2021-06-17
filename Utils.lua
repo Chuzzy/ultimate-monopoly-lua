@@ -9,6 +9,7 @@ Utils = {
     end,
     ---Determines whether thing matches any of the following arguments.
     ---@param thing any the thing to test equality for
+    ---@vararg table an array of things to test equality against
     ---@return boolean success
     equalsAny = function (thing, ...)
         for _, other in ipairs(table.pack(...)) do
