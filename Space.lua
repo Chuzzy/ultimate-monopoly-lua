@@ -32,7 +32,7 @@ function Space.new(name, transit_type, action, camera_pos, occupant_positions, d
     self.camera_pos = camera_pos
     self.occupant_positions = occupant_positions
     self.direction = direction
-    self.building_pos = avatar_pos
+    self.avatar_pos = avatar_pos
     self.house_positions = house_positions
     return self
 end
