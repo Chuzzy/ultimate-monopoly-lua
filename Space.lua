@@ -6,7 +6,7 @@
 ---@field camera_pos table
 ---@field occupant_positions table
 ---@field direction Direction
----@field building_pos table
+---@field avatar_pos table
 ---@field house_positions table
 ---@field prev Space
 ---@field next Space
@@ -22,9 +22,9 @@ Space.__index = Space
 ---@param camera_pos table
 ---@param occupant_positions table
 ---@param direction Direction
----@param building_pos table
+---@param avatar_pos table
 ---@param house_positions table
-function Space.new(name, transit_type, action, camera_pos, occupant_positions, direction, building_pos, house_positions)
+function Space.new(name, transit_type, action, camera_pos, occupant_positions, direction, avatar_pos, house_positions)
     local self = setmetatable({}, Space)
     self.name = name
     self.transit_type = transit_type
@@ -32,7 +32,7 @@ function Space.new(name, transit_type, action, camera_pos, occupant_positions, d
     self.camera_pos = camera_pos
     self.occupant_positions = occupant_positions
     self.direction = direction
-    self.building_pos = building_pos
+    self.building_pos = avatar_pos
     self.house_positions = house_positions
     return self
 end
