@@ -166,8 +166,9 @@ function spawnAvatarOnSpace(color, space_name)
 
     customCard = spawnObject({
         type = "Card",
-        position = {x = 0, y = 5, z = 0},
-        rotation = {x = 0, y = 180, z = 0}
+        position = Vector(board.spaces[space_name].camera_pos),
+        rotation = {x = 0, y = 180, z = 0},
+        scale = {0.25, 1, 0.25}
     })
     WebRequest.get("https://steamcommunity.com/profiles/" .. player_id .. "?xml=1",
     function (response)
@@ -177,8 +178,6 @@ function spawnAvatarOnSpace(color, space_name)
             face = image_url,
             back = image_url
         })
-        customCard.addForce({rng(-10, 10), rng(5, 20), rng(-10 ,10)})
-        customCard.addTorque({rng(-10, 10), rng(0, 10), rng(-10 ,10)})
     end)
 end
 
