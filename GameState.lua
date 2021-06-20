@@ -1,3 +1,4 @@
+---@class GameState
 GameState = {
     -- The player is about to move by choosing to roll or using a travel voucher.
     PREMOVE = 1,
