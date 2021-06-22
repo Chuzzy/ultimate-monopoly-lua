@@ -1,7 +1,7 @@
 --- The Ultimate Monopoly game board.
 ---@class Board
 ---@field game Game
----@field spaces table
+---@field spaces table<string, Space>
 Board = {}
 Board.__index = Board
 
@@ -10,6 +10,7 @@ require("BoardPrototype")
 require("BoardPositions")
 
 function Board.new()
+    ---@type Board
     local self = setmetatable({}, Board)
     -- Initialise the spaces. All 111 of them.
     self.spaces = {}
