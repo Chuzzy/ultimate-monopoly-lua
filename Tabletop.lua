@@ -2,8 +2,10 @@ require("GUIDs")
 require("Board")
 require("BoardPositions")
 require("Utils")
+require("Game")
 
-local board = Board.new()
+local game = Game.new()
+local board = game.board
 local board_btns = {}
 local mutated_btns = {}
 

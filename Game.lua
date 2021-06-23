@@ -8,7 +8,7 @@
 ---@field debts table<number, Debt> Array of unpaid debts.
 ---@field cash_pool integer Number of dollars in the cash pool.
 ---@field state GameState The current game state.
-local Game = {}
+Game = {}
 Game.__index = Game
 
 function Game.new(json_save)
