@@ -11,10 +11,11 @@ function onLoad()
     -- triggerPoliceLights()
     Gameboard = getObjectFromGUID(GUIDs.gameboard)
     Gameboard.interactable = false
-    createAllBoardButtons()
+    --createAllBoardButtons()
 end
 
 function createAllBoardButtons()
+    --TODO: Allow creation of buttons on specific spaces
     local i = 0
     for name, space in pairs(board.spaces) do
         -- The board's local scale is different to the
