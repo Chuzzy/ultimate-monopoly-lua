@@ -10,7 +10,7 @@
 ---@field action_cards table<integer, ActionCard> The action cards owned by this player.
 ---@field bankrupt boolean Whether this player is bankrupt.
 UMPlayer = {}
-UMPlayer.__index = {}
+UMPlayer.__index = UMPlayer
 
 require("Names")
 
@@ -35,4 +35,8 @@ function UMPlayer.new(color, token_guid, starting_money, location)
     self.action_cards = {}
     self.bankrupt = false
     return self
+end
+
+function UMPlayer:getName()
+    return Player[self.color] and Player[self.color].steam_name or self.color
 end

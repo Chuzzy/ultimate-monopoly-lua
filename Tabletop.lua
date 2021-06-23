@@ -268,13 +268,16 @@ end
 
 function onObjectPickUp(player_color, object)
     if Utils.equalsAny(object.getGUID(), GUIDs.dice) then
-        if player_color == "White" then
+        if player_color == game:whoseTurn().color then
             rollRegularDice()
-            object.drop()
         else
-            broadcastToColor("Not your turn", player_color, "Red")
-            object.drop()
+            --TODO: Specify what is being waited on
+            --e.g. Blue is waiting to roll the dice
+            --Yellow is considering the trade offer
+            --Green is building stuff
+            broadcastToColor("It is " .. game:whoseTurn():getName() .. "'s turn right now.", player_color, "Red")
         end
+        object.drop()
     end
 end
 
