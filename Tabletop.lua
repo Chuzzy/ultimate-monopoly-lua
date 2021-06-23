@@ -13,11 +13,11 @@ function onLoad()
     -- triggerPoliceLights()
     Gameboard = getObjectFromGUID(GUIDs.gameboard)
     Gameboard.interactable = false
-    --createAllBoardButtons()
+    -- createAllBoardButtons()
 end
 
 function createAllBoardButtons()
-    --TODO: Allow creation of buttons on specific spaces
+    -- TODO: Allow creation of buttons on specific spaces
     local i = 0
     for name, space in pairs(board.spaces) do
         -- The board's local scale is different to the
@@ -224,29 +224,34 @@ local function rollRegularDice()
     rollDieRoutine(normaldie2)
     rollDieRoutine(speeddie)
 
+    local function centerDiceAndBroadcastResult()
+        normaldie1.scale(2)
+        normaldie2.scale(2)
+        speeddie.scale(2)
+        normaldie1.setPositionSmooth({-2, 3.5, 0}, false)
+        normaldie2.setPositionSmooth({0, 3.5, 0}, false)
+        speeddie.setPositionSmooth({2, 3.5, 0}, false)
+        broadcastToAll("Rolled " .. normaldie1.getValue() .. ", " ..
+                           normaldie2.getValue() .. " and " .. speedDieString())
+        Wait.frames(function()
+            normaldie1.setLock(true)
+            normaldie2.setLock(true)
+            speeddie.setLock(true)
+        end)
+    end
+
+    local function allThreeDiceAreResting()
+        return normaldie1.resting and normaldie2.resting and speeddie.resting
+    end
+
+    local function broadcastErrorMessage()
+        broadcastToAll("Could not get the die result", "Red")
+    end
+
     -- Notify of the number
     Wait.frames(function()
-        Wait.condition(function()
-            normaldie1.scale(2)
-            normaldie2.scale(2)
-            speeddie.scale(2)
-            normaldie1.setPositionSmooth({-2, 3.5, 0}, false)
-            normaldie2.setPositionSmooth({0, 3.5, 0}, false)
-            speeddie.setPositionSmooth({2, 3.5, 0}, false)
-            broadcastToAll("Rolled " .. normaldie1.getValue() .. ", " .. normaldie2.getValue() .. " and " .. speedDieString())
-            Wait.frames(function()
-                normaldie1.setLock(true)
-                normaldie2.setLock(true)
-                speeddie.setLock(true)
-                normaldie2.interactable = true
-            end)
-        end, function()
-            return
-                normaldie1.resting and normaldie2.resting and speeddie.resting
-        end, 7, function()
-            broadcastToAll("Could not get the die result", "Red")
-            normaldie2.interactable = true
-        end)
+        Wait.condition(centerDiceAndBroadcastResult, allThreeDiceAreResting, 7,
+                       broadcastErrorMessage)
     end)
 end
 
