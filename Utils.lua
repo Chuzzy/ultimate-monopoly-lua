@@ -49,4 +49,8 @@ Utils = {
         Wait.time(toggleLights, 0.5, 14)
         Wait.time(normalLight, 7)
     end,
+    -- The board's local scale is different to the
+    -- global scale. When creating buttons the position
+    -- vectors have to be multiplied by 0.63 to appear normal.
+    board_scale_vector = Vector(0.63, 0.3, -0.63)
 }

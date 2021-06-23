@@ -4,6 +4,8 @@ require("BoardPositions")
 require("Utils")
 require("Game")
 
+function doNothing() end
+
 local game = Game.new()
 local board = game.board
 local board_btns = {}
@@ -52,11 +54,6 @@ function createAllBoardButtons()
     -- TODO: Allow creation of buttons on specific spaces
     local i = 0
     for name, space in pairs(board.spaces) do
-        -- The board's local scale is different to the
-        -- global scale. When creating buttons the position
-        -- vectors have to be multiplied by 0.63 to appear normal.
-        local board_scale_vector = Vector(0.63, 0.3, -0.63)
-
         -- Create a global function for the space event
         _G[name .. "_click"] = function(_, player_color)
             resetBoardButtons()
@@ -139,7 +136,7 @@ function createAllBoardButtons()
             color = {1, 1, 1, 0.8},
             label = name,
             font_size = 35,
-            position = Vector(space.camera_pos):scale(board_scale_vector),
+            position = Vector(space.camera_pos):scale(Utils.board_scale_vector),
             rotation = space.direction.vector,
             tooltip = name,
             width = 300,
@@ -224,6 +221,43 @@ local function speedDieString()
     end
 end
 
+local function animateDiceRoll(start, roll)
+    local visited_spaces = board:diceRoll(board.spaces[start], roll, false)
+    local current_index = 1
+    local last_space_was_transit = false
+    local transit_count = 0
+    local function animateSpaces()
+        local current_space = visited_spaces[current_index]
+
+        if last_space_was_transit and current_space.transit_type then
+            transit_count = transit_count + 1
+            last_space_was_transit = false
+        elseif current_space.transit_type then
+            last_space_was_transit = true
+        else
+            last_space_was_transit = false
+        end
+
+        Gameboard.createButton({
+            click_function = "doNothing",
+            color = game:whoseTurn().color,
+            label = current_index - transit_count,
+            font_size = 35,
+            position = Vector(current_space.camera_pos):scale(Utils.board_scale_vector),
+            rotation = current_space.direction.vector,
+            width = 300,
+            height = 300
+        })
+
+        if current_index < #visited_spaces then
+            current_index = current_index + 1
+            Wait.frames(animateSpaces, 10)
+        end
+    end
+
+    Wait.frames(animateSpaces, 10)
+end
+
 local function rollRegularDice()
     local normaldie1 = getObjectFromGUID(GUIDs.dice.normal1)
     local normaldie2 = getObjectFromGUID(GUIDs.dice.normal2)
@@ -246,6 +280,8 @@ local function rollRegularDice()
             normaldie2.setLock(true)
             speeddie.setLock(true)
         end)
+        local total_rolled = normaldie1.getValue() + normaldie2.getValue() + Game.speedDieValue(speeddie.getValue())
+        animateDiceRoll(game:whoseTurn().location.name, total_rolled)
         game:submitDiceRoll(normaldie1.getValue(), normaldie2.getValue(), speeddie.getValue())
         movePlayerToken(game:whoseTurn().color, game:whoseTurn().location)
         game:nextTurn()

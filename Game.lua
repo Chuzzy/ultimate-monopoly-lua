@@ -28,6 +28,14 @@ function Game.new()
     return self
 end
 
+function Game.speedDieValue(die)
+    if die > 3 then
+        return 0
+    else
+        return die
+    end
+end
+
 ---Creates a new player and puts them on Go.
 ---@param color string The color of the seat the player is sitting at.
 ---@param token_guid string The GUID of the player's playing token.
