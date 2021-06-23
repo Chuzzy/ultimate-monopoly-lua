@@ -16,6 +16,7 @@ function onLoad()
     -- createAllBoardButtons()
 end
 
+--#region Board button CUD
 function createAllBoardButtons()
     -- TODO: Allow creation of buttons on specific spaces
     local i = 0
@@ -143,6 +144,7 @@ function labelBoardButton(name, new_text)
     })
     mutated_btns[name] = true
 end
+--#endregion Board Button CUD
 
 function triggerPoliceLights()
     local normal_light_intensity = 0.54
