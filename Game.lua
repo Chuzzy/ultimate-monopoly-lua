@@ -11,6 +11,8 @@
 Game = {}
 Game.__index = Game
 
+require("GameState")
+
 function Game.new(json_save)
     --TODO: Allow loading game from JSON savedata
     local self = setmetatable({}, Game)
