@@ -6,7 +6,7 @@
 ---@field rent_values table
 ---@field improvement_cost integer
 ---@field improvements integer
----@field owner Player
+---@field owner UMPlayer
 local Property = {}
 Property.__index = Property
 

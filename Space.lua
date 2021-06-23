@@ -38,7 +38,7 @@ function Space.new(name, transit_type, action, camera_pos, occupant_positions, d
 end
 
 --- Performs the action on this space.
----@param player Player
+---@param player UMPlayer
 ---@param params table
 function Space:act(player, params)
     self.action(self, player, params)

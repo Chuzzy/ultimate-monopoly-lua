@@ -1,6 +1,6 @@
 --- An action card: Chance, Community Chest, Travel Voucher or Roll 3.
 ---@class ActionCard
----@field owner Player
+---@field owner UMPlayer
 local ActionCard = {}
 ActionCard.__index = ActionCard
 

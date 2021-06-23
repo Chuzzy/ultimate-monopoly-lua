@@ -1,5 +1,5 @@
 --- A player in the game of Ultimate Monopoly.
----@class Player
+---@class UMPlayer
 ---@field color string The color of the seat this player is sitting at.
 ---@field token_guid string GUID of this player's token.
 ---@field money integer The amount of money this player has.
@@ -9,23 +9,30 @@
 ---@field owned_properties table<integer, Property> The properties owned by this player.
 ---@field action_cards table<integer, ActionCard> The action cards owned by this player.
 ---@field bankrupt boolean Whether this player is bankrupt.
-local Player = {}
-Player.__index = {}
+UMPlayer = {}
+UMPlayer.__index = {}
 
 require("Names")
 
----Creates a new Player.
+---Creates a new UMPlayer.
 ---@param color string The color of the seat.
 ---@param token_guid string The GUID of the playing token.
 ---@param starting_money integer The amount of money to start with.
----@param game Game The instance of Game this player is using.
----@return Player
-function Player.new(color, token_guid, starting_money, game)
-    ---@type Player
-    local self = setmetatable({}, Player)
+---@param location Space The location of the player. Usually Go.
+---@return UMPlayer
+function UMPlayer.new(color, token_guid, starting_money, location)
+    ---@type UMPlayer
+    local self = setmetatable({}, UMPlayer)
     self.color = color
     self.token_guid = token_guid
     self.money = starting_money
-    self.location = game.board.spaces[Names.Go]
+    assert(location, "location is nil")
+    self.location = location
+    assert(self.location, "self.location is nil")
+    self.lost_turns = 0
+    self.turns_in_jail = 0
+    self.owned_properties = {}
+    self.action_cards = {}
+    self.bankrupt = false
     return self
 end

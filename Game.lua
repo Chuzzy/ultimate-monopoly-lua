@@ -1,9 +1,10 @@
 --- A game of Ultimate Monopoly.
 ---@class Game
 ---@field board Board The game board.
----@field players table<number, Player> The players of the game.
+---@field players table<number, UMPlayer> The players of the game.
+---@field players_by_color table<string, UMPlayer> The players of the game by color.
 ---@field current_turn_index integer The current player.
----@field waiting_on Player The player who is holding up progression of the game.
+---@field waiting_on UMPlayer The player who is holding up progression of the game.
 ---@field turn_count integer The number of turns.
 ---@field debts table<number, Debt> Array of unpaid debts.
 ---@field cash_pool integer Number of dollars in the cash pool.
@@ -12,12 +13,14 @@ Game = {}
 Game.__index = Game
 
 require("GameState")
+require("UMPlayer")
 
-function Game.new(json_save)
+function Game.new()
     --TODO: Allow loading game from JSON savedata
     local self = setmetatable({}, Game)
     self.board = Board.new()
     self.players = {}
+    self.players_by_color = {}
     self.turn_count = 0
     self.debts = {}
     self.cash_pool = 0
@@ -30,27 +33,42 @@ end
 ---@param token_guid string The GUID of the player's playing token.
 ---@param starting_money integer How much money the player starts with.
 function Game:createPlayer(color, token_guid, starting_money)
-    if self.state ~= GameState.UNBEGUN then
-        error("cannot create player when the game has started", 2)
-    end
-    local new_player = Player.new(color, token_guid, starting_money)
+    assert(self.state == GameState.UNBEGUN, "cannot create player when the game has started")
+    local new_player = UMPlayer.new(color, token_guid, starting_money, self.board.spaces[Names.go])
     table.insert(self.players, new_player)
+    self.players_by_color[color] = new_player
+end
+
+---Returns an array of players who are on a particular space.
+---@param space_name string The name of the space.
+---@return table<integer, UMPlayer> occupants
+function Game:getOccupantsOnSpace(space_name)
+    local occupants = {}
+    for _, player in ipairs(self.players) do
+        assert(player.location)
+        if player.location.name == space_name then
+            table.insert(occupants, player)
+        end
+    end
+    return occupants
 end
 
 ---Starts the game.
----@param color string The player color who is going first.
-function Game:start(color)
+---@param starting_color string The player color who is going first.
+function Game:start(starting_color)
+    assert(starting_color, "Game:start - color is nil")
     for i, player in ipairs(self.players) do
-        if player.color == color then
+        if player.color == starting_color then
             self.current_turn_index = i
             self.state = GameState.PREMOVE
             return
         end
     end
+    error("no such player " .. starting_color)
 end
 
 ---Returns the player whose turn it is.
----@return Player current_player The player whose turn it is.
+---@return UMPlayer current_player The player whose turn it is.
 function Game:whoseTurn()
     return self.players[self.current_turn_index]
 end
@@ -71,7 +89,7 @@ function Game:submitDiceRoll(die1, die2, speed_die)
 end
 
 ---Moves a player to a new position on the board.
----@param player Player The player to move.
+---@param player UMPlayer The player to move.
 ---@param destination Space The space on the board to move to.
 function Game:movePlayer(player, destination)
     if not destination then

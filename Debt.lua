@@ -1,7 +1,7 @@
 --- A debt, representing someone owing someone else money.
 ---@class Debt
----@field debtor Player
----@field creditor Player
+---@field debtor UMPlayer
+---@field creditor UMPlayer
 ---@field amount integer
 ---@field reason string
 local Debt = {}
@@ -11,8 +11,8 @@ function Debt:__tostring()
 end
 
 --- Creates a new Debt.
----@param debtor Player
----@param creditor Player
+---@param debtor UMPlayer
+---@param creditor UMPlayer
 ---@param amount integer
 ---@param reason string
 ---@return Debt

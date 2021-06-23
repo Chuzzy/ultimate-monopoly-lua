@@ -8,12 +8,43 @@ local game = Game.new()
 local board = game.board
 local board_btns = {}
 local mutated_btns = {}
+local player_tokens = {}
 
 function onLoad()
     -- triggerPoliceLights()
     Gameboard = getObjectFromGUID(GUIDs.gameboard)
     Gameboard.interactable = false
     -- createAllBoardButtons()
+    registerNewPlayer("Blue", GUIDs.tokens.car)
+    registerNewPlayer("Yellow", GUIDs.tokens.hat)
+    registerNewPlayer("Green", GUIDs.tokens.iron)
+    game:start("Blue")
+end
+
+function registerNewPlayer(color, token_guid)
+    game:createPlayer(color, token_guid, 3200)
+    player_tokens[color] = getObjectFromGUID(token_guid)
+    player_tokens[color].setColorTint(color)
+    movePlayerToken(color, "Go")
+end
+
+---Moves a token to the specified space.
+---@param player_color string The player's color.
+---@param destination Space|string The space to move to.
+function movePlayerToken(player_color, destination)
+    local occupant_position_index = #game:getOccupantsOnSpace(destination) + 1
+    ---@type Space
+    local new_space
+    if destination.occupant_positions and destination.direction then
+        new_space = destination
+    elseif type(destination) == "string" then
+        new_space = game.board.spaces[destination]
+    else
+        error("wanted a space or string but received " .. type(destination), 2)
+    end
+    assert(new_space, "new_space is nil")
+    player_tokens[player_color].setPositionSmooth(new_space.occupant_positions[occupant_position_index])
+    player_tokens[player_color].setRotationSmooth(new_space.direction.vector)
 end
 
 --#region Board button CUD
@@ -146,31 +177,6 @@ function labelBoardButton(name, new_text)
 end
 --#endregion Board Button CUD
 
-function triggerPoliceLights()
-    local normal_light_intensity = 0.54
-    local normal_light_color = Color.new(255, 251, 228)
-    local is_blue = false
-
-    function toggleLights()
-        local light_color = is_blue and Color.Red or Color.Blue
-        Lighting.setLightColor(light_color)
-        Lighting.apply()
-        is_blue = not is_blue
-    end
-
-    function normalLight()
-        Lighting.setLightColor(normal_light_color)
-        Lighting.light_intensity = normal_light_intensity
-        Lighting.apply()
-    end
-
-    Lighting.light_intensity = 1.5
-
-    toggleLights()
-    Wait.time(toggleLights, 0.5, 14)
-    Wait.time(normalLight, 7)
-end
-
 local die_launch_radius = 15
 
 local function rollDieRoutine(die)
@@ -240,6 +246,9 @@ local function rollRegularDice()
             normaldie2.setLock(true)
             speeddie.setLock(true)
         end)
+        game:submitDiceRoll(normaldie1.getValue(), normaldie2.getValue(), speeddie.getValue())
+        movePlayerToken(game:whoseTurn().color, game:whoseTurn().location)
+        game:nextTurn()
     end
 
     local function allThreeDiceAreResting()

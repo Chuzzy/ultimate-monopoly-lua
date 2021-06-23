@@ -25,4 +25,28 @@ Utils = {
         end
         return false
     end,
+    triggerPoliceLights = function ()
+        local normal_light_intensity = 0.54
+        local normal_light_color = Color.new(255, 251, 228)
+        local is_blue = false
+
+        local function toggleLights()
+            local light_color = is_blue and Color.Red or Color.Blue
+            Lighting.setLightColor(light_color)
+            Lighting.apply()
+            is_blue = not is_blue
+        end
+
+        local function normalLight()
+            Lighting.setLightColor(normal_light_color)
+            Lighting.light_intensity = normal_light_intensity
+            Lighting.apply()
+        end
+
+        Lighting.light_intensity = 1.5
+
+        toggleLights()
+        Wait.time(toggleLights, 0.5, 14)
+        Wait.time(normalLight, 7)
+    end,
 }
