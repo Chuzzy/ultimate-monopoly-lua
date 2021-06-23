@@ -240,7 +240,7 @@ local function rollRegularDice()
         normaldie2.setPositionSmooth({0, 3.5, 0}, false)
         speeddie.setPositionSmooth({2, 3.5, 0}, false)
         broadcastToAll("Rolled " .. normaldie1.getValue() .. ", " ..
-                           normaldie2.getValue() .. " and " .. speedDieString())
+                           normaldie2.getValue() .. " and " .. speedDieString(), game:whoseTurn().color)
         Wait.frames(function()
             normaldie1.setLock(true)
             normaldie2.setLock(true)
