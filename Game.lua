@@ -24,7 +24,7 @@ function Game.new()
     self.turn_count = 0
     self.debts = {}
     self.cash_pool = 0
-    self.state = GameState.UNBEGUN
+    self.state = {name = GameState.UNBEGUN}
     return self
 end
 
@@ -41,7 +41,7 @@ end
 ---@param token_guid string The GUID of the player's playing token.
 ---@param starting_money integer How much money the player starts with.
 function Game:createPlayer(color, token_guid, starting_money)
-    assert(self.state == GameState.UNBEGUN, "cannot create player when the game has started")
+    assert(self.state.name == GameState.UNBEGUN, "cannot create player when the game has started")
     local new_player = UMPlayer.new(color, token_guid, starting_money, self.board.spaces[Names.go])
     table.insert(self.players, new_player)
     self.players_by_color[color] = new_player
@@ -65,6 +65,7 @@ end
 ---@param starting_color string The player color who is going first.
 function Game:start(starting_color)
     assert(starting_color, "Game:start - color is nil")
+    
     for i, player in ipairs(self.players) do
         if player.color == starting_color then
             self.current_turn_index = i

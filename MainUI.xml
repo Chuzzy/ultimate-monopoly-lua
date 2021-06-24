@@ -1,0 +1,2 @@
+<Button id="tradeBtn" text="Trade" rectAlignment="UpperCenter" offsetXY="-55 -70" width="100" height="40"/>
+<Button id="endTurnBtn" text="End Turn" onClick="endTurnClick" rectAlignment="UpperCenter" offsetXY="55 -70" width="100" height="40"/>

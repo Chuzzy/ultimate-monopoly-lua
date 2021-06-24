@@ -11,16 +11,23 @@ local board = game.board
 local board_btns = {}
 local mutated_btns = {}
 local player_tokens = {}
+local normaldie1 = getObjectFromGUID(GUIDs.dice.normal1)
+local normaldie2 = getObjectFromGUID(GUIDs.dice.normal2)
+local speeddie = getObjectFromGUID(GUIDs.dice.speedie)
 
 function onLoad()
-    -- triggerPoliceLights()
     Gameboard = getObjectFromGUID(GUIDs.gameboard)
+    normaldie1 = getObjectFromGUID(GUIDs.dice.normal1)
+    normaldie2 = getObjectFromGUID(GUIDs.dice.normal2)
+    speeddie = getObjectFromGUID(GUIDs.dice.speedie)
     Gameboard.interactable = false
     -- createAllBoardButtons()
     registerNewPlayer("Blue", GUIDs.tokens.car)
     registerNewPlayer("Yellow", GUIDs.tokens.hat)
     registerNewPlayer("Green", GUIDs.tokens.iron)
     game:start("Blue")
+    UI.setAttribute("tradeBtn", "visibility", "0")
+    UI.setAttribute("endTurnBtn", "visibility", "0")
 end
 
 function registerNewPlayer(color, token_guid)
@@ -187,9 +194,9 @@ local function rollDieRoutine(die)
     local z = die_launch_radius * math.sin(angle)
 
     -- Move the die to that position
-    die.setLock(false)
     die.setScale({1, 1, 1})
     die.setPosition({x, 11.3, z})
+    die.setLock(false)
 
     -- Calculate launch angle - opposite initial angle
     -- This way the die is launched towards the center
@@ -242,7 +249,7 @@ local function animateDiceRoll(start, roll)
             click_function = "doNothing",
             color = game:whoseTurn().color,
             label = current_index - transit_count,
-            font_size = 35,
+            font_size = 100,
             position = Vector(current_space.camera_pos):scale(Utils.board_scale_vector),
             rotation = current_space.direction.vector,
             width = 300,
@@ -252,6 +259,14 @@ local function animateDiceRoll(start, roll)
         if current_index < #visited_spaces then
             current_index = current_index + 1
             Wait.frames(animateSpaces, 10)
+        else
+            Wait.time(function()
+                Gameboard.clearButtons()
+                broadcastToAll(game:whoseTurn():getName() .. " landed on " .. game:whoseTurn().location.name, game:whoseTurn().color)
+                movePlayerToken(game:whoseTurn().color, game:whoseTurn().location)
+                UI.setAttribute("tradeBtn", "visibility", game:whoseTurn().color)
+                UI.setAttribute("endTurnBtn", "visibility", game:whoseTurn().color)
+            end, 1.5)
         end
     end
 
@@ -259,9 +274,6 @@ local function animateDiceRoll(start, roll)
 end
 
 local function rollRegularDice()
-    local normaldie1 = getObjectFromGUID(GUIDs.dice.normal1)
-    local normaldie2 = getObjectFromGUID(GUIDs.dice.normal2)
-    local speeddie = getObjectFromGUID(GUIDs.dice.speedie)
     rollDieRoutine(normaldie1)
     rollDieRoutine(normaldie2)
     rollDieRoutine(speeddie)
@@ -273,18 +285,16 @@ local function rollRegularDice()
         normaldie1.setPositionSmooth({-2, 3.5, 0}, false)
         normaldie2.setPositionSmooth({0, 3.5, 0}, false)
         speeddie.setPositionSmooth({2, 3.5, 0}, false)
-        broadcastToAll("Rolled " .. normaldie1.getValue() .. ", " ..
-                           normaldie2.getValue() .. " and " .. speedDieString(), game:whoseTurn().color)
+        local total_rolled = normaldie1.getValue() + normaldie2.getValue() + Game.speedDieValue(speeddie.getValue())
+        broadcastToAll(game:whoseTurn():getName() .. " rolled " .. normaldie1.getValue() .. ", " ..
+                           normaldie2.getValue() .. " and " .. speedDieString() .. " = " .. total_rolled, game:whoseTurn().color)
         Wait.frames(function()
             normaldie1.setLock(true)
             normaldie2.setLock(true)
             speeddie.setLock(true)
         end)
-        local total_rolled = normaldie1.getValue() + normaldie2.getValue() + Game.speedDieValue(speeddie.getValue())
         animateDiceRoll(game:whoseTurn().location.name, total_rolled)
         game:submitDiceRoll(normaldie1.getValue(), normaldie2.getValue(), speeddie.getValue())
-        movePlayerToken(game:whoseTurn().color, game:whoseTurn().location)
-        game:nextTurn()
     end
 
     local function allThreeDiceAreResting()
@@ -304,6 +314,7 @@ end
 
 function onObjectPickUp(player_color, object)
     if Utils.equalsAny(object.getGUID(), GUIDs.dice) then
+        object.drop()
         if player_color == game:whoseTurn().color then
             rollRegularDice()
         else
@@ -313,7 +324,20 @@ function onObjectPickUp(player_color, object)
             --Green is building stuff
             broadcastToColor("It is " .. game:whoseTurn():getName() .. "'s turn right now.", player_color, "Red")
         end
-        object.drop()
+    end
+end
+
+function endTurnClick(player)
+    if player.color == game:whoseTurn().color then
+        game:nextTurn()
+        broadcastToAll(game:whoseTurn():getName() .. "'s turn starts now.", game:whoseTurn().color)
+        UI.setAttribute("tradeBtn", "visibility", "0")
+        UI.setAttribute("endTurnBtn", "visibility", "0")
+        for _, die in ipairs({normaldie1, normaldie2, speeddie}) do
+            die.scale(0.5)
+            die.setLock(false)
+            die.interactable = true
+        end
     end
 end
 

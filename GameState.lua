@@ -1,4 +1,5 @@
 ---@class GameState
+---@field name GameState
 GameState = {
     -- The game hasn't started yet.
     UNBEGUN = 0,
