@@ -1,0 +1,63 @@
+<!-- Money panel -->
+<HorizontalLayout id="moneyMain" offsetXY="80 0" width="60%" height="60" rectAlignment="LowerCenter">
+    <Panel id="WhiteMoneyPanel" color="White">
+        <VerticalLayout>
+            <Text id="WhiteName">White Player</Text>
+            <Text id="WhiteMoney" class="moneyText">$3200</Text>
+        </VerticalLayout>
+    </Panel>
+    <Panel id="BrownMoneyPanel" color="Brown">
+        <VerticalLayout>
+            <Text id="BrownName" color="White">Brown Player</Text>
+            <Text id="BrownMoney" class="moneyText" color="White">$3200</Text>
+        </VerticalLayout>
+    </Panel>
+    <Panel id="RedMoneyPanel" color="Red">
+        <VerticalLayout>
+            <Text id="RedName" color="White">Red Player</Text>
+            <Text id="RedMoney" class="moneyText" color="White">$3200</Text>
+        </VerticalLayout>
+    </Panel>
+    <Panel id="OrangeMoneyPanel" color="Orange">
+        <VerticalLayout>
+            <Text id="OrangeName" color="White">Orange Player</Text>
+            <Text id="OrangeMoney" class="moneyText" color="White">$3200</Text>
+        </VerticalLayout>
+    </Panel>
+    <Panel id="YellowMoneyPanel" color="Yellow">
+        <VerticalLayout>
+            <Text id="YellowName">Yellow Player</Text>
+            <Text id="YellowMoney" class="moneyText">$3200</Text>
+        </VerticalLayout>
+    </Panel>
+    <Panel id="GreenMoneyPanel" color="Green">
+        <VerticalLayout>
+            <Text id="GreenName">Green Player</Text>
+            <Text id="GreenMoney" class="moneyText">$3200</Text>
+        </VerticalLayout>
+    </Panel>
+    <Panel id="TealMoneyPanel" color="Teal">
+        <VerticalLayout>
+            <Text id="TealName">Teal Player</Text>
+            <Text id="TealMoney" class="moneyText">$3200</Text>
+        </VerticalLayout>
+    </Panel>
+    <Panel id="BlueMoneyPanel" color="Blue">
+        <VerticalLayout>
+            <Text id="BlueName" color="White">Blue Player</Text>
+            <Text id="BlueMoney" class="moneyText" color="White">$3200</Text>
+        </VerticalLayout>
+    </Panel>
+    <Panel id="PurpleMoneyPanel" color="Purple">
+        <VerticalLayout>
+            <Text id="PurpleName" color="White">Purple Player</Text>
+            <Text id="PurpleMoney" class="moneyText" color="White">$3200</Text>
+        </VerticalLayout>
+    </Panel>
+    <Panel id="PinkMoneyPanel" color="Pink">
+        <VerticalLayout>
+            <Text id="PinkName">Pink Player</Text>
+            <Text id="PinkMoney" class="moneyText">$3200</Text>
+        </VerticalLayout>
+    </Panel>
+</HorizontalLayout>

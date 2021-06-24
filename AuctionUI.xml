@@ -1,0 +1,84 @@
+<Defaults>
+    <VerticalLayout class="lightPanel" color="#f5f5f5"/>
+    <VerticalLayout class="darkPanel" color="#444444"/> 
+
+    <Button class="bidButton" fontSize="40" minWidth="100" minHeight="60"/>
+    <Button class="withdrawButton" fontSize="40" minHeight="100" preferredHeight="100"/>
+
+    <ProgressBar class="bidBar" color="" showPercentageText="false"/>
+
+    <Text fontSize="14" fontStyle="Normal" alignment="MiddleCenter"/>
+    <Text class="moneyText" fontStyle="bold" resizeTextForBestFit="true" resizeTextMaxSize="26"/>
+    <Text class="bidAmount" fontSize="24" />
+</Defaults>
+
+<VerticalLayout width="250" height="200" rectAlignment="MiddleRight">
+    <InputField onEndEdit="setPropertyName" placeholder="Property Name">Boardwalk</InputField>
+    <InputField onEndEdit="setPropertyCost" placeholder="Property Value" characterValidation="Integer">400</InputField>
+    <InputField onEndEdit="setPropertyColor" placeholder="Property Color">#284ea1</InputField>
+    <InputField onEndEdit="setAuctionTime" placeholder="Auction Time" characterValidation="Integer">20</InputField>
+    <Button id="mockButton" resizeTextForBestFit="true" onClick="mockAuction"> Begin Auction </Button>
+</VerticalLayout>
+
+<!-- Main auction panel -->
+<VerticalLayout id="auctionMain" width="70%" height="70%" active="false" showAnimation="FadeIn" hideAnimation="FadeOut">
+    <!-- Title bar -->
+    <HorizontalLayout id="titlePanel" color="#284ea1" minHeight="0" preferredHeight="0" flexibleHeight="0">
+        <Text id="titleText" color="White" minWidth="600" preferredWidth="1000" resizeTextForBestFit="true">Auction for something ($money)</Text>
+        <Panel id="timerPanel" color="#333333">
+            <Text id="timerText" color="White" fontSize="80" fontStyle="Bold" verticalOverflow="Overflow" horizontalOverflow="Overflow">40.00</Text>
+        </Panel>
+    </HorizontalLayout>
+    <VerticalLayout color="#999999" minHeight="50" preferredHeight="100">
+            <!-- Bid progress bars -->
+            <!-- Why can't you use player colors in fillImageColor? Bezerk Games pls fix. -->
+            <ProgressBar id="WhiteBidBar" class="bidBar">
+                <Text id="WhiteBidAmount" class="bidAmount" alignment="MiddleLeft">White: $0</Text>
+            </ProgressBar>
+            <ProgressBar id="BrownBidBar" class="bidBar" fillImageColor="#713b17">
+                <Text id="BrownBidAmount" class="bidAmount" alignment="MiddleLeft" color="White">Brown: $0</Text>
+            </ProgressBar>
+            <ProgressBar id="RedBidBar" class="bidBar" fillImageColor="#da1918">
+                <Text id="RedBidAmount" class="bidAmount" alignment="MiddleLeft" color="White">Red: $0</Text>
+            </ProgressBar>
+            <ProgressBar id="OrangeBidBar" class="bidBar" fillImageColor="#f4641d">
+                <Text id="OrangeBidAmount" class="bidAmount" alignment="MiddleLeft" color="White">Orange: $0</Text>
+            </ProgressBar>
+            <ProgressBar id="YellowBidBar" class="bidBar" fillImageColor="#e7e52c">
+                <Text id="YellowBidAmount" class="bidAmount" alignment="MiddleLeft">Yellow: $0</Text>
+            </ProgressBar>
+            <ProgressBar id="GreenBidBar" class="bidBar" fillImageColor="#31b32b">
+                <Text id="GreenBidAmount" class="bidAmount" alignment="MiddleLeft">Green: $0</Text>
+            </ProgressBar>
+            <ProgressBar id="TealBidBar" class="bidBar" fillImageColor="#21b19b">
+                <Text id="TealBidAmount" class="bidAmount" alignment="MiddleLeft">Teal: $0</Text>
+            </ProgressBar>
+            <ProgressBar id="BlueBidBar" class="bidBar" fillImageColor="#1f87ff">
+                <Text id="BlueBidAmount" class="bidAmount" alignment="MiddleLeft" color="White">Blue: $0</Text>
+            </ProgressBar>
+            <ProgressBar id="PurpleBidBar" class="bidBar" fillImageColor="#a020f0">
+                <Text id="PurpleBidAmount" class="bidAmount" alignment="MiddleLeft" color="White">Purple: $0</Text>
+            </ProgressBar>
+            <ProgressBar id="PinkBidBar" class="bidBar" fillImageColor="#f570ce">
+                <Text id="PinkBidAmount" class="bidAmount" alignment="MiddleLeft">Pink: $0</Text>
+            </ProgressBar>
+    </VerticalLayout>
+    <HorizontalLayout class="darkPanel" minHeight="50" preferredHeight="100">
+        <VerticalLayout childForceExpandHeight="false">
+            <!-- The top bid button rows -->
+            <HorizontalLayout childForceExpandHeight="false">
+                <Button id="bidOneDollar"  onClick="bidOneDollar" class="bidButton" color="#f5f5f5">$1</Button>
+                <Button id="bidFiveDollars" onClick="bidFiveDollars" class="bidButton" color="#FFA6A6">$5</Button>
+                <Button id="bidTenDollars" onClick="bidTenDollars" class="bidButton" color="#ffcc00">$10</Button>
+            </HorizontalLayout>
+            <!-- The bottom bid button rows -->
+            <HorizontalLayout childForceExpandHeight="false">
+                <Button id="bidTwentyDollars" onClick="bidTwentyDollars" class="bidButton" color="#668000">$20</Button>
+                <Button id="bidFiftyDollars" onClick="bidFiftyDollars" class="bidButton" color="#2c889f">$50</Button>
+                <Button id="bidHundredDollars" onClick="bidHundredDollars" class="bidButton" color="#f5be59">$100</Button>
+            </HorizontalLayout>
+            <!-- The withdraw button -->
+            <Button id="withdrawButton" onClick="withdrawClick" class="withdrawButton" color="Red" textColor="#f5f5f5">Withdraw</Button>
+        </VerticalLayout>
+    </HorizontalLayout>
+</VerticalLayout>

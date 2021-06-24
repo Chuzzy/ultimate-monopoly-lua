@@ -1,0 +1,59 @@
+<TableLayout width="200" height="350" rectAlignment="UpperLeft" offsetXY="75 -11" columnWidths="0 50" rowBackgroundColor="#FFFFFF" cellBackgroundImage="" cellBackgroundColor="#FFFFFF">
+    <Row dontUseTableRowBackground="true" color="#044d9c" preferredHeight="50">
+        <Cell dontUseTableCellBackground="true" columnSpan="2"><Text color="White">ANDREW YOUNG INTERNATIONAL BOULEVARD</Text></Cell>
+    </Row>
+    <!-- Unmortgaged property example -->
+    <!--
+    <Row>
+        <Cell><Text>Rent</Text></Cell>
+        <Cell><Text>$50</Text></Cell>
+    </Row>
+    <Row>
+        <Cell><Text>With Majority</Text></Cell>
+        <Cell><Text>$100</Text></Cell>
+    </Row>
+    <Row>
+        <Cell><Text>With Monopoly</Text></Cell>
+        <Cell><Text>$150</Text></Cell>
+    </Row>
+    <Row>
+        <Cell><Text>With 1 house</Text></Cell>
+        <Cell><Text>$200</Text></Cell>
+    </Row>
+    <Row>
+        <Cell><Text>With 2 houses</Text></Cell>
+        <Cell><Text>$600</Text></Cell>
+    </Row>
+    <Row dontUseTableRowBackground="true" color="Green">
+        <Cell dontUseTableCellBackground="true"><Text color="White">With 3 houses</Text></Cell>
+        <Cell dontUseTableCellBackground="true"><Text color="White">$1400</Text></Cell>
+    </Row>
+    <Row>
+        <Cell><Text>With 4 houses</Text></Cell>
+        <Cell><Text>$1700</Text></Cell>
+    </Row>
+    <Row>
+        <Cell><Text>With hotel</Text></Cell>
+        <Cell><Text>$2000</Text></Cell>
+    </Row>
+    <Row>
+        <Cell><Text>With skyscraper</Text></Cell>
+        <Cell><Text>$3000</Text></Cell>
+    </Row>
+    <Row>
+        <Cell image=""><Text>Cost to build</Text></Cell>
+        <Cell image=""><Text>$200</Text></Cell>
+    </Row>
+    <Row>
+        <Cell image=""><Text>Mortgage Value</Text></Cell>
+        <Cell image=""><Text>$200</Text></Cell>
+    </Row>
+    -->
+    <Row dontUseTableRowBackground="true" color="Red">
+        <Cell columnSpan="2" dontUseTableCellBackground="true">
+            <Text color="White">MORTGAGED
+            for $200
+            Unmortgage for $220</Text>
+        </Cell>
+    </Row>
+</TableLayout>
