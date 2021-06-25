@@ -118,3 +118,10 @@ function Game:nextTurn()
     self.current_turn_index = (self.current_turn_index % #self.players) + 1
     self.state = GameState.PREMOVE
 end
+
+---Gives the player the property and deducts the cost from them.
+---@param buyer UMPlayer The player buying the property.
+---@param property Property The sold property.
+function Game:sellPropertyTo(buyer, property)
+    --TODO: Game:sellPropertyTo
+end
