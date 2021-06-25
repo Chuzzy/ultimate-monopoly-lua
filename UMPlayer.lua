@@ -40,3 +40,33 @@ end
 function UMPlayer:getName()
     return Player[self.color] and Player[self.color].steam_name or self.color
 end
+
+function UMPlayer:railroadCount()
+    local count = 0
+    for _, property in ipairs(self.owned_properties) do
+        if property.group == "rail" then
+            count = count + 1
+        end
+    end
+    return count
+end
+
+function UMPlayer:cabCompanyCount()
+    local count = 0
+    for _, property in ipairs(self.owned_properties) do
+        if property.group == "cab" then
+            count = count + 1
+        end
+    end
+    return count
+end
+
+function UMPlayer:utilityCount()
+    local count = 0
+    for _, property in ipairs(self.owned_properties) do
+        if property.group == "utility" then
+            count = count + 1
+        end
+    end
+    return count
+end
