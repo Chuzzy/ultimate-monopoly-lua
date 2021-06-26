@@ -17,4 +17,6 @@ GameState = {
     TRADING = 6,
     -- The game is waiting for an acceptance or refusal of a trade.
     TRADE_OFFER = 7,
+    -- The game is waiting for a player to buy or auction a property.
+    PROPERTY_SALE = 8,
 }
