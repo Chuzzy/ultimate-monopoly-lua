@@ -258,6 +258,7 @@ local function postMoveHandler()
     TheGame:submitDiceRoll(normaldie1.getValue(), normaldie2.getValue(), speeddie.getValue())
     movePlayerToken(TheGame:whoseTurn().color, TheGame:whoseTurn().location, function()
         showActionButtons()
+        TheGame:handleSpaceAction()
     end)
     broadcastToAll(TheGame:whoseTurn():getName() .. " landed on " .. TheGame:whoseTurn().location.name, TheGame:whoseTurn().color)
 end
