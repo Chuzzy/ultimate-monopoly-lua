@@ -40,7 +40,8 @@ end
 ---Moves a token to the specified space.
 ---@param player_color string The player's color.
 ---@param destination Space|string The space to move to.
-function movePlayerToken(player_color, destination)
+---@param callback function Optional callback function to execute when the movement is complete.
+function movePlayerToken(player_color, destination, callback)
     local occupant_position_index = #game:getOccupantsOnSpace(destination) + 1
     ---@type Space
     local new_space
@@ -54,6 +55,9 @@ function movePlayerToken(player_color, destination)
     assert(new_space, "new_space is nil")
     player_tokens[player_color].setPositionSmooth(new_space.occupant_positions[occupant_position_index])
     player_tokens[player_color].setRotationSmooth(new_space.direction.vector)
+    if type(callback) == "function" then
+        Wait.time(callback, 1.5)
+    end
 end
 
 --#region Board button CUD
@@ -228,6 +232,16 @@ local function speedDieString()
     end
 end
 
+local function showActionButtons()
+    UI.setAttribute("tradeBtn", "visibility", game:whoseTurn().color)
+    UI.setAttribute("endTurnBtn", "visibility", game:whoseTurn().color)
+end
+
+local function hideActionButtons()
+    UI.setAttribute("tradeBtn", "visibility", "0")
+    UI.setAttribute("endTurnBtn", "visibility", "0")
+end
+
 local function animateDiceRoll(start, roll)
     local visited_spaces = board:diceRoll(board.spaces[start], roll, false)
     local current_index = 1
@@ -263,9 +277,7 @@ local function animateDiceRoll(start, roll)
             Wait.time(function()
                 Gameboard.clearButtons()
                 broadcastToAll(game:whoseTurn():getName() .. " landed on " .. game:whoseTurn().location.name, game:whoseTurn().color)
-                movePlayerToken(game:whoseTurn().color, game:whoseTurn().location)
-                UI.setAttribute("tradeBtn", "visibility", game:whoseTurn().color)
-                UI.setAttribute("endTurnBtn", "visibility", game:whoseTurn().color)
+                movePlayerToken(game:whoseTurn().color, game:whoseTurn().location, showActionButtons)
             end, 1.5)
         end
     end
@@ -293,6 +305,7 @@ local function rollRegularDice()
             normaldie2.setLock(true)
             speeddie.setLock(true)
         end)
+        -- Move the player to the spot
         animateDiceRoll(game:whoseTurn().location.name, total_rolled)
         game:submitDiceRoll(normaldie1.getValue(), normaldie2.getValue(), speeddie.getValue())
     end
@@ -331,8 +344,7 @@ function endTurnClick(player)
     if player.color == game:whoseTurn().color then
         game:nextTurn()
         broadcastToAll(game:whoseTurn():getName() .. "'s turn starts now.", game:whoseTurn().color)
-        UI.setAttribute("tradeBtn", "visibility", "0")
-        UI.setAttribute("endTurnBtn", "visibility", "0")
+        hideActionButtons()
         for _, die in ipairs({normaldie1, normaldie2, speeddie}) do
             die.scale(0.5)
             die.setLock(false)
