@@ -243,12 +243,12 @@ local function speedDieString()
     end
 end
 
-local function showActionButtons()
+function showActionButtons()
     UI.setAttribute("tradeBtn", "visibility", TheGame:whoseTurn().color)
     UI.setAttribute("endTurnBtn", "visibility", TheGame:whoseTurn().color)
 end
 
-local function hideActionButtons()
+function hideActionButtons()
     UI.setAttribute("tradeBtn", "visibility", "0")
     UI.setAttribute("endTurnBtn", "visibility", "0")
 end
