@@ -1,5 +1,5 @@
 --- A game of Ultimate Monopoly.
----@class Game
+---@class UMGame
 ---@field board Board The game board.
 ---@field players table<number, UMPlayer> The players of the game.
 ---@field players_by_color table<string, UMPlayer> The players of the game by color.
@@ -11,8 +11,8 @@
 ---@field cash_pool integer Number of dollars in the cash pool.
 ---@field state GameState The current game state.
 ---@field money_changed_handler function Event handler that is called when money changes hands.
-Game = {}
-Game.__index = Game
+UMGame = {}
+UMGame.__index = UMGame
 
 require("GameState")
 require("UMPlayer")
@@ -20,9 +20,9 @@ require("Property")
 require("Properties")
 require("Debt")
 
-function Game.new()
+function UMGame.new()
     --TODO: Allow loading game from JSON savedata
-    local self = setmetatable({}, Game)
+    local self = setmetatable({}, UMGame)
     self.board = Board.new()
     self.players = {}
     self.players_by_color = {}
@@ -34,7 +34,7 @@ function Game.new()
     return self
 end
 
-function Game.speedDieValue(die)
+function UMGame.speedDieValue(die)
     if die > 3 then
         return 0
     else
@@ -46,7 +46,7 @@ end
 ---@param color string The color of the seat the player is sitting at.
 ---@param token_guid string The GUID of the player's playing token.
 ---@param starting_money integer How much money the player starts with.
-function Game:createPlayer(color, token_guid, starting_money)
+function UMGame:createPlayer(color, token_guid, starting_money)
     assert(self.state.name == GameState.UNBEGUN, "cannot create player when the game has started")
     local new_player = UMPlayer.new(color, token_guid, starting_money, self.board.spaces[Names.go])
     table.insert(self.players, new_player)
@@ -56,7 +56,7 @@ end
 ---Returns an array of players who are on a particular space.
 ---@param space_name string The name of the space.
 ---@return table<integer, UMPlayer> occupants
-function Game:getOccupantsOnSpace(space_name)
+function UMGame:getOccupantsOnSpace(space_name)
     local occupants = {}
     for _, player in ipairs(self.players) do
         assert(player.location)
@@ -69,8 +69,8 @@ end
 
 ---Starts the game.
 ---@param starting_color string The player color who is going first.
-function Game:start(starting_color)
-    assert(starting_color, "Game:start - color is nil")
+function UMGame:start(starting_color)
+    assert(starting_color, "UMGame:start - color is nil")
 
     for i, player in ipairs(self.players) do
         if player.color == starting_color then
@@ -84,11 +84,11 @@ end
 
 ---Returns the player whose turn it is.
 ---@return UMPlayer current_player The player whose turn it is.
-function Game:whoseTurn()
+function UMGame:whoseTurn()
     return self.players[self.current_turn_index]
 end
 
-function Game:submitDiceRoll(die1, die2, speed_die)
+function UMGame:submitDiceRoll(die1, die2, speed_die)
     local total = die1 + die2
     if speed_die == 6 then
         print("Bus")
@@ -130,21 +130,21 @@ function Game:submitDiceRoll(die1, die2, speed_die)
 end
 
 ---Called when the current player lands on a new space.
-function Game:handleSpaceAction()
+function UMGame:handleSpaceAction()
     self.state = GameState.POST_MOVEMENT
 end
 
 ---Moves a player to a new position on the board.
 ---@param player UMPlayer The player to move.
 ---@param destination Space The space on the board to move to.
-function Game:movePlayer(player, destination)
+function UMGame:movePlayer(player, destination)
     if not destination then
         error("destination cannot be empty", 2)
     end
     player.location = destination
 end
 
-function Game:nextTurn()
+function UMGame:nextTurn()
     if self.state ~= GameState.POST_MOVEMENT then
         error("game is not in the post movement state", 2)
     end
@@ -156,7 +156,7 @@ end
 ---@param creditor UMPlayer The recipient of the money.
 ---@param amount integer The amount of money to be paid.
 ---@param reason string The reason for getting the money
-function Game:payFromBank(creditor, amount, reason)
+function UMGame:payFromBank(creditor, amount, reason)
     creditor.money = creditor.money + amount
     pcall(self.money_changed_handler, Debt.new(nil, creditor, amount, reason))
 end
@@ -164,6 +164,6 @@ end
 ---Gives the player the property and deducts the cost from them.
 ---@param buyer UMPlayer The player buying the property.
 ---@param property Property The sold property.
-function Game:sellPropertyTo(buyer, property)
+function UMGame:sellPropertyTo(buyer, property)
     --TODO: Game:sellPropertyTo
 end

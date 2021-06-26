@@ -2,10 +2,10 @@ require("GUIDs")
 require("Board")
 require("BoardPositions")
 require("Utils")
-require("Game")
+require("UMGame")
 
 function doNothing() end
-TheGame = Game.new()
+TheGame = UMGame.new()
 local board = TheGame.board
 local board_btns = {}
 local mutated_btns = {}
@@ -302,7 +302,7 @@ local function rollRegularDice()
         normaldie1.setPositionSmooth({-2, 3.5, 0}, false)
         normaldie2.setPositionSmooth({0, 3.5, 0}, false)
         speeddie.setPositionSmooth({2, 3.5, 0}, false)
-        local total_rolled = normaldie1.getValue() + normaldie2.getValue() + Game.speedDieValue(speeddie.getValue())
+        local total_rolled = normaldie1.getValue() + normaldie2.getValue() + UMGame.speedDieValue(speeddie.getValue())
         broadcastToAll(TheGame:whoseTurn():getName() .. " rolled " .. normaldie1.getValue() .. ", " ..
                            normaldie2.getValue() .. " and " .. speedDieString() .. " = " .. total_rolled, TheGame:whoseTurn().color)
         Wait.frames(function()

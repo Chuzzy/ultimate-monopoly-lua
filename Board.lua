@@ -1,6 +1,6 @@
 --- The Ultimate Monopoly game board.
 ---@class Board
----@field game Game
+---@field game UMGame
 ---@field spaces table<string, Space>
 Board = {}
 Board.__index = Board

@@ -6,7 +6,7 @@ ActionCard.__index = ActionCard
 
 --- Create a new Action Card.
 ---@param name string
----@param game Game
+---@param game UMGame
 ---@param action function
 ---@return ActionCard
 function ActionCard.new(name, game, action)
