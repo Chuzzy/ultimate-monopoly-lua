@@ -34,14 +34,11 @@ end
 function Property:rent(dice_total)
     if not self.owner or self.improvements == -1 then
         return 0
-    elseif self.group == "rail" then
-        local rent_multiplier = self.improvements + 1 -- Double rent for improved railroad
-        return self.rent_values[self.owner:railroadCount()] * rent_multiplier
-    elseif self.group == "cab" then
-        local rent_multiplier = self.improvements + 1 -- Double rent for improved cab co
-        return self.rent_values[self.owner:cabCompanyCount()] * rent_multiplier
+    elseif self.group == "rail" or self.group == "cab" then
+        local rent_multiplier = self.improvements + 1 -- Double rent for improved transit station/cab company
+        return self.rent_values[self.owner:countPropertiesOwnedInGroup(self.group)] * rent_multiplier
     elseif self.group == "utility" then
-        return dice_total * self.rent_values[self.owner:utilityCount()]
+        return dice_total * self.rent_values[self.owner:countPropertiesOwnedInGroup("utility")]
     elseif self.improvements > 1 then -- If property has buildings
         return self.rent_values[self.improvements]
     else
