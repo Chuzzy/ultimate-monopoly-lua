@@ -10,6 +10,7 @@
 ---@field unowned_properties table<integer, Property> Array of unowned_properties.
 ---@field cash_pool integer Number of dollars in the cash pool.
 ---@field state GameState The current game state.
+---@field money_changed_handler function Event handler that is called when money changes hands.
 Game = {}
 Game.__index = Game
 
@@ -98,7 +99,10 @@ function Game:submitDiceRoll(die1, die2, speed_die)
     local visited_spaces = self.board:diceRoll(self:whoseTurn().location, total)
     local destination = visited_spaces[#visited_spaces]
     self:movePlayer(self:whoseTurn(), destination)
-    self.state = GameState.POST_MOVEMENT
+end
+
+function Game:handle()
+    
 end
 
 ---Moves a player to a new position on the board.
