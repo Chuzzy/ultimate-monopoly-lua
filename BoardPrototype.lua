@@ -21,66 +21,87 @@ end
 local function createGoPrototype(track)
     table.insert(track, {
         name = Names.go,
+        action = function(space, player, params) print("Landed on go.") end
     })
 end
 
 local function createBonusPrototype(track)
     table.insert(track, {
         name = Names.bonus,
+        action = function(space, player, params) print("Dosh!") end
     })
 end
 
 local function createSqueezePlayPrototype(track)
     table.insert(track, {
         name = Names.squeeze,
+        action = function(space, player, params) print("Lucky you!") end
     })
 end
 
 local function createRollThreePrototype(track)
     table.insert(track, {
         name = Names.roll3,
+        action = function(space, player, params)
+            print("Roll the dice to win some cash.")
+        end
     })
 end
 
 local function createTaxRefundPrototype(track)
     table.insert(track, {
         name = Names.refund,
+        action = function(space, player, params) print("Here you go!") end
     })
 end
 
 local function createReverseDirectionPrototype(track)
     table.insert(track, {
         name = Names.reverse,
+        action = function(space, player, params)
+            print("Moving backwards.")
+        end
     })
 end
 
 local function createPayDayPrototype(track)
     table.insert(track, {
         name = Names.payday,
+        action = function(space, player, params) print("It's PAYDAY!") end
     })
 end
 
 local function createStockExchangePrototype(track)
     table.insert(track, {
         name = Names.stock,
+        action = function(space, player, params)
+            print("Buy! Buy! Sell! Sell!")
+        end
     })
 end
 
 local function createAuctionPrototype(track)
     table.insert(track, {
         name = Names.auction,
+        action = function(space, player, params)
+            print("Sold to the highest bidder.")
+        end
     })
 end
 
 local function createBirthdayPrototype(track)
     table.insert(track, {
         name = Names.birthday,
+        action = function(space, player, params) print("Happy birthday!") end
     })
 end
 
 local function createSubwayPrototype(track)
     table.insert(track, {
         name = Names.subway,
+        action = function(space, player, params)
+            print("Going round the underground.")
+        end
     })
 end
 
@@ -88,13 +109,22 @@ local function createHollandTunnelPrototype(track, is_inner)
     local suffix = is_inner and " Inner" or " Outer"
     table.insert(track, {
         name = Names.holland .. suffix,
+        action = function(space, player, params) print("Holland!") end
     })
+end
+
+local function propertyAction(space, player, name)
+    print("Property function: " .. space)
 end
 
 ---@param track table
 ---@param name string
 local function createPropertyPrototype(track, name)
-    table.insert(track, {name = name})
+    table.insert(track, {name = name, action = propertyAction})
+end
+
+local function transitStationAction(space, player, params)
+    print("Here's your travel voucher, " .. player.name)
 end
 
 ---@param track table
@@ -105,7 +135,12 @@ local function createTransitStationPrototype(track, name, is_inner)
     table.insert(track, {
         name = name .. suffix,
         transit_type = is_inner and 1 or 0,
+        action = transitStationAction
     })
+end
+
+local function cabCompanyAction(space, player, params)
+    print("Taxi!") -- Putting this here so formatter doesn't screw it up
 end
 
 ---@param track table
@@ -113,19 +148,28 @@ end
 local function createCabCompanyPrototype(track, name)
     table.insert(track, {
         name = name,
+        action = cabCompanyAction
     })
 end
 
 local function createIncomeTaxPrototype(track)
     table.insert(track, {
         name = Names.income,
+        action = function(space, player, params) print("Taxes due.") end
     })
 end
 
 local function createLuxuryTaxPrototype(track)
     table.insert(track, {
         name = Names.luxury,
+        action = function(space, player, params)
+            print("Good ol' Uncle Sam.")
+        end
     })
+end
+
+local function chestAction(space, player, params)
+    print("Community Chest says...")
 end
 
 ---@param track table
@@ -133,7 +177,12 @@ local function createChestPrototype(track)
     local chest_id = getChestId()
     table.insert(track, {
         name = Names.chest .. chest_id,
+        action = chestAction
     })
+end
+
+local function chanceAction(space, player, params)
+    print("Feeling lucky?")
 end
 
 ---@param track table
@@ -141,12 +190,18 @@ local function createChancePrototype(track)
     local chance_id = getChanceId()
     table.insert(track, {
         name = Names.chance .. chance_id,
+        action = chanceAction
     })
+end
+
+local function busTicketAction(space, player, params)
+    print("Bus ticket.")
 end
 
 local function createBusTicketPrototype(track)
     table.insert(track, {
         name = Names.bus .. getTicketId(),
+        action = busTicketAction
     })
 end
 
@@ -154,6 +209,7 @@ end
 local function createJustVisitingPrototype(track)
     table.insert(track, {
         name = Names.visit,
+        action = function(space, player, params) print("Just Visiting") end
     })
 end
 
@@ -161,6 +217,9 @@ end
 local function createFreeParkingPrototype(track)
     table.insert(track, {
         name = Names.parking,
+        action = function(space, player, params)
+            print("Free Parking. Beep beep.")
+        end
     })
 end
 
@@ -168,6 +227,7 @@ end
 local function createGoToJailPrototype(track)
     table.insert(track, {
         name = Names.malloy,
+        action = function(space, player, params) print("GO TO JAIL") end
     })
 end
 

@@ -21,10 +21,12 @@ function Board.new()
     local function linkConsecutiveSpaces(space_prototype, after_prototype)
         local space_name = space_prototype.name
         local space_transit = space_prototype.transit_type
+        local space_action = space_prototype.action
         local space_pos = BoardPositions.main[space_name]
         local space_direction = BoardPositions.direction[space_name]
         local after_name = after_prototype.name
         local after_transit = after_prototype.transit_type
+        local after_action = after_prototype.action
         local after_pos = BoardPositions.main[after_name]
         local after_direction = BoardPositions.direction[after_name]
 
@@ -35,7 +37,7 @@ function Board.new()
                 table.insert(space_occupant_positions, offset + space_pos)
             end
             local space_avatar_pos = BoardPositions.avatar[space_direction.board_side] + space_pos
-            self.spaces[space_name] = Space.new(space_name, space_transit, space_pos, space_occupant_positions, space_direction, space_avatar_pos)
+            self.spaces[space_name] = Space.new(space_name, space_transit, space_action, space_pos, space_occupant_positions, space_direction, space_avatar_pos)
         end
         -- Create another space if after_name doesn't exist yet
         if not self.spaces[after_name] then
@@ -44,7 +46,7 @@ function Board.new()
                 table.insert(after_occupant_positions, offset + after_pos)
             end
             local after_avatar_pos = BoardPositions.avatar[after_direction.board_side] + after_pos
-            self.spaces[after_name] = Space.new(after_name, after_transit, after_pos, after_occupant_positions, after_direction, after_avatar_pos)
+            self.spaces[after_name] = Space.new(after_name, after_transit, after_action, after_pos, after_occupant_positions, after_direction, after_avatar_pos)
         end
         -- Make the "after" space point backwards to the current space
         self.spaces[after_name].prev = self.spaces[space_name]
