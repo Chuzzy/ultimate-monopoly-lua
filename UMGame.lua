@@ -126,12 +126,11 @@ function UMGame:submitDiceRoll(die1, die2, speed_die)
         self:payFromBank(self:whoseTurn(), 250, "for passing Bonus")
     end
     self:movePlayer(self:whoseTurn(), destination)
-    self:handleSpaceAction()
 end
 
 ---Called when the current player lands on a new space.
 function UMGame:handleSpaceAction()
-    self.state = GameState.POST_MOVEMENT
+    self:whoseTurn():act(self)
 end
 
 ---Moves a player to a new position on the board.
