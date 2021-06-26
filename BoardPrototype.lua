@@ -21,7 +21,13 @@ end
 local function createGoPrototype(track)
     table.insert(track, {
         name = Names.go,
-        action = function(space, player, params) print("Landed on go.") end
+        ---comment
+        ---@param space any
+        ---@param game any
+        ---@param player any
+        action = function(space, game, player)
+            
+        end
     })
 end
 
