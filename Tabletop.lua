@@ -56,7 +56,7 @@ function movePlayerToken(player_color, destination, callback)
     player_tokens[player_color].setPositionSmooth(new_space.occupant_positions[occupant_position_index])
     player_tokens[player_color].setRotationSmooth(new_space.direction.vector)
     if type(callback) == "function" then
-        Wait.time(callback, 1.5)
+        Wait.time(callback, 2)
     end
 end
 
@@ -242,6 +242,15 @@ local function hideActionButtons()
     UI.setAttribute("endTurnBtn", "visibility", "0")
 end
 
+---Called when the token has finished moving.
+local function postMoveHandler()
+    Gameboard.clearButtons()
+    broadcastToAll(game:whoseTurn():getName() .. " landed on " .. game:whoseTurn().location.name, game:whoseTurn().color)
+    movePlayerToken(game:whoseTurn().color, game:whoseTurn().location, function()
+        showActionButtons()
+    end)
+end
+
 local function animateDiceRoll(start, roll)
     local visited_spaces = board:diceRoll(board.spaces[start], roll, false)
     local current_index = 1
@@ -274,11 +283,7 @@ local function animateDiceRoll(start, roll)
             current_index = current_index + 1
             Wait.frames(animateSpaces, 10)
         else
-            Wait.time(function()
-                Gameboard.clearButtons()
-                broadcastToAll(game:whoseTurn():getName() .. " landed on " .. game:whoseTurn().location.name, game:whoseTurn().color)
-                movePlayerToken(game:whoseTurn().color, game:whoseTurn().location, showActionButtons)
-            end, 1.5)
+            Wait.time(postMoveHandler, 1.5)
         end
     end
 
