@@ -7,7 +7,9 @@
 Debt = {}
 Debt.__index = Debt
 function Debt:__tostring()
-    return (self.debtor and self.debtor:getName() or "The Bank") .. " owes " .. (self.creditor and self.creditor:getName() or "The Bank") .. " $" .. self.amount .. " " .. (self.reason or "")
+    return (self.debtor and self.debtor:getName() or "The Bank") .. " owes " ..
+               (self.creditor and self.creditor:getName() or "The Bank") .. " $" ..
+               self.amount .. (self.reason and " " .. self.reason or "")
 end
 
 --- Creates a new Debt.
@@ -23,9 +25,7 @@ function Debt.new(debtor, creditor, amount, reason)
     if not debtor and not creditor then
         error("debtor and creditor cannot both be nil", 2)
     end
-    if amount < 1 then
-        error("amount must be larger than 1", 2)
-    end
+    if amount < 1 then error("amount must be larger than 1", 2) end
     self.amount = amount
     self.reason = reason
     return self
