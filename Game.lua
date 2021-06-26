@@ -18,6 +18,7 @@ require("GameState")
 require("UMPlayer")
 require("Property")
 require("Properties")
+require("Debt")
 
 function Game.new()
     --TODO: Allow loading game from JSON savedata
@@ -98,11 +99,39 @@ function Game:submitDiceRoll(die1, die2, speed_die)
     end
     local visited_spaces = self.board:diceRoll(self:whoseTurn().location, total)
     local destination = visited_spaces[#visited_spaces]
+    -- Handle passing Go, Payday and Bonus
+    local has_passed_go, has_passed_payday, has_passed_bonus
+    for _, space in ipairs(visited_spaces) do
+        if not has_passed_go and space.name == Names.go then
+            has_passed_go = true
+        end
+        if not has_passed_payday and space.name == Names.payday then
+            has_passed_payday = true
+        end
+        if not has_passed_bonus and space.name == Names.bonus then
+            has_passed_bonus = true
+        end
+    end
+    if has_passed_go then
+        self:payFromBank(self:whoseTurn(), 200, "for passing Go")
+    end
+    if has_passed_payday and destination ~= self.board.spaces[Names.payday] then
+        if total % 2 == 0 then
+            self:payFromBank(self:whoseTurn(), 400, "for passing Payday with an even roll")
+        else
+            self:payFromBank(self:whoseTurn(), 300, "for passing Payday with an odd roll")
+        end
+    end
+    if has_passed_bonus and destination ~= self.board.spaces[Names.bonus] then
+        self:payFromBank(self:whoseTurn(), 250, "for passing Bonus")
+    end
     self:movePlayer(self:whoseTurn(), destination)
+    self:handleSpaceAction()
 end
 
-function Game:handle()
-    
+---Called when the current player lands on a new space.
+function Game:handleSpaceAction()
+    self.state = GameState.POST_MOVEMENT
 end
 
 ---Moves a player to a new position on the board.
