@@ -6,7 +6,7 @@
 ---@field reason string
 Debt = {}
 Debt.__index = Debt
-function Debt:__tostring()
+function Debt.__tostring(self)
     return (self.debtor and self.debtor:getName() or "The Bank") .. " owes " ..
                (self.creditor and self.creditor:getName() or "The Bank") .. " $" ..
                self.amount .. (self.reason and " " .. self.reason or "")
@@ -29,4 +29,14 @@ function Debt.new(debtor, creditor, amount, reason)
     self.amount = amount
     self.reason = reason
     return self
+end
+
+---Returns a string representation of this Debt.
+---@param has_paid boolean true to use the word "paid" in place of "owes".
+---@return string
+function Debt:tostring(has_paid)
+    return (self.debtor and self.debtor:getName() or "The Bank") ..
+    (has_paid and " paid " or " owes ") ..
+    (self.creditor and self.creditor:getName() or "The Bank") .. " $" ..
+    self.amount .. (self.reason and " " .. self.reason or "")
 end
