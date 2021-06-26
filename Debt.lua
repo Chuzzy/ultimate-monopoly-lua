@@ -4,10 +4,10 @@
 ---@field creditor UMPlayer
 ---@field amount integer
 ---@field reason string
-local Debt = {}
+Debt = {}
 Debt.__index = Debt
 function Debt:__tostring()
-    return (self.debtor and self.debtor.name or "The Bank") .. " owes " .. (self.creditor and self.creditor.name or "The Bank") .. " $" .. self.amount .. " " .. (self.reason or "")
+    return (self.debtor and self.debtor:getName() or "The Bank") .. " owes " .. (self.creditor and self.creditor:getName() or "The Bank") .. " $" .. self.amount .. " " .. (self.reason or "")
 end
 
 --- Creates a new Debt.
