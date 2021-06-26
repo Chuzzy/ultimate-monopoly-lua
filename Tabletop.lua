@@ -37,8 +37,7 @@ function onLoad()
         end
     end
     TheGame:start("Blue")
-    UI.setAttribute("tradeBtn", "visibility", "0")
-    UI.setAttribute("endTurnBtn", "visibility", "0")
+    hideActionButtons()
 end
 
 function registerNewPlayer(color, token_guid)
