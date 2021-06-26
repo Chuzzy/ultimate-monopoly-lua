@@ -158,7 +158,9 @@ end
 ---@param reason string The reason for getting the money
 function UMGame:payFromBank(creditor, amount, reason)
     creditor.money = creditor.money + amount
-    pcall(self.money_changed_handler, Debt.new(nil, creditor, amount, reason))
+    if self.money_changed_handler then
+        self.money_changed_handler(Debt.new(nil, creditor, amount, reason))
+    end
 end
 
 ---Gives the player the property and deducts the cost from them.
