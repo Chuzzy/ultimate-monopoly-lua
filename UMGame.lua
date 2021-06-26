@@ -9,6 +9,9 @@
 ---@field debts table<number, Debt> Array of unpaid debts.
 ---@field properties table<string, Property> Array of all properties.
 ---@field cash_pool integer Number of dollars in the cash pool.
+---@field house_count integer Number of remaining houses.
+---@field hotel_count integer Number of remaining hotels.
+---@field skyscraper_count integer Number of remaining skyscrapers.
 ---@field state GameState The current game state.
 ---@field money_changed_handler function Event handler that is called when money changes hands.
 UMGame = {}
@@ -30,6 +33,9 @@ function UMGame.new()
     self.debts = {}
     self.properties = Property.generateUMProperties()
     self.cash_pool = 0
+    self.house_count = 84
+    self.hotel_count = 36
+    self.skyscraper_count = 20
     self.state = {name = GameState.UNBEGUN}
     return self
 end
