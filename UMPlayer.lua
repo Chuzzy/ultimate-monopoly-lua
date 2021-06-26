@@ -41,6 +41,10 @@ function UMPlayer:getName()
     return Player[self.color] and Player[self.color].steam_name or self.color
 end
 
+function UMPlayer:act(game)
+    self.location:act(game, self)
+end
+
 function UMPlayer:railroadCount()
     local count = 0
     for _, property in ipairs(self.owned_properties) do
