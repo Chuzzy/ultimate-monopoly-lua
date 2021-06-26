@@ -13,6 +13,7 @@
 ---@field hotel_count integer Number of remaining hotels.
 ---@field skyscraper_count integer Number of remaining skyscrapers.
 ---@field state GameState The current game state.
+---@field dice_roll integer[] The values of the dice that were rolled this turn.
 ---@field money_changed_handler function Event handler that is called when money changes hands.
 UMGame = {}
 UMGame.__index = UMGame
@@ -95,6 +96,7 @@ function UMGame:whoseTurn()
 end
 
 function UMGame:submitDiceRoll(die1, die2, speed_die)
+    self.dice_roll = {die1, die2, speed_die}
     local total = die1 + die2
     if speed_die == 6 then
         print("Bus")
