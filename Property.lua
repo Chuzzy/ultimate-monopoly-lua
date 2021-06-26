@@ -1,12 +1,12 @@
 --- A property in Ultimate Monopoly.
 ---@class Property
----@field name string
----@field cost integer
----@field group string
----@field rent_values table
----@field improvement_cost integer
----@field improvements integer
----@field owner UMPlayer
+---@field name string The name of the property.
+---@field cost integer The price of the property.
+---@field group string The name of the group this property belongs to.
+---@field rent_values integer[] The amounts of rent owed on this property.
+---@field improvement_cost integer The cost to build an improvement.
+---@field improvements integer The number of improvements.
+---@field owner UMPlayer The owner of the property.
 Property = {}
 Property.__index = Property
 
