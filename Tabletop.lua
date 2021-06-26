@@ -24,6 +24,18 @@ function onLoad()
     registerNewPlayer("Blue", GUIDs.tokens.car)
     registerNewPlayer("Yellow", GUIDs.tokens.hat)
     registerNewPlayer("Green", GUIDs.tokens.iron)
+    TheGame.money_changed_handler = function(debt)
+        if debt.debtor then
+            UI.setValue(debt.debtor.color .. "Money", "$" .. debt.debtor.money)
+            broadcastToAll(debt:tostring(true), debt.debtor.color)
+        end
+        if debt.creditor then
+            UI.setValue(debt.creditor.color .. "Money", "$" .. debt.creditor.money)
+            if not debt.debtor then
+                broadcastToAll(debt:tostring(true), debt.creditor.color)
+            end
+        end
+    end
     TheGame:start("Blue")
     UI.setAttribute("tradeBtn", "visibility", "0")
     UI.setAttribute("endTurnBtn", "visibility", "0")
