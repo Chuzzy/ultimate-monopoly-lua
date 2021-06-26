@@ -14,6 +14,7 @@
 ---@field skyscraper_count integer Number of remaining skyscrapers.
 ---@field state GameState The current game state.
 ---@field dice_roll integer[] The values of the dice that were rolled this turn.
+---@field dice_total integer The sum of the values of the dice.
 ---@field money_changed_handler function Event handler that is called when money changes hands.
 UMGame = {}
 UMGame.__index = UMGame
@@ -105,6 +106,7 @@ function UMGame:submitDiceRoll(die1, die2, speed_die)
     else
         total = total + speed_die
     end
+    self.dice_total = total
     local visited_spaces = self.board:diceRoll(self:whoseTurn().location, total)
     local destination = visited_spaces[#visited_spaces]
     -- Handle passing Go, Payday and Bonus
