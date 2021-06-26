@@ -45,30 +45,10 @@ function UMPlayer:act(game)
     self.location:act(game, self)
 end
 
-function UMPlayer:railroadCount()
+function UMPlayer:countPropertiesOwnedInGroup(group)
     local count = 0
     for _, property in ipairs(self.owned_properties) do
-        if property.group == "rail" then
-            count = count + 1
-        end
-    end
-    return count
-end
-
-function UMPlayer:cabCompanyCount()
-    local count = 0
-    for _, property in ipairs(self.owned_properties) do
-        if property.group == "cab" then
-            count = count + 1
-        end
-    end
-    return count
-end
-
-function UMPlayer:utilityCount()
-    local count = 0
-    for _, property in ipairs(self.owned_properties) do
-        if property.group == "utility" then
+        if property.group == group then
             count = count + 1
         end
     end
