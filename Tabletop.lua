@@ -5,9 +5,8 @@ require("Utils")
 require("Game")
 
 function doNothing() end
-
-local game = Game.new()
-local board = game.board
+TheGame = Game.new()
+local board = TheGame.board
 local board_btns = {}
 local mutated_btns = {}
 local player_tokens = {}
@@ -25,13 +24,13 @@ function onLoad()
     registerNewPlayer("Blue", GUIDs.tokens.car)
     registerNewPlayer("Yellow", GUIDs.tokens.hat)
     registerNewPlayer("Green", GUIDs.tokens.iron)
-    game:start("Blue")
+    TheGame:start("Blue")
     UI.setAttribute("tradeBtn", "visibility", "0")
     UI.setAttribute("endTurnBtn", "visibility", "0")
 end
 
 function registerNewPlayer(color, token_guid)
-    game:createPlayer(color, token_guid, 3200)
+    TheGame:createPlayer(color, token_guid, 3200)
     player_tokens[color] = getObjectFromGUID(token_guid)
     player_tokens[color].setColorTint(color)
     movePlayerToken(color, "Go")
@@ -42,13 +41,13 @@ end
 ---@param destination Space|string The space to move to.
 ---@param callback function Optional callback function to execute when the movement is complete.
 function movePlayerToken(player_color, destination, callback)
-    local occupant_position_index = #game:getOccupantsOnSpace(destination) + 1
+    local occupant_position_index = #TheGame:getOccupantsOnSpace(destination) + 1
     ---@type Space
     local new_space
     if destination.occupant_positions and destination.direction then
         new_space = destination
     elseif type(destination) == "string" then
-        new_space = game.board.spaces[destination]
+        new_space = TheGame.board.spaces[destination]
     else
         error("wanted a space or string but received " .. type(destination), 2)
     end
@@ -233,8 +232,8 @@ local function speedDieString()
 end
 
 local function showActionButtons()
-    UI.setAttribute("tradeBtn", "visibility", game:whoseTurn().color)
-    UI.setAttribute("endTurnBtn", "visibility", game:whoseTurn().color)
+    UI.setAttribute("tradeBtn", "visibility", TheGame:whoseTurn().color)
+    UI.setAttribute("endTurnBtn", "visibility", TheGame:whoseTurn().color)
 end
 
 local function hideActionButtons()
@@ -245,10 +244,11 @@ end
 ---Called when the token has finished moving.
 local function postMoveHandler()
     Gameboard.clearButtons()
-    broadcastToAll(game:whoseTurn():getName() .. " landed on " .. game:whoseTurn().location.name, game:whoseTurn().color)
-    movePlayerToken(game:whoseTurn().color, game:whoseTurn().location, function()
+    TheGame:submitDiceRoll(normaldie1.getValue(), normaldie2.getValue(), speeddie.getValue())
+    movePlayerToken(TheGame:whoseTurn().color, TheGame:whoseTurn().location, function()
         showActionButtons()
     end)
+    broadcastToAll(TheGame:whoseTurn():getName() .. " landed on " .. TheGame:whoseTurn().location.name, TheGame:whoseTurn().color)
 end
 
 local function animateDiceRoll(start, roll)
@@ -270,7 +270,7 @@ local function animateDiceRoll(start, roll)
 
         Gameboard.createButton({
             click_function = "doNothing",
-            color = game:whoseTurn().color,
+            color = TheGame:whoseTurn().color,
             label = current_index - transit_count,
             font_size = 100,
             position = Vector(current_space.camera_pos):scale(Utils.board_scale_vector),
@@ -303,16 +303,15 @@ local function rollRegularDice()
         normaldie2.setPositionSmooth({0, 3.5, 0}, false)
         speeddie.setPositionSmooth({2, 3.5, 0}, false)
         local total_rolled = normaldie1.getValue() + normaldie2.getValue() + Game.speedDieValue(speeddie.getValue())
-        broadcastToAll(game:whoseTurn():getName() .. " rolled " .. normaldie1.getValue() .. ", " ..
-                           normaldie2.getValue() .. " and " .. speedDieString() .. " = " .. total_rolled, game:whoseTurn().color)
+        broadcastToAll(TheGame:whoseTurn():getName() .. " rolled " .. normaldie1.getValue() .. ", " ..
+                           normaldie2.getValue() .. " and " .. speedDieString() .. " = " .. total_rolled, TheGame:whoseTurn().color)
         Wait.frames(function()
             normaldie1.setLock(true)
             normaldie2.setLock(true)
             speeddie.setLock(true)
         end)
         -- Move the player to the spot
-        animateDiceRoll(game:whoseTurn().location.name, total_rolled)
-        game:submitDiceRoll(normaldie1.getValue(), normaldie2.getValue(), speeddie.getValue())
+        animateDiceRoll(TheGame:whoseTurn().location.name, total_rolled)
     end
 
     local function allThreeDiceAreResting()
@@ -333,22 +332,22 @@ end
 function onObjectPickUp(player_color, object)
     if Utils.equalsAny(object.getGUID(), GUIDs.dice) then
         object.drop()
-        if player_color == game:whoseTurn().color then
+        if player_color == TheGame:whoseTurn().color then
             rollRegularDice()
         else
             --TODO: Specify what is being waited on
             --e.g. Blue is waiting to roll the dice
             --Yellow is considering the trade offer
             --Green is building stuff
-            broadcastToColor("It is " .. game:whoseTurn():getName() .. "'s turn right now.", player_color, "Red")
+            broadcastToColor("It is " .. TheGame:whoseTurn():getName() .. "'s turn right now.", player_color, "Red")
         end
     end
 end
 
 function endTurnClick(player)
-    if player.color == game:whoseTurn().color then
-        game:nextTurn()
-        broadcastToAll(game:whoseTurn():getName() .. "'s turn starts now.", game:whoseTurn().color)
+    if player.color == TheGame:whoseTurn().color then
+        TheGame:nextTurn()
+        broadcastToAll(TheGame:whoseTurn():getName() .. "'s turn starts now.", TheGame:whoseTurn().color)
         hideActionButtons()
         for _, die in ipairs({normaldie1, normaldie2, speeddie}) do
             die.scale(0.5)
