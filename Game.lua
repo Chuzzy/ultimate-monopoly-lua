@@ -123,6 +123,15 @@ function Game:nextTurn()
     self.state = GameState.PREMOVE
 end
 
+---Gives a player money from the bank.
+---@param creditor UMPlayer The recipient of the money.
+---@param amount integer The amount of money to be paid.
+---@param reason string The reason for getting the money
+function Game:payFromBank(creditor, amount, reason)
+    creditor.money = creditor.money + amount
+    pcall(self.money_changed_handler, Debt.new(nil, creditor, amount, reason))
+end
+
 ---Gives the player the property and deducts the cost from them.
 ---@param buyer UMPlayer The player buying the property.
 ---@param property Property The sold property.
