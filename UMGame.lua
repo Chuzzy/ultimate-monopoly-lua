@@ -7,7 +7,7 @@
 ---@field waiting_on UMPlayer The player who is holding up progression of the game.
 ---@field turn_count integer The number of turns.
 ---@field debts table<number, Debt> Array of unpaid debts.
----@field unowned_properties table<integer, Property> Array of unowned_properties.
+---@field properties table<string, Property> Array of all properties.
 ---@field cash_pool integer Number of dollars in the cash pool.
 ---@field state GameState The current game state.
 ---@field money_changed_handler function Event handler that is called when money changes hands.
@@ -28,7 +28,7 @@ function UMGame.new()
     self.players_by_color = {}
     self.turn_count = 0
     self.debts = {}
-    self.unowned_properties = Property.generateUMProperties()
+    self.properties = Property.generateUMProperties()
     self.cash_pool = 0
     self.state = {name = GameState.UNBEGUN}
     return self
