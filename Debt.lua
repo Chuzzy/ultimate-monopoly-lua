@@ -1,9 +1,9 @@
 --- A debt, representing someone owing someone else money.
 ---@class Debt
----@field debtor UMPlayer
----@field creditor UMPlayer
----@field amount integer
----@field reason string
+---@field debtor UMPlayer The person who owes money.
+---@field creditor UMPlayer The person who is owed money.
+---@field amount integer The amount of money owed.
+---@field reason string The reason for owing money.
 Debt = {}
 Debt.__index = Debt
 function Debt.__tostring(self)
@@ -13,10 +13,10 @@ function Debt.__tostring(self)
 end
 
 --- Creates a new Debt.
----@param debtor UMPlayer
----@param creditor UMPlayer
----@param amount integer
----@param reason string
+---@param debtor UMPlayer The person who owes money.
+---@param creditor UMPlayer The person who is owed money.
+---@param amount integer The amount of money owed.
+---@param reason string The reason for owing money.
 ---@return Debt
 function Debt.new(debtor, creditor, amount, reason)
     local self = setmetatable({}, Debt)
