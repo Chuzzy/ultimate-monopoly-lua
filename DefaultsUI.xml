@@ -9,6 +9,13 @@
     <ProgressBar class="bidBar" color="" showPercentageText="false"/>
 
     <Text fontSize="14" fontStyle="Normal" alignment="MiddleCenter"/>
-    <Text class="moneyText" fontStyle="bold" resizeTextForBestFit="true" resizeTextMaxSize="26"/>
     <Text class="bidAmount" fontSize="24" />
+
+    <!-- Money UI -->
+    <Text class="moneyText" fontStyle="bold" resizeTextForBestFit="true" resizeTextMaxSize="26"/>
+
+    <!-- Property UI -->
+    <Row class="activeRent" dontUseTableRowBackground="true" color="Green"/>
+    <Cell class="activeRent" dontUseTableCellBackground="true"/>
+    <Text class="activeRent" color="White"/>
 </Defaults>
