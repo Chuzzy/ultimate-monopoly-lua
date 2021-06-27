@@ -10,6 +10,7 @@ local board = TheGame.board
 local board_btns = {}
 local mutated_btns = {}
 local player_tokens = {}
+Rigged = {}
 local normaldie1 = getObjectFromGUID(GUIDs.dice.normal1)
 local normaldie2 = getObjectFromGUID(GUIDs.dice.normal2)
 local speeddie = getObjectFromGUID(GUIDs.dice.speedie)
@@ -303,9 +304,15 @@ local function animateDiceRoll(start, roll)
 end
 
 local function rollRegularDice()
-    rollDieRoutine(normaldie1)
-    rollDieRoutine(normaldie2)
-    rollDieRoutine(speeddie)
+    if Rigged then
+        normaldie1.setValue(Rigged[1])
+        normaldie2.setValue(Rigged[2])
+        speeddie.setValue(Rigged[3])
+    else
+        rollDieRoutine(normaldie1)
+        rollDieRoutine(normaldie2)
+        rollDieRoutine(speeddie)
+    end
 
     local function centerDiceAndBroadcastResult()
         normaldie1.scale(2)
