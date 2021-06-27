@@ -54,6 +54,18 @@ Property.colors = {
     utility = "#696969"
 }
 
+---Set containing properties which have bright colors
+---and should be displayed with black text.
+Property.bright_colors = {
+    ["light pink"] = true,
+    ["light green"] = true,
+    cream = true,
+    peach = true,
+    ["light blue"] = true,
+    pink = true,
+    white = true,
+}
+
 --- Calculate the rent on this property.
 ---@param dice_total integer
 ---@return integer
