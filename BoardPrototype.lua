@@ -21,12 +21,8 @@ end
 local function createGoPrototype(track)
     table.insert(track, {
         name = Names.go,
-        ---comment
-        ---@param space any
-        ---@param game any
-        ---@param player any
         action = function(space, game, player)
-            
+            --TODO: Handle landing on go
         end
     })
 end
@@ -34,21 +30,23 @@ end
 local function createBonusPrototype(track)
     table.insert(track, {
         name = Names.bonus,
-        action = function(space, player, params) print("Dosh!") end
+        action = function(space, game, player)
+            game:payFromBank(player, 300, "for landing on Bonus")
+        end
     })
 end
 
 local function createSqueezePlayPrototype(track)
     table.insert(track, {
         name = Names.squeeze,
-        action = function(space, player, params) print("Lucky you!") end
+        action = function(space, game, player) print("Lucky you!") end
     })
 end
 
 local function createRollThreePrototype(track)
     table.insert(track, {
         name = Names.roll3,
-        action = function(space, player, params)
+        action = function(space, game, player)
             print("Roll the dice to win some cash.")
         end
     })
@@ -57,14 +55,14 @@ end
 local function createTaxRefundPrototype(track)
     table.insert(track, {
         name = Names.refund,
-        action = function(space, player, params) print("Here you go!") end
+        action = function(space, game, player) print("Here you go!") end
     })
 end
 
 local function createReverseDirectionPrototype(track)
     table.insert(track, {
         name = Names.reverse,
-        action = function(space, player, params)
+        action = function(space, game, player)
             print("Moving backwards.")
         end
     })
@@ -73,14 +71,16 @@ end
 local function createPayDayPrototype(track)
     table.insert(track, {
         name = Names.payday,
-        action = function(space, player, params) print("It's PAYDAY!") end
+        action = function(space, game, player)
+            game:payFromBank(player, 400, "for landing on Pay Day")
+        end
     })
 end
 
 local function createStockExchangePrototype(track)
     table.insert(track, {
         name = Names.stock,
-        action = function(space, player, params)
+        action = function(space, game, player)
             print("Buy! Buy! Sell! Sell!")
         end
     })
@@ -89,7 +89,7 @@ end
 local function createAuctionPrototype(track)
     table.insert(track, {
         name = Names.auction,
-        action = function(space, player, params)
+        action = function(space, game, player)
             print("Sold to the highest bidder.")
         end
     })
@@ -98,14 +98,14 @@ end
 local function createBirthdayPrototype(track)
     table.insert(track, {
         name = Names.birthday,
-        action = function(space, player, params) print("Happy birthday!") end
+        action = function(space, game, player) print("Happy birthday!") end
     })
 end
 
 local function createSubwayPrototype(track)
     table.insert(track, {
         name = Names.subway,
-        action = function(space, player, params)
+        action = function(space, game, player)
             print("Going round the underground.")
         end
     })
@@ -115,7 +115,7 @@ local function createHollandTunnelPrototype(track, is_inner)
     local suffix = is_inner and " Inner" or " Outer"
     table.insert(track, {
         name = Names.holland .. suffix,
-        action = function(space, player, params) print("Holland!") end
+        action = function(space, game, player) print("Holland!") end
     })
 end
 
@@ -181,14 +181,14 @@ end
 local function createIncomeTaxPrototype(track)
     table.insert(track, {
         name = Names.income,
-        action = function(space, player, params) print("Taxes due.") end
+        action = function(space, game, player) print("Taxes due.") end
     })
 end
 
 local function createLuxuryTaxPrototype(track)
     table.insert(track, {
         name = Names.luxury,
-        action = function(space, player, params)
+        action = function(space, game, player)
             print("Good ol' Uncle Sam.")
         end
     })
@@ -235,7 +235,7 @@ end
 local function createJustVisitingPrototype(track)
     table.insert(track, {
         name = Names.visit,
-        action = function(space, player, params) print("Just Visiting") end
+        action = function(space, game, player) print("Just Visiting") end
     })
 end
 
@@ -243,7 +243,7 @@ end
 local function createFreeParkingPrototype(track)
     table.insert(track, {
         name = Names.parking,
-        action = function(space, player, params)
+        action = function(space, game, player)
             print("Free Parking. Beep beep.")
         end
     })
@@ -253,7 +253,7 @@ end
 local function createGoToJailPrototype(track)
     table.insert(track, {
         name = Names.malloy,
-        action = function(space, player, params) print("GO TO JAIL") end
+        action = function(space, game, player) print("GO TO JAIL") end
     })
 end
 
