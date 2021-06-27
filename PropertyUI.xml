@@ -1,59 +1,90 @@
-<TableLayout width="200" height="350" rectAlignment="UpperLeft" offsetXY="75 -11" columnWidths="0 50" rowBackgroundColor="#FFFFFF" cellBackgroundImage="" cellBackgroundColor="#FFFFFF">
-    <Row dontUseTableRowBackground="true" color="#044d9c" preferredHeight="50">
-        <Cell dontUseTableCellBackground="true" columnSpan="2"><Text color="White">ANDREW YOUNG INTERNATIONAL BOULEVARD</Text></Cell>
+<TableLayout id="PropertyCard" width="200" height="300" rectAlignment="UpperLeft" offsetXY="75 -11" columnWidths="0 50" rowBackgroundColor="#FFFFFF" cellBackgroundImage="" cellBackgroundColor="#FFFFFF">
+    <Row id="PropertyTitle" dontUseTableRowBackground="true" color="#044d9c" preferredHeight="50">
+        <Cell dontUseTableCellBackground="true" columnSpan="2"><Text id="PropertyName" color="White">PROPERTY NAME GOES HERE PLEASE AND THANK YOU   </Text></Cell>
     </Row>
     <!-- Unmortgaged property example -->
-    <!--
-    <Row>
-        <Cell><Text>Rent</Text></Cell>
-        <Cell><Text>$50</Text></Cell>
+    <Row id="Rent1Row">
+        <Cell id="Rent1LabelCell">
+            <Text id="Rent1Label">Rent</Text>
+        </Cell>
+        <Cell id="Rent1ValueCell">
+            <Text id="Rent1Value"></Text>
+        </Cell>
     </Row>
-    <Row>
-        <Cell><Text>With Majority</Text></Cell>
-        <Cell><Text>$100</Text></Cell>
+    <Row id="RentMajorityRow">
+        <Cell id="RentMajorityLabelCell">
+            <Text id="RentMajorityLabel">With Majority</Text>
+        </Cell>
+        <Cell id="RentMajorityValueCell">
+            <Text id="RentMajorityValue"></Text>
+        </Cell>
     </Row>
-    <Row>
-        <Cell><Text>With Monopoly</Text></Cell>
-        <Cell><Text>$150</Text></Cell>
+    <Row id="RentMonopolyRow">
+        <Cell id="RentMonopolyLabelCell">
+            <Text id="RentMonopolyLabel">With Monopoly</Text>
+        </Cell>
+        <Cell id="RentMonopolyValueCell">
+            <Text id="RentMonopolyValue"></Text>
+        </Cell>
     </Row>
-    <Row>
-        <Cell><Text>With 1 house</Text></Cell>
-        <Cell><Text>$200</Text></Cell>
+    <Row id="Rent2Row">
+        <Cell id="Rent2LabelCell">
+            <Text id="Rent2Label">With 1 House</Text>
+        </Cell>
+        <Cell id="Rent2ValueCell">
+            <Text id="Rent2Value"></Text>
+        </Cell>
     </Row>
-    <Row>
-        <Cell><Text>With 2 houses</Text></Cell>
-        <Cell><Text>$600</Text></Cell>
+    <Row id="Rent3Row">
+        <Cell id="Rent3LabelCell">
+            <Text id="Rent3Label">With 2 Houses</Text>
+        </Cell>
+        <Cell id="Rent3ValueCell">
+            <Text id="Rent3Value"></Text>
+        </Cell>
     </Row>
-    <Row dontUseTableRowBackground="true" color="Green">
-        <Cell dontUseTableCellBackground="true"><Text color="White">With 3 houses</Text></Cell>
-        <Cell dontUseTableCellBackground="true"><Text color="White">$1400</Text></Cell>
+    <Row id="Rent4Row">
+        <Cell id="Rent4LabelCell">
+            <Text id="Rent4Label">With 3 Houses</Text>
+        </Cell>
+        <Cell id="Rent4ValueCell">
+            <Text id="Rent4Value"></Text>
+        </Cell>
     </Row>
-    <Row>
-        <Cell><Text>With 4 houses</Text></Cell>
-        <Cell><Text>$1700</Text></Cell>
+    <Row id="Rent5Row">
+        <Cell id="Rent5LabelCell">
+            <Text id="Rent5Label">With 4 Houses</Text>
+        </Cell>
+        <Cell id="Rent5ValueCell">
+            <Text id="Rent5Value"></Text>
+        </Cell>
     </Row>
-    <Row>
-        <Cell><Text>With hotel</Text></Cell>
-        <Cell><Text>$2000</Text></Cell>
+    <Row id="Rent6Row">
+        <Cell id="Rent6LabelCell">
+            <Text id="Rent6Label">With Hotel</Text>
+        </Cell>
+        <Cell id="Rent6ValueCell">
+            <Text id="Rent6Value"></Text>
+        </Cell>
     </Row>
-    <Row>
-        <Cell><Text>With skyscraper</Text></Cell>
-        <Cell><Text>$3000</Text></Cell>
+    <Row id="Rent7Row">
+        <Cell id="Rent7LabelCell">
+            <Text id="Rent7Label">With Skyscraper</Text>
+        </Cell>
+        <Cell id="Rent7ValueCell">
+            <Text id="Rent7Value"></Text>
+        </Cell>
     </Row>
-    <Row>
-        <Cell image=""><Text>Cost to build</Text></Cell>
-        <Cell image=""><Text>$200</Text></Cell>
-    </Row>
-    <Row>
-        <Cell image=""><Text>Mortgage Value</Text></Cell>
-        <Cell image=""><Text>$200</Text></Cell>
-    </Row>
-    -->
-    <Row dontUseTableRowBackground="true" color="Red">
+
+    <Row dontUseTableRowBackground="true" color="Red" active="false">
         <Cell columnSpan="2" dontUseTableCellBackground="true">
-            <Text color="White">MORTGAGED
-            for $200
-            Unmortgage for $220</Text>
+            <Text color="White">MORTGAGED</Text>
+        </Cell>
+    </Row>
+    <Row visibility="White">
+        <Cell columnSpan="2">
+            <Button id="DowngradeBtn" image="" color="Red" textColor="White" tooltip="Sell a building" tooltipPosition="Below" text="+$100"/>
+            <Button id="UpgradeBtn" image="" color="Green" textColor="White" tooltip="Buy a building" tooltipPosition="Below" text="-$200"/>
         </Cell>
     </Row>
 </TableLayout>
