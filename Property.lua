@@ -48,7 +48,10 @@ Property.colors = {
     white = "#ffffff",
     black = "#000000",
     gray = "#808080",
-    brown = "#aa4400"
+    brown = "#aa4400",
+    rail = "#000000",
+    cab = "#FFFF8D",
+    utility = "#696969"
 }
 
 --- Calculate the rent on this property.
