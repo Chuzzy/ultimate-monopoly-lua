@@ -1,0 +1,14 @@
+<Defaults>
+    <!-- Auction UI -->
+    <VerticalLayout class="lightPanel" color="#f5f5f5"/>
+    <VerticalLayout class="darkPanel" color="#444444"/> 
+
+    <Button class="bidButton" fontSize="40" minWidth="100" minHeight="60"/>
+    <Button class="withdrawButton" fontSize="40" minHeight="100" preferredHeight="100"/>
+
+    <ProgressBar class="bidBar" color="" showPercentageText="false"/>
+
+    <Text fontSize="14" fontStyle="Normal" alignment="MiddleCenter"/>
+    <Text class="moneyText" fontStyle="bold" resizeTextForBestFit="true" resizeTextMaxSize="26"/>
+    <Text class="bidAmount" fontSize="24" />
+</Defaults>
