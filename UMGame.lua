@@ -143,6 +143,72 @@ function UMGame:handleSpaceAction()
     self:whoseTurn():act(self)
 end
 
+---Shows the property UI.
+---@param property Property The property to display.
+---@param show_controls_to UMPlayer The player to show the building controls to, if any.
+function UMGame:showPropertyInfo(property, show_controls_to)
+    UI.setValue("PropertyName", property.name)
+    UI.setAttribute("PropertyTitle", "color", Property.colors[property.group])
+    UI.setAttribute("PropertyName", "color", Property.bright_colors[property.group] and "Black" or "White")
+
+    if property.group == "rail" then
+        UI.hide("RentMajorityRow")
+        UI.hide("RentMonopolyRow")
+        UI.hide("Rent5Row")
+        UI.hide("Rent6Row")
+        UI.hide("Rent7Row")
+        UI.setValue("Rent2Label", "With Two Railroads")
+        UI.setValue("Rent3Label", "With Three Railroads")
+        UI.setValue("Rent4Label", "With Four Railroads")
+
+        for i, rent in ipairs(property.rent_values) do
+            UI.setValue("Rent" .. i .. "Value", "$" .. rent)
+        end
+    elseif property.group == "cab" then
+        UI.hide("RentMajorityRow")
+        UI.hide("RentMonopolyRow")
+        UI.hide("Rent5Row")
+        UI.hide("Rent6Row")
+        UI.hide("Rent7Row")
+        UI.setValue("Rent2Label", "With Two Cab Companies")
+        UI.setValue("Rent3Label", "With Three Cab Companies")
+        UI.setValue("Rent4Label", "With Four Companies")
+
+        for i, rent in ipairs(property.rent_values) do
+            UI.setValue("Rent" .. i .. "Value", "$" .. rent)
+        end
+    elseif property.group == "utility" then
+        UI.show("RentMajorityRow")
+        UI.show("RentMonopolyRow")
+        UI.show("Rent5Row")
+        UI.show("Rent6Row")
+        UI.hide("Rent7Row")
+        UI.setValue("RentMajorityLabel", "With Two Utilities")
+        UI.setValue("RentMonopolyLabel", "With Three Utilities")
+        UI.setValue("Rent2Label", "With Four Utilities")
+        UI.setValue("Rent3Label", "With Five Utilities")
+        UI.setValue("Rent4Label", "With Six Utilities")
+        UI.setValue("Rent5Label", "With Seven Utilities")
+        UI.setValue("Rent6Label", "With Eight Utilities")
+
+        for i, id in ipairs({"Rent1Value", "RentMajorityValue", "RentMonopolyValue", "Rent2Value", "Rent3Value", "Rent4Value", "Rent5Value", "Rent6Value"}) do
+            UI.setValue(id, property.rent_values[i] .. "x")
+        end
+    else
+        UI.setValue("RentMajorityValue", "$" .. property.rent_values[1] * 2)
+        UI.setValue("RentMonopolyValue", "$" .. property.rent_values[1] * 3)
+
+        for i, rent in ipairs(property.rent_values) do
+            UI.setValue("Rent" .. i .. "Value", "$" .. rent)
+        end
+    end
+    UI.show("PropertyCard")
+end
+
+function UMGame:hidePropertyInfo()
+    UI.hide("PropertyCard")
+end
+
 ---Moves a player to a new position on the board.
 ---@param player UMPlayer The player to move.
 ---@param destination Space The space on the board to move to.
@@ -155,7 +221,7 @@ end
 
 function UMGame:nextTurn()
     if self.state ~= GameState.POST_MOVEMENT then
-        error("game is not in the post movement state", 2)
+        --error("game is not in the post movement state", 2)
     end
     self.current_turn_index = (self.current_turn_index % #self.players) + 1
     self.state = GameState.PREMOVE
