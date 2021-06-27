@@ -28,6 +28,29 @@ function Property.new(name, cost, group, rent_values, improvement_cost)
     return self
 end
 
+Property.colors = {
+    ["light pink"] = "#ffaaaa",
+    ["light green"] = "#80ff80",
+    cream = "#ffe680",
+    teal = "#008066",
+    wine = "#800033",
+    gold = "#aa8800",
+    peach = "#ffb380",
+    maroon = "#800000",
+    purple = "#580c39",
+    ["light blue"] = "#87a5d7",
+    pink = "#ef3878",
+    orange = "#f58023",
+    red = "#d40000",
+    yellow = "#ffcc00",
+    green = "#098733",
+    ["dark blue"] = "#284e9c",
+    white = "#ffffff",
+    black = "#000000",
+    gray = "#808080",
+    brown = "#aa4400"
+}
+
 --- Calculate the rent on this property.
 ---@param dice_total integer
 ---@return integer
