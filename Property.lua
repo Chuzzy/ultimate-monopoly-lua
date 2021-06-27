@@ -63,7 +63,9 @@ Property.bright_colors = {
     peach = true,
     ["light blue"] = true,
     pink = true,
+    yellow = true,
     white = true,
+    cab = true,
 }
 
 --- Calculate the rent on this property.
