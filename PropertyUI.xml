@@ -77,14 +77,6 @@
             <Text id="Rent7Value"></Text>
         </Cell>
     </Row>
-    <Row id="Rent8Row">
-        <Cell id="Rent8LabelCell">
-            <Text id="Rent8Label">With 8 Utilities</Text>
-        </Cell>
-        <Cell id="Rent8ValueCell">
-            <Text id="Rent8Value">150x</Text>
-        </Cell>
-    </Row>
 
     <Row dontUseTableRowBackground="true" color="Red" active="false">
         <Cell columnSpan="2" dontUseTableCellBackground="true">
