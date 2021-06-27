@@ -304,7 +304,7 @@ local function animateDiceRoll(start, roll)
 end
 
 local function rollRegularDice()
-    if Rigged then
+    if #Rigged == 3 then
         normaldie1.setValue(Rigged[1])
         normaldie2.setValue(Rigged[2])
         speeddie.setValue(Rigged[3])
