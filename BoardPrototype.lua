@@ -119,8 +119,27 @@ local function createHollandTunnelPrototype(track, is_inner)
     })
 end
 
-local function propertyAction(space, player, name)
-    print("Property function: " .. space)
+---@param space Space
+---@param game UMGame
+---@param player UMPlayer
+local function propertyAction(space, game, player)
+    local property, property_name
+    if space.transit_type then
+        -- Removes the " Outer" or " Inner" at the end of the transit station's name
+        property_name = space.name:sub(0, space.name:len() - 6)
+    else
+        property_name = space.name
+    end
+    property = game.properties[property_name]
+    if not property.owner then
+        broadcastToColor(property_name .. " is for sale for $" .. property.cost .. ". You want it?", player.color, player.color)
+        game.state = GameState.PROPERTY_SALE
+    else
+        local rent_owed = property:rent(game.dice_total)
+        if rent_owed > 0 then
+            table.insert(game.debts, Debt.new(player, property.owner, rent_owed, "rent for landing on " .. property_name))
+        end
+    end
 end
 
 ---@param track table
@@ -129,8 +148,9 @@ local function createPropertyPrototype(track, name)
     table.insert(track, {name = name, action = propertyAction})
 end
 
-local function transitStationAction(space, player, params)
-    print("Here's your travel voucher, " .. player.name)
+local function transitStationAction(space, game, player)
+    print("Here's your travel voucher, " .. player:getName())
+    propertyAction(space, game, player)
 end
 
 ---@param track table
