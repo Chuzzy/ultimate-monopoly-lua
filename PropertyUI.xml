@@ -78,12 +78,12 @@
         </Cell>
     </Row>
 
-    <Row dontUseTableRowBackground="true" color="Red" active="false">
+    <Row id="PropertyMortgagedRow" dontUseTableRowBackground="true" color="Red" active="false">
         <Cell columnSpan="2" dontUseTableCellBackground="true">
             <Text color="White">MORTGAGED</Text>
         </Cell>
     </Row>
-    <Row visibility="White">
+    <Row id="PropertyControlsRow" visibility="0">
         <Cell columnSpan="2">
             <Button id="DowngradeBtn" image="" color="Red" textColor="White" tooltip="Sell a building" tooltipPosition="Below" text="+$100"/>
             <Button id="UpgradeBtn" image="" color="Green" textColor="White" tooltip="Buy a building" tooltipPosition="Below" text="-$200"/>

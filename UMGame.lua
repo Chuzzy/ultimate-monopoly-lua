@@ -146,7 +146,8 @@ end
 ---Shows the property UI.
 ---@param property Property The property to display.
 ---@param show_controls_to UMPlayer The player to show the building controls to, if any.
-function UMGame:showPropertyInfo(property, show_controls_to)
+---@param show_purchase_controls boolean True to show buy/auction controls instead of building.
+function UMGame:showPropertyInfo(property, show_controls_to, show_purchase_controls)
     UI.setValue("PropertyName", property.name)
     UI.setAttribute("PropertyTitle", "color", Property.colors[property.group])
     UI.setAttribute("PropertyName", "color", Property.bright_colors[property.group] and "Black" or "White")
@@ -206,6 +207,24 @@ function UMGame:showPropertyInfo(property, show_controls_to)
         else
             UI.show("RentMajorityRow")
         end
+    end
+    if show_controls_to then
+        UI.setAttribute("PropertyControlsRow", "visibility", show_controls_to.color)
+        if show_purchase_controls then
+            UI.setAttribute("DowngradeBtn", "text", "Auction")
+            UI.setAttribute("DowngradeBtn", "tooltip", "Put this property up to auction")
+            UI.setAttribute("UpgradeBtn", "text", "Buy $" .. property.cost)
+            UI.setAttribute("UpgradeBtn", "tooltip", "Buy " .. property.name .. " for $" .. property.cost)
+        else
+            UI.setAttribute("DowngradeBtn", "text", "+$" .. property.improvement_cost / 2)
+            UI.setAttribute("DowngradeBtn", "tooltip", "Sell a building")
+            UI.setAttribute("UpgradeBtn", "text", "-$" .. property.improvement_cost)
+            UI.setAttribute("UpgradeBtn", "tooltip", "Buy a building")
+        end
+        --Weird bug: changing the text also changes the text color to black.
+        --Hence the text color is reset.
+        UI.setAttribute("DowngradeBtn", "textColor", "White")
+        UI.setAttribute("UpgradeBtn", "textColor", "White")
     end
     UI.show("PropertyCard")
 end

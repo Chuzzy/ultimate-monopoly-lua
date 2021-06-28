@@ -133,7 +133,7 @@ local function propertyAction(space, game, player)
     property = game.properties[property_name]
     if not property.owner then
         broadcastToColor(property_name .. " is for sale for $" .. property.cost .. ". You want it?", player.color, player.color)
-        game:showPropertyInfo(property)
+        game:showPropertyInfo(property, game:whoseTurn(), true)
         game.state = GameState.PROPERTY_SALE
     else
         local rent_owed = property:rent(game.dice_total)
