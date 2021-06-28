@@ -9,7 +9,9 @@
 ---@field owner UMPlayer The owner of the property.
 Property = {}
 Property.__index = Property
+---@type table<string, integer>
 Property.counts = {}
+---@type table<string, Property[]>
 Property.properties_in_group = {}
 
 --- Create a new Property.

@@ -6,7 +6,7 @@
 ---@field location Space The space this player is currently on.
 ---@field lost_turns integer The number of turns this player is set to "lose".
 ---@field turns_in_jail integer The number of turns this player has spent in jail.
----@field owned_properties table<integer, Property> The properties owned by this player.
+---@field owned_properties table<string, Property> The properties owned by this player.
 ---@field action_cards table<integer, ActionCard> The action cards owned by this player.
 ---@field bankrupt boolean Whether this player is bankrupt.
 UMPlayer = {}
@@ -47,8 +47,8 @@ end
 
 function UMPlayer:countPropertiesOwnedInGroup(group)
     local count = 0
-    for _, property in ipairs(self.owned_properties) do
-        if property.group == group then
+    for _, property in ipairs(Property.properties_in_group[group]) do
+        if self.owned_properties[property.name] then
             count = count + 1
         end
     end
