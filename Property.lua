@@ -90,7 +90,14 @@ function Property:rent(dice_total)
         return self.rent_values[self.improvements]
     else
         local unimproved_rent = self.rent_values[0]
-        -- TODO: Calculate double/triple rent if necessary
-        return unimproved_rent
+        local rent_multiplier = 1
+        local properties_owned_in_group = self.owner:countPropertiesOwnedInGroup(self.group)
+        local properties_in_group = Property.counts[self.group]
+        if properties_owned_in_group == properties_owned_in_group then
+            rent_multiplier = 3
+        elseif properties_owned_in_group > properties_in_group / 2 then
+            rent_multiplier = 2
+        end
+        return unimproved_rent * rent_multiplier
     end
 end
