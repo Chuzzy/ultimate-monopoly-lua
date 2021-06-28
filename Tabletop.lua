@@ -315,9 +315,9 @@ local function rollRegularDice()
     end
 
     local function centerDiceAndBroadcastResult()
-        normaldie1.scale(2)
-        normaldie2.scale(2)
-        speeddie.scale(2)
+        normaldie1.setScale({2, 2, 2})
+        normaldie2.setScale({2, 2, 2})
+        speeddie.setScale({2, 2, 2})
         normaldie1.setPositionSmooth({-2, 3.5, 0}, false)
         normaldie2.setPositionSmooth({0, 3.5, 0}, false)
         speeddie.setPositionSmooth({2, 3.5, 0}, false)
