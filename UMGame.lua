@@ -201,6 +201,11 @@ function UMGame:showPropertyInfo(property, show_controls_to)
         for i, rent in ipairs(property.rent_values) do
             UI.setValue("Rent" .. i .. "Value", "$" .. rent)
         end
+        if Property.counts[property.group] == 2 then
+            UI.hide("RentMajorityRow")
+        else
+            UI.show("RentMajorityRow")
+        end
     end
     UI.show("PropertyCard")
 end
