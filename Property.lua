@@ -9,6 +9,8 @@
 ---@field owner UMPlayer The owner of the property.
 Property = {}
 Property.__index = Property
+Property.counts = {}
+Property.properties_in_group = {}
 
 --- Create a new Property.
 ---@param name string
@@ -25,6 +27,9 @@ function Property.new(name, cost, group, rent_values, improvement_cost)
     self.rent_values = rent_values
     self.improvement_cost = improvement_cost
     self.improvements = 0
+    Property.counts[self.group] = (Property.counts[self.group] or 0) + 1
+    Property.properties_in_group[self.group] = Property.properties_in_group[self.group] or {}
+    table.insert(Property.properties_in_group[self.group], self)
     return self
 end
 
