@@ -3,6 +3,8 @@ require("Board")
 require("BoardPositions")
 require("Utils")
 require("UMGame")
+require("InGameObjects")
+require("ClickHandlers")
 
 function doNothing() end
 TheGame = UMGame.new()
@@ -11,16 +13,26 @@ local board_btns = {}
 local mutated_btns = {}
 local player_tokens = {}
 Rigged = {}
-local normaldie1 = getObjectFromGUID(GUIDs.dice.normal1)
-local normaldie2 = getObjectFromGUID(GUIDs.dice.normal2)
-local speeddie = getObjectFromGUID(GUIDs.dice.speedie)
+
+---Populates the InGameObjects table.
+---@param guids table<string, string> Table of GUIDs.
+---@param directory string Name of the directory.
+function populateInGameObjects(guids, directory)
+    for object_name, object_guid in pairs(guids) do
+        if type(object_guid) == "table" then
+            populateInGameObjects(guids[object_name], object_name)
+        elseif directory then
+            InGameObjects[directory] = InGameObjects[directory] or {}
+            InGameObjects[directory][object_name] = getObjectFromGUID(object_guid)
+        else
+            InGameObjects[object_name] = getObjectFromGUID(object_guid)
+        end
+    end
+end
 
 function onLoad()
-    Gameboard = getObjectFromGUID(GUIDs.gameboard)
-    normaldie1 = getObjectFromGUID(GUIDs.dice.normal1)
-    normaldie2 = getObjectFromGUID(GUIDs.dice.normal2)
-    speeddie = getObjectFromGUID(GUIDs.dice.speedie)
-    Gameboard.interactable = false
+    populateInGameObjects(GUIDs)
+    InGameObjects.gameboard.interactable = false
     -- createAllBoardButtons()
     registerNewPlayer("Blue", GUIDs.tokens.car)
     registerNewPlayer("Yellow", GUIDs.tokens.hat)
@@ -153,7 +165,7 @@ function createAllBoardButtons()
             spawnAvatarOnSpace(player_color, space.name)
         end
 
-        Gameboard.createButton({
+        InGameObjects.gameboard.createButton({
             click_function = name .. "_click",
             color = {1, 1, 1, 0.8},
             label = name,
@@ -171,7 +183,7 @@ end
 
 function resetBoardButtons()
     for name in pairs(mutated_btns) do
-        Gameboard.editButton({
+        InGameObjects.gameboard.editButton({
             index = board_btns[name],
             color = {1, 1, 1, 0.8},
             label = name,
@@ -182,12 +194,12 @@ function resetBoardButtons()
 end
 
 function colorBoardButton(name, new_color)
-    Gameboard.editButton({index = board_btns[name], color = new_color})
+    InGameObjects.gameboard.editButton({index = board_btns[name], color = new_color})
     mutated_btns[name] = true
 end
 
 function labelBoardButton(name, new_text)
-    Gameboard.editButton({
+    InGameObjects.gameboard.editButton({
         index = board_btns[name],
         label = new_text,
         font_size = 100
@@ -233,7 +245,7 @@ local function rollDieRoutine(die)
 end
 
 local function speedDieString()
-    local value = getObjectFromGUID(GUIDs.dice.speedie).getValue()
+    local value = getObjectFromGUID(GUIDs.dice.speed).getValue()
     if value == 6 then
         return "Bus"
     elseif value == 5 or value == 4 then
@@ -255,8 +267,8 @@ end
 
 ---Called when the token has finished moving.
 local function postMoveHandler()
-    Gameboard.clearButtons()
-    TheGame:submitDiceRoll(normaldie1.getValue(), normaldie2.getValue(), speeddie.getValue())
+    InGameObjects.gameboard.clearButtons()
+    TheGame:submitDiceRoll(InGameObjects.dice.normal1.getValue(), InGameObjects.dice.normal2.getValue(), InGameObjects.dice.speed.getValue())
     movePlayerToken(TheGame:whoseTurn().color, TheGame:whoseTurn().location, function()
         showActionButtons()
         TheGame:handleSpaceAction()
@@ -281,7 +293,7 @@ local function animateDiceRoll(start, roll)
             last_space_was_transit = false
         end
 
-        Gameboard.createButton({
+        InGameObjects.gameboard.createButton({
             click_function = "doNothing",
             color = TheGame:whoseTurn().color,
             label = current_index - transit_count,
@@ -305,36 +317,36 @@ end
 
 local function rollRegularDice()
     if #Rigged == 3 then
-        normaldie1.setValue(Rigged[1])
-        normaldie2.setValue(Rigged[2])
-        speeddie.setValue(Rigged[3])
+        InGameObjects.dice.normal1.setValue(Rigged[1])
+        InGameObjects.dice.normal2.setValue(Rigged[2])
+        InGameObjects.dice.speed.setValue(Rigged[3])
     else
-        rollDieRoutine(normaldie1)
-        rollDieRoutine(normaldie2)
-        rollDieRoutine(speeddie)
+        rollDieRoutine(InGameObjects.dice.normal1)
+        rollDieRoutine(InGameObjects.dice.normal2)
+        rollDieRoutine(InGameObjects.dice.speed)
     end
 
     local function centerDiceAndBroadcastResult()
-        normaldie1.setScale({2, 2, 2})
-        normaldie2.setScale({2, 2, 2})
-        speeddie.setScale({2, 2, 2})
-        normaldie1.setPositionSmooth({-2, 3.5, 0}, false)
-        normaldie2.setPositionSmooth({0, 3.5, 0}, false)
-        speeddie.setPositionSmooth({2, 3.5, 0}, false)
-        local total_rolled = normaldie1.getValue() + normaldie2.getValue() + UMGame.speedDieValue(speeddie.getValue())
-        broadcastToAll(TheGame:whoseTurn():getName() .. " rolled " .. normaldie1.getValue() .. ", " ..
-                           normaldie2.getValue() .. " and " .. speedDieString() .. " = " .. total_rolled, TheGame:whoseTurn().color)
+        InGameObjects.dice.normal1.setScale({2, 2, 2})
+        InGameObjects.dice.normal2.setScale({2, 2, 2})
+        InGameObjects.dice.speed.setScale({2, 2, 2})
+        InGameObjects.dice.normal1.setPositionSmooth({-2, 3.5, 0}, false)
+        InGameObjects.dice.normal2.setPositionSmooth({0, 3.5, 0}, false)
+        InGameObjects.dice.speed.setPositionSmooth({2, 3.5, 0}, false)
+        local total_rolled = InGameObjects.dice.normal1.getValue() + InGameObjects.dice.normal2.getValue() + UMGame.speedDieValue(InGameObjects.dice.speed.getValue())
+        broadcastToAll(TheGame:whoseTurn():getName() .. " rolled " .. InGameObjects.dice.normal1.getValue() .. ", " ..
+                           InGameObjects.dice.normal2.getValue() .. " and " .. speedDieString() .. " = " .. total_rolled, TheGame:whoseTurn().color)
         Wait.frames(function()
-            normaldie1.setLock(true)
-            normaldie2.setLock(true)
-            speeddie.setLock(true)
+            InGameObjects.dice.normal1.setLock(true)
+            InGameObjects.dice.normal2.setLock(true)
+            InGameObjects.dice.speed.setLock(true)
         end)
         -- Move the player to the spot
         animateDiceRoll(TheGame:whoseTurn().location.name, total_rolled)
     end
 
     local function allThreeDiceAreResting()
-        return normaldie1.resting and normaldie2.resting and speeddie.resting
+        return InGameObjects.dice.normal1.resting and InGameObjects.dice.normal2.resting and InGameObjects.dice.speed.resting
     end
 
     local function broadcastErrorMessage()
@@ -359,19 +371,6 @@ function onObjectPickUp(player_color, object)
             --Yellow is considering the trade offer
             --Green is building stuff
             broadcastToColor("It is " .. TheGame:whoseTurn():getName() .. "'s turn right now.", player_color, "Red")
-        end
-    end
-end
-
-function endTurnClick(player)
-    if player.color == TheGame:whoseTurn().color then
-        TheGame:nextTurn()
-        broadcastToAll(TheGame:whoseTurn():getName() .. "'s turn starts now.", TheGame:whoseTurn().color)
-        hideActionButtons()
-        for _, die in ipairs({normaldie1, normaldie2, speeddie}) do
-            die.scale(0.5)
-            die.setLock(false)
-            die.interactable = true
         end
     end
 end

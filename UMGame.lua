@@ -79,7 +79,6 @@ end
 ---@param starting_color string The player color who is going first.
 function UMGame:start(starting_color)
     assert(starting_color, "UMGame:start - color is nil")
-
     for i, player in ipairs(self.players) do
         if player.color == starting_color then
             self.current_turn_index = i

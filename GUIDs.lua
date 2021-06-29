@@ -13,9 +13,9 @@ GUIDs = {
         --- The third white die.
         normal3 = "849861",
         --- The red speed die.
-        speedie = "368ea8",
+        speed = "368ea8",
         --- The blue voucher die.
-        voucherdie = "3e6cbb"
+        voucher = "3e6cbb"
     },
     --- The playing tokens.
     tokens = {
