@@ -78,9 +78,9 @@
         </Cell>
     </Row>
 
-    <Row id="PropertyMortgagedRow" dontUseTableRowBackground="true" color="Red" active="false">
+    <Row id="PropertyMortgagedRow" dontUseTableRowBackground="true" color="Red">
         <Cell columnSpan="2" dontUseTableCellBackground="true">
-            <Text color="White">MORTGAGED</Text>
+            <Text id="PropertyMortgagedText" color="White">Improvements cost $21 each</Text>
         </Cell>
     </Row>
     <Row id="PropertyControlsRow" visibility="0">

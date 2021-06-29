@@ -214,7 +214,21 @@ function UMGame:showPropertyInfo(property, show_controls_to, show_purchase_contr
             UI.setAttribute("DowngradeBtn", "tooltip", "Put this property up to auction")
             UI.setAttribute("UpgradeBtn", "text", "Buy $" .. property.cost)
             UI.setAttribute("UpgradeBtn", "tooltip", "Buy " .. property.name .. " for $" .. property.cost)
+            -- Use PropertyMortgagedRow to show improvement costs instead of mortgage information
+            UI.setAttribute("PropertyMortgagedRow", "color", "White")
+            UI.setAttribute("PropertyMortgagedText", "color", "Black")
+            UI.setValue("PropertyMortgagedText", "Improvements cost $" .. property.improvement_cost .. " each")
+            UI.show("PropertyMortgagedRow")
         else
+            UI.setAttribute("PropertyMortgagedRow", "color", "Red")
+            UI.setAttribute("PropertyMortgagedText", "color", "White")
+            UI.setValue("PropertyMortgagedText", "MORTGAGED")
+            if property.improvements == -1 then
+                UI.show("PropertyMortgagedRow")
+            else
+                UI.hide("PropertyMortgagedRow")
+            end
+            --TODO: enable/disable buttons when property is mortgaged/has skyscraper
             UI.setAttribute("DowngradeBtn", "text", "+$" .. property.improvement_cost / 2)
             UI.setAttribute("DowngradeBtn", "tooltip", "Sell a building")
             UI.setAttribute("UpgradeBtn", "text", "-$" .. property.improvement_cost)
