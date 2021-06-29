@@ -153,11 +153,11 @@ function UMGame:showPropertyInfo(property, show_controls_to, show_purchase_contr
     UI.setAttribute("PropertyName", "color", Property.bright_colors[property.group] and "Black" or "White")
 
     if property.group == "rail" then
-        UI.hide("RentMajorityRow")
-        UI.hide("RentMonopolyRow")
-        UI.hide("Rent5Row")
-        UI.hide("Rent6Row")
-        UI.hide("Rent7Row")
+        UI.setAttribute("RentMajorityRow", "active", "false")
+        UI.setAttribute("RentMonopolyRow", "active", "false")
+        UI.setAttribute("Rent5Row", "active", "false")
+        UI.setAttribute("Rent6Row", "active", "false")
+        UI.setAttribute("Rent7Row", "active", "false")
         UI.setValue("Rent2Label", "With Two Railroads")
         UI.setValue("Rent3Label", "With Three Railroads")
         UI.setValue("Rent4Label", "With Four Railroads")
@@ -166,11 +166,11 @@ function UMGame:showPropertyInfo(property, show_controls_to, show_purchase_contr
             UI.setValue("Rent" .. i .. "Value", "$" .. rent)
         end
     elseif property.group == "cab" then
-        UI.hide("RentMajorityRow")
-        UI.hide("RentMonopolyRow")
-        UI.hide("Rent5Row")
-        UI.hide("Rent6Row")
-        UI.hide("Rent7Row")
+        UI.setAttribute("RentMajorityRow", "active", "false")
+        UI.setAttribute("RentMonopolyRow", "active", "false")
+        UI.setAttribute("Rent5Row", "active", "false")
+        UI.setAttribute("Rent6Row", "active", "false")
+        UI.setAttribute("Rent7Row", "active", "false")
         UI.setValue("Rent2Label", "With Two Cab Companies")
         UI.setValue("Rent3Label", "With Three Cab Companies")
         UI.setValue("Rent4Label", "With Four Companies")
@@ -179,11 +179,11 @@ function UMGame:showPropertyInfo(property, show_controls_to, show_purchase_contr
             UI.setValue("Rent" .. i .. "Value", "$" .. rent)
         end
     elseif property.group == "utility" then
-        UI.show("RentMajorityRow")
-        UI.show("RentMonopolyRow")
-        UI.show("Rent5Row")
-        UI.show("Rent6Row")
-        UI.hide("Rent7Row")
+        UI.setAttribute("RentMajorityRow", "active", "true")
+        UI.setAttribute("RentMonopolyRow", "active", "true")
+        UI.setAttribute("Rent5Row", "active", "true")
+        UI.setAttribute("Rent6Row", "active", "true")
+        UI.setAttribute("Rent7Row", "active", "false")
         UI.setValue("RentMajorityLabel", "With Two Utilities")
         UI.setValue("RentMonopolyLabel", "With Three Utilities")
         UI.setValue("Rent2Label", "With Four Utilities")
@@ -203,9 +203,9 @@ function UMGame:showPropertyInfo(property, show_controls_to, show_purchase_contr
             UI.setValue("Rent" .. i .. "Value", "$" .. rent)
         end
         if Property.counts[property.group] == 2 then
-            UI.hide("RentMajorityRow")
+            UI.setAttribute("RentMajorityRow", "active", "false")
         else
-            UI.show("RentMajorityRow")
+            UI.setAttribute("RentMajorityRow", "active", "true")
         end
     end
     if show_controls_to then
@@ -217,18 +217,22 @@ function UMGame:showPropertyInfo(property, show_controls_to, show_purchase_contr
             UI.setAttribute("UpgradeBtn", "tooltip", "Buy " .. property.name .. " for $" .. property.cost)
             UI.setAttribute("UpgradeBtn", "onClick", "buyCurrentProperty")
             -- Use PropertyMortgagedRow to show improvement costs instead of mortgage information
-            UI.setAttribute("PropertyMortgagedRow", "color", "White")
-            UI.setAttribute("PropertyMortgagedText", "color", "Black")
-            UI.setValue("PropertyMortgagedText", "Improvements cost $" .. property.improvement_cost .. " each")
-            UI.show("PropertyMortgagedRow")
+            if property.improvement_cost then
+                UI.setAttribute("PropertyMortgagedRow", "color", "White")
+                UI.setAttribute("PropertyMortgagedText", "color", "Black")
+                UI.setValue("PropertyMortgagedText", "Improvements cost $" .. property.improvement_cost .. " each")
+                UI.setAttribute("PropertyMortgagedRow", "active", "true")
+            else
+                UI.setAttribute("PropertyMortgagedRow", "active", "false")
+            end
         else
             UI.setAttribute("PropertyMortgagedRow", "color", "Red")
             UI.setAttribute("PropertyMortgagedText", "color", "White")
             UI.setValue("PropertyMortgagedText", "MORTGAGED")
             if property.improvements == -1 then
-                UI.show("PropertyMortgagedRow")
+                UI.setAttribute("PropertyMortgagedRow", "active", "true")
             else
-                UI.hide("PropertyMortgagedRow")
+                UI.setAttribute("PropertyMortgagedRow", "active", "false")
             end
             --TODO: enable/disable buttons when property is mortgaged/has skyscraper
             UI.setAttribute("DowngradeBtn", "text", "+$" .. property.improvement_cost / 2)
@@ -241,11 +245,11 @@ function UMGame:showPropertyInfo(property, show_controls_to, show_purchase_contr
         UI.setAttribute("DowngradeBtn", "textColor", "White")
         UI.setAttribute("UpgradeBtn", "textColor", "White")
     end
-    UI.show("PropertyCard")
+    UI.setAttribute("PropertyCard", "active", "true")
 end
 
 function UMGame:hidePropertyInfo()
-    UI.hide("PropertyCard")
+    UI.setAttribute("PropertyCard", "active", "false")
 end
 
 ---Moves a player to a new position on the board.
