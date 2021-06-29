@@ -1,4 +1,4 @@
-<TableLayout id="PropertyCard" width="200" height="300" rectAlignment="UpperLeft" offsetXY="75 -11" columnWidths="0 50" rowBackgroundColor="#FFFFFF" cellBackgroundImage="" cellBackgroundColor="#FFFFFF">
+<TableLayout id="PropertyCard" width="200" height="340" rectAlignment="UpperLeft" offsetXY="75 -11" columnWidths="0 50" rowBackgroundColor="#FFFFFF" cellBackgroundImage="" cellBackgroundColor="#FFFFFF">
     <Row id="PropertyTitle" dontUseTableRowBackground="true" color="#044d9c" preferredHeight="50">
         <Cell dontUseTableCellBackground="true" columnSpan="2">
             <Text id="PropertyName" color="white" resizeTextForBestFit="true" resizeTextMaxSize="24">Put the property name here right now</Text>
