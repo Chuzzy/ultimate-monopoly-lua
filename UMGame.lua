@@ -225,7 +225,7 @@ function UMGame:showPropertyInfo(property, show_controls_to, show_purchase_contr
         UI.setAttribute("PropertyControlsRow", "visibility", show_controls_to.color)
         if show_purchase_controls then
             UI.setAttribute("DowngradeBtn", "text", "Auction")
-            UI.setAttribute("DowngradeBtn", "tooltip", "Put this property up to auction")
+            UI.setAttribute("DowngradeBtn", "tooltip", "Put " .. property.name .. " up for auction")
             UI.setAttribute("UpgradeBtn", "text", "Buy $" .. property.cost)
             UI.setAttribute("UpgradeBtn", "tooltip", "Buy " .. property.name .. " for $" .. property.cost)
             UI.setAttribute("UpgradeBtn", "onClick", "buyCurrentProperty")
