@@ -16,6 +16,7 @@
 ---@field dice_roll integer[] The values of the dice that were rolled this turn.
 ---@field dice_total integer The sum of the values of the dice.
 ---@field money_changed_handler function Event handler that is called when money changes hands.
+---@field property_changed_handler function Event handler that is called when property changes owners.
 UMGame = {}
 UMGame.__index = UMGame
 
@@ -214,6 +215,7 @@ function UMGame:showPropertyInfo(property, show_controls_to, show_purchase_contr
             UI.setAttribute("DowngradeBtn", "tooltip", "Put this property up to auction")
             UI.setAttribute("UpgradeBtn", "text", "Buy $" .. property.cost)
             UI.setAttribute("UpgradeBtn", "tooltip", "Buy " .. property.name .. " for $" .. property.cost)
+            UI.setAttribute("UpgradeBtn", "onClick", "buyCurrentProperty")
             -- Use PropertyMortgagedRow to show improvement costs instead of mortgage information
             UI.setAttribute("PropertyMortgagedRow", "color", "White")
             UI.setAttribute("PropertyMortgagedText", "color", "Black")
@@ -276,8 +278,19 @@ function UMGame:payFromBank(creditor, amount, reason)
 end
 
 ---Gives the player the property and deducts the cost from them.
----@param buyer UMPlayer The player buying the property.
----@param property Property The sold property.
+---@param buyer UMPlayer The player buying the property. If nil, the current player.
+---@param property Property The sold property. If nil, the buyer's location.
 function UMGame:sellPropertyTo(buyer, property)
-    --TODO: Game:sellPropertyTo
+    buyer = buyer or self:whoseTurn()
+    property = property or self.properties[buyer.location.name]
+    assert(buyer.money >= property.cost, buyer:getName() .. " can't afford " .. property.name)
+    buyer.money = buyer.money - property.cost
+    buyer.owned_properties[property.name] = property
+    property.owner = buyer
+    if self.money_changed_handler then
+        self.money_changed_handler(Debt.new(buyer, nil, property.cost, "for " .. property.name))
+    end
+    if self.property_changed_handler then
+        self.property_changed_handler(property)
+    end
 end

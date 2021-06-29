@@ -11,3 +11,9 @@ function endTurnClick(player)
         end
     end
 end
+
+function buyCurrentProperty(player)
+    TheGame:sellPropertyTo()
+    TheGame:hidePropertyInfo()
+    TheGame.state = GameState.POST_MOVEMENT
+end
