@@ -196,6 +196,19 @@ function UMGame:showPropertyInfo(property, show_controls_to, show_purchase_contr
             UI.setValue(id, property.rent_values[i] .. "x")
         end
     else
+        UI.setAttribute("RentMajorityRow", "active", "true")
+        UI.setAttribute("RentMonopolyRow", "active", "true")
+        UI.setAttribute("Rent5Row", "active", "true")
+        UI.setAttribute("Rent6Row", "active", "true")
+        UI.setAttribute("Rent7Row", "active", "true")
+        UI.setValue("RentMajorityLabel", "With Majority")
+        UI.setValue("RentMonopolyLabel", "With Monopoly")
+        UI.setValue("Rent2Label", "With 1 House")
+        UI.setValue("Rent3Label", "With 2 Houses")
+        UI.setValue("Rent4Label", "With 3 Houses")
+        UI.setValue("Rent5Label", "With 4 Houses")
+        UI.setValue("Rent6Label", "With Hotel")
+        UI.setValue("Rent7Label", "With Skyscraper")
         UI.setValue("RentMajorityValue", "$" .. property.rent_values[1] * 2)
         UI.setValue("RentMonopolyValue", "$" .. property.rent_values[1] * 3)
 
