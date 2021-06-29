@@ -49,6 +49,9 @@ function onLoad()
             end
         end
     end
+    TheGame.property_changed_handler = function (property)
+        spawnAvatarOnSpace(property.owner.color, property.name)
+    end
     TheGame:start("Blue")
     hideActionButtons()
 end
