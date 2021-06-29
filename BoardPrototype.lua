@@ -123,22 +123,15 @@ end
 ---@param game UMGame
 ---@param player UMPlayer
 local function propertyAction(space, game, player)
-    local property, property_name
-    if space.transit_type then
-        -- Removes the " Outer" or " Inner" at the end of the transit station's name
-        property_name = space.name:sub(0, space.name:len() - 6)
-    else
-        property_name = space.name
-    end
-    property = game.properties[property_name]
+    local property = Utils.spaceToProperty(space, game)
     if not property.owner then
-        broadcastToColor(property_name .. " is for sale for $" .. property.cost .. ". You want it?", player.color, player.color)
+        broadcastToColor(property.name .. " is for sale for $" .. property.cost .. ". You want it?", player.color, player.color)
         game:showPropertyInfo(property, game:whoseTurn(), true)
         game.state = GameState.PROPERTY_SALE
     else
         local rent_owed = property:rent(game.dice_total)
         if rent_owed > 0 then
-            table.insert(game.debts, Debt.new(player, property.owner, rent_owed, "rent for landing on " .. property_name))
+            table.insert(game.debts, Debt.new(player, property.owner, rent_owed, "rent for landing on " .. property.name))
         end
     end
 end

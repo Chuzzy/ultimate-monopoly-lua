@@ -49,6 +49,14 @@ Utils = {
         Wait.time(toggleLights, 0.5, 14)
         Wait.time(normalLight, 7)
     end,
+    spaceToProperty = function(space, game)
+        if space.transit_type then
+            -- Removes the " Outer" or " Inner" at the end of the transit station's name
+            return game.properties[space.name:sub(0, space.name:len() - 6)]
+        else
+            return game.properties[space.name]
+        end
+    end,
     -- The board's local scale is different to the
     -- global scale. When creating buttons the position
     -- vectors have to be multiplied by 0.63 to appear normal.

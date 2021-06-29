@@ -50,7 +50,11 @@ function onLoad()
         end
     end
     TheGame.property_changed_handler = function (property)
-        spawnAvatarOnSpace(property.owner.color, property.name)
+        if property.group == "rail" then
+            spawnAvatarOnSpace(property.owner.color, property.name .. " Outer")
+        else
+            spawnAvatarOnSpace(property.owner.color, property.name)
+        end
     end
     TheGame:start("Blue")
     hideActionButtons()
@@ -381,13 +385,6 @@ end
 function spawnAvatarOnSpace(color, space_name)
     local player_id = Player[color].steam_id
     local space = board.spaces[space_name]
-    local customCard = spawnObject({
-        type = "Card",
-        position = Vector(space.avatar_pos):add(Vector{0, 4, 0}),
-        rotation = Vector(space.direction.clockwise().clockwise().vector),
-        sound = false,
-        scale = {0.25, 1, 0.25}
-    })
     WebRequest.get("https://steamcommunity.com/profiles/" .. player_id ..
                        "?xml=1",
     -- TODO: Fallback when the steam avatar can't be fetched
@@ -395,8 +392,16 @@ function spawnAvatarOnSpace(color, space_name)
         local regex = "<avatarFull><!%[CDATA%[([%w%p]+)%]%]></avatarFull>"
         local image_url = assert(response.text:match(regex),
                                  "Unable to fetch the steam avatar of " ..
-                                     Player[color].steam_name)
-        customCard.setCustomObject({face = image_url, back = image_url})
+                                        Player[color].steam_name)
+        local customCard = spawnObject({
+            type = "Custom_Tile",
+            position = Vector(space.avatar_pos):add(Vector{0, 4, 0}),
+            rotation = Vector(space.direction.clockwise().clockwise().vector),
+            sound = false,
+            scale = {0.36, 1, 0.36}
+        })
+        customCard.setColorTint(color)
+        customCard.setCustomObject({image = image_url, thickness = 0.03})
         customCard.interactable = false
         Wait.time(function () customCard.setLock(true) end, 2)
     end)
