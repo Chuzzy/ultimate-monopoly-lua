@@ -383,7 +383,7 @@ function spawnAvatarOnSpace(color, space_name)
     local space = board.spaces[space_name]
     local customCard = spawnObject({
         type = "Card",
-        position = Vector(space.avatar_pos),
+        position = Vector(space.avatar_pos):add(Vector{0, 4, 0}),
         rotation = Vector(space.direction.clockwise().clockwise().vector),
         sound = false,
         scale = {0.25, 1, 0.25}
@@ -397,6 +397,8 @@ function spawnAvatarOnSpace(color, space_name)
                                  "Unable to fetch the steam avatar of " ..
                                      Player[color].steam_name)
         customCard.setCustomObject({face = image_url, back = image_url})
+        customCard.interactable = false
+        Wait.time(function () customCard.setLock(true) end, 2)
     end)
 end
 
