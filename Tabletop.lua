@@ -72,7 +72,6 @@ end
 ---@param destination Space|string The space to move to.
 ---@param callback function Optional callback function to execute when the movement is complete.
 function movePlayerToken(player_color, destination, callback)
-    local occupant_position_index = #TheGame:getOccupantsOnSpace(destination) + 1
     ---@type Space
     local new_space
     if destination.occupant_positions and destination.direction then
@@ -82,6 +81,7 @@ function movePlayerToken(player_color, destination, callback)
     else
         error("wanted a space or string but received " .. type(destination), 2)
     end
+    local occupant_position_index = #TheGame:getOccupantsOnSpace(new_space)
     assert(new_space, "new_space is nil")
     player_tokens[player_color].setPositionSmooth(new_space.occupant_positions[occupant_position_index])
     player_tokens[player_color].setRotationSmooth(new_space.direction.vector)

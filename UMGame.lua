@@ -63,13 +63,13 @@ function UMGame:createPlayer(color, token_guid, starting_money)
 end
 
 ---Returns an array of players who are on a particular space.
----@param space_name string The name of the space.
+---@param space Space The space.
 ---@return table<integer, UMPlayer> occupants
-function UMGame:getOccupantsOnSpace(space_name)
+function UMGame:getOccupantsOnSpace(space)
     local occupants = {}
     for _, player in ipairs(self.players) do
         assert(player.location)
-        if player.location.name == space_name then
+        if player.location == space then
             table.insert(occupants, player)
         end
     end
