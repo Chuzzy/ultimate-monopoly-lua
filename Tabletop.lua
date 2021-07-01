@@ -85,6 +85,9 @@ function movePlayerToken(player_color, destination, callback)
     assert(new_space, "new_space is nil")
     player_tokens[player_color].setPositionSmooth(new_space.occupant_positions[occupant_position_index])
     player_tokens[player_color].setRotationSmooth(new_space.direction.vector)
+    if Player[player_color].seated then
+        Player[player_color].pingTable(new_space.camera_pos)
+    end
     if type(callback) == "function" then
         Wait.time(callback, 2)
     end
