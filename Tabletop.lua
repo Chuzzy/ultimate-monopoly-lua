@@ -56,6 +56,7 @@ function onLoad()
             spawnAvatarOnSpace(property.owner.color, property.name)
         end
     end
+    TheGame.player_moved_handler = movePlayerToken
     TheGame:start("Blue")
     hideActionButtons()
 end
@@ -69,10 +70,9 @@ function registerNewPlayer(color, token_guid)
 end
 
 ---Moves a token to the specified space.
----@param player_color string The player's color.
+---@param player_color UMPlayer|string The player or their color.
 ---@param destination Space|string The space to move to.
----@param callback function Optional callback function to execute when the movement is complete.
-function movePlayerToken(player_color, destination, callback)
+function movePlayerToken(player_color, destination)
     ---@type Space
     local new_space
     if destination.occupant_positions and destination.direction then
@@ -84,13 +84,11 @@ function movePlayerToken(player_color, destination, callback)
     end
     local occupant_position_index = #TheGame:getOccupantsOnSpace(new_space)
     assert(new_space, "new_space is nil")
+    player_color = type(player_color) == "string" and player_color or player_color.color
     player_tokens[player_color].setPositionSmooth(new_space.occupant_positions[occupant_position_index])
     player_tokens[player_color].setRotationSmooth(new_space.direction.vector)
     if Player[player_color].seated then
         Player[player_color].pingTable(new_space.camera_pos)
-    end
-    if type(callback) == "function" then
-        Wait.time(callback, 2)
     end
 end
 
@@ -280,11 +278,11 @@ end
 local function postMoveHandler()
     InGameObjects.gameboard.clearButtons()
     TheGame:submitDiceRoll(InGameObjects.dice.normal1.getValue(), InGameObjects.dice.normal2.getValue(), InGameObjects.dice.speed.getValue())
-    movePlayerToken(TheGame:whoseTurn().color, TheGame:whoseTurn().location, function()
-        showActionButtons()
-        TheGame:handleSpaceAction()
-    end)
     broadcastToAll(TheGame:whoseTurn():getName() .. " landed on " .. TheGame:whoseTurn().location.name, TheGame:whoseTurn().color)
+    Wait.time(function()
+       showActionButtons()
+       TheGame:handleSpaceAction()
+    end, 2)
 end
 
 local function animateDiceRoll(start, roll)
