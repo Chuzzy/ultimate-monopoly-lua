@@ -64,6 +64,7 @@ function registerNewPlayer(color, token_guid)
     TheGame:createPlayer(color, token_guid, 3200)
     player_tokens[color] = getObjectFromGUID(token_guid)
     player_tokens[color].setColorTint(color)
+    player_tokens[color].interactable = false
     movePlayerToken(color, "Go")
 end
 
