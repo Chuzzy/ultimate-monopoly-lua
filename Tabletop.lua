@@ -70,25 +70,16 @@ function registerNewPlayer(color, token_guid)
 end
 
 ---Moves a token to the specified space.
----@param player_color UMPlayer|string The player or their color.
----@param destination Space|string The space to move to.
+---@param player_color UMPlayer The player or their color.
+---@param destination Space The space to move to.
 function movePlayerToken(player_color, destination)
-    ---@type Space
-    local new_space
-    if destination.occupant_positions and destination.direction then
-        new_space = destination
-    elseif type(destination) == "string" then
-        new_space = TheGame.board.spaces[destination]
-    else
-        error("wanted a space or string but received " .. type(destination), 2)
-    end
-    local occupant_position_index = #TheGame:getOccupantsOnSpace(new_space)
-    assert(new_space, "new_space is nil")
+    local occupant_position_index = #TheGame:getOccupantsOnSpace(destination)
+    assert(destination, "destination is nil")
     player_color = type(player_color) == "string" and player_color or player_color.color
-    player_tokens[player_color].setPositionSmooth(new_space.occupant_positions[occupant_position_index])
-    player_tokens[player_color].setRotationSmooth(new_space.direction.vector)
+    player_tokens[player_color].setPositionSmooth(destination.occupant_positions[occupant_position_index])
+    player_tokens[player_color].setRotationSmooth(destination.direction.vector)
     if Player[player_color].seated then
-        Player[player_color].pingTable(new_space.camera_pos)
+        Player[player_color].pingTable(destination.camera_pos)
     end
 end
 
