@@ -334,12 +334,26 @@ local function rollRegularDice()
     end
 
     local function centerDiceAndBroadcastResult()
-        InGameObjects.dice.normal1.setScale({2, 2, 2})
-        InGameObjects.dice.normal2.setScale({2, 2, 2})
-        InGameObjects.dice.speed.setScale({2, 2, 2})
-        InGameObjects.dice.normal1.setPositionSmooth({-2, 3.5, 0}, false)
-        InGameObjects.dice.normal2.setPositionSmooth({0, 3.5, 0}, false)
-        InGameObjects.dice.speed.setPositionSmooth({2, 3.5, 0}, false)
+        local die_positions = {{-2, 3.5, 0}, {0, 3.5, 0}, {2, 3.5, 0}}
+        do
+            local i = 1
+            for name, die in pairs(InGameObjects.dice) do
+                if name ~= "normal3" and name ~= "voucher" then
+                    die.setScale({2, 2, 2})
+                    die.setPositionSmooth(die_positions[i], false)
+                    -- "Straighten" the die by getting its current value
+                    -- then looping through all rotation values until the
+                    -- current die value is found, then set the die's rotation
+                    for _, rot_value in ipairs(die.getRotationValues()) do
+                        if rot_value.value == die.getValue() then
+                            die.setRotationSmooth(rot_value.rotation)
+                        end
+                    end
+                    i = i + 1
+                end
+            end
+        end
+
         local total_rolled = InGameObjects.dice.normal1.getValue() + InGameObjects.dice.normal2.getValue() + UMGame.speedDieValue(InGameObjects.dice.speed.getValue())
         broadcastToAll(TheGame:whoseTurn():getName() .. " rolled " .. InGameObjects.dice.normal1.getValue() .. ", " ..
                            InGameObjects.dice.normal2.getValue() .. " and " .. speedDieString() .. " = " .. total_rolled, TheGame:whoseTurn().color)
