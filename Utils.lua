@@ -60,5 +60,32 @@ Utils = {
     -- The board's local scale is different to the
     -- global scale. When creating buttons the position
     -- vectors have to be multiplied by 0.63 to appear normal.
-    board_scale_vector = Vector(0.63, 0.3, -0.63)
+    board_scale_vector = Vector(0.63, 0.3, -0.63),
+    ---Splits an integer value into the smallest number of subdivisions
+    ---of Monopoly™ money sizes.
+    ---@param value integer The integer value to split.
+    ---@return table<string, integer> denominations
+    moneySplit = function(value)
+        local fiveHundreds = value // 500
+        value = value % 500
+        local hundreds = value // 100
+        value = value % 100
+        local fifties = value // 50
+        value = value % 50
+        local twenties = value // 20
+        value = value % 20
+        local tens = value // 10
+        value = value % 10
+        local fives = value // 5
+        value = value % 5
+
+        return {fiveHundreds=fiveHundreds,
+                hundreds=hundreds,
+                fifties=fifties,
+                twenties=twenties,
+                tens=tens,
+                fives=fives,
+                ones=value
+            }
+    end
 }
