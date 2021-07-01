@@ -56,11 +56,13 @@ end
 ---@param color string The color of the seat the player is sitting at.
 ---@param token_guid string The GUID of the player's playing token.
 ---@param starting_money integer How much money the player starts with.
+---@return UMPlayer new_player The new player.
 function UMGame:createPlayer(color, token_guid, starting_money)
     assert(self.state.name == GameState.UNBEGUN, "cannot create player when the game has started")
     local new_player = UMPlayer.new(color, token_guid, starting_money, self.board.spaces[Names.go])
     table.insert(self.players, new_player)
     self.players_by_color[color] = new_player
+    return new_player
 end
 
 ---Returns an array of players who are on a particular space.
