@@ -17,6 +17,7 @@
 ---@field dice_total integer The sum of the values of the dice.
 ---@field money_changed_handler function Event handler that is called when money changes hands.
 ---@field property_changed_handler function Event handler that is called when property changes owners.
+---@field player_moved_handler function Event handler that is called when players move.
 UMGame = {}
 UMGame.__index = UMGame
 
@@ -272,7 +273,11 @@ function UMGame:movePlayer(player, destination)
     if not destination then
         error("destination cannot be empty", 2)
     end
+    local old_location = player.location
     player.location = destination
+    if self.player_moved_handler then
+        self.player_moved_handler(player, destination, old_location)
+    end
 end
 
 function UMGame:nextTurn()
