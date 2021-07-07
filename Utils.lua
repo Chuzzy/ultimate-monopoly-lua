@@ -66,17 +66,17 @@ Utils = {
     ---@param value integer The integer value to split.
     ---@return table<string, integer> denominations
     moneySplit = function(value)
-        local fiveHundreds = value // 500
+        local fiveHundreds = math.floor(value / 500)
         value = value % 500
-        local hundreds = value // 100
+        local hundreds = math.floor(value / 100)
         value = value % 100
-        local fifties = value // 50
+        local fifties = math.floor(value / 50)
         value = value % 50
-        local twenties = value // 20
+        local twenties = math.floor(value / 20)
         value = value % 20
-        local tens = value // 10
+        local tens = math.floor(value / 10)
         value = value % 10
-        local fives = value // 5
+        local fives = math.floor(value / 5)
         value = value % 5
 
         return {fiveHundreds=fiveHundreds,
