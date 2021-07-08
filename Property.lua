@@ -93,7 +93,7 @@ function Property:rent(dice_total)
         local rent_multiplier = 1
         local properties_owned_in_group = self.owner:countPropertiesOwnedInGroup(self.group)
         local properties_in_group = Property.counts[self.group]
-        if properties_owned_in_group == properties_owned_in_group then
+        if properties_owned_in_group == properties_in_group then
             rent_multiplier = 3
         elseif properties_owned_in_group > properties_in_group / 2 then
             rent_multiplier = 2
