@@ -57,6 +57,13 @@ Utils = {
             return game.properties[space.name]
         end
     end,
+    propertyToSpace = function(property, game)
+        if property.group == "rail" then
+            return game.board.spaces[property.name .. " Outer"]
+        else
+            return game.board.spaces[property.name]
+        end
+    end,
     -- The board's local scale is different to the
     -- global scale. When creating buttons the position
     -- vectors have to be multiplied by 0.63 to appear normal.
