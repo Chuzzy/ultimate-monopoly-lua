@@ -89,7 +89,7 @@ function Property:rent(dice_total)
     elseif self.improvements > 1 then -- If property has buildings
         return self.rent_values[self.improvements]
     else
-        local unimproved_rent = self.rent_values[0]
+        local unimproved_rent = self.rent_values[1]
         local rent_multiplier = 1
         local properties_owned_in_group = self.owner:countPropertiesOwnedInGroup(self.group)
         local properties_in_group = Property.counts[self.group]
