@@ -189,6 +189,36 @@ function labelBoardButton(name, new_text)
     })
     mutated_btns[name] = true
 end
+
+---Creates property management buttons on the board.
+---This subroutine creates a button on each space the player owns.
+---When clicked it shows the title deed allowing the player to buy/sell improvements.
+---@param player UMPlayer The player to create property management buttons for.
+function createManagementBoardButtons(player)
+    local i = 0
+    for name, property in pairs(player.owned_properties) do
+        local space = Utils.propertyToSpace(property, TheGame)
+        -- Create the event handler when the button is clicked
+        _G[name .. " Clicked"] = function (_, player_color)
+            TheGame:showPropertyInfo(property, player)
+        end
+
+        -- Create the board button
+        InGameObjects.gameboard.createButton({
+            click_function = name .. " Clicked",
+            color = {1, 1, 1, 0.8},
+            label = name:gsub(" ", "\n"),
+            font_size = 65,
+            position = Vector(space.camera_pos):scale(Utils.board_scale_vector),
+            rotation = space.direction.vector,
+            tooltip = name,
+            width = 300,
+            height = 300
+        })
+        board_btns[name] = i
+        i = i + 1
+    end
+end
 --#endregion Board Button CUD
 
 local die_launch_radius = 15
