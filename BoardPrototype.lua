@@ -131,7 +131,7 @@ local function propertyAction(space, game, player)
     else
         local rent_owed = property:rent(game.dice_total)
         if rent_owed > 0 then
-            table.insert(game.debts, Debt.new(player, property.owner, rent_owed, "rent for landing on " .. property.name))
+            UMGame:createDebt(player, property.owner, rent_owed, "rent for landing on " .. property.name)
         end
     end
 end
