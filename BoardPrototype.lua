@@ -55,7 +55,14 @@ end
 local function createTaxRefundPrototype(track)
     table.insert(track, {
         name = Names.refund,
-        action = function(space, game, player) print("Here you go!") end
+        action = function(space, game, player)
+            if game.cash_pool == 0 then
+                broadcastToAll("There's nothing in the Cash Pool for " .. player:getName() .. ". Sorry!", player.color)
+            else
+                local tax_refund_amount = math.ceil(game.cash_pool / 2)
+                game:payFromPool(player, tax_refund_amount, "in a Tax Refund")
+            end
+        end
     })
 end
 
