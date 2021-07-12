@@ -347,6 +347,30 @@ function UMGame:payDebt(debt)
     end
 end
 
+---Gives money to a lucky player from everyone else's pockets.
+---@param creditor UMPlayer The recipient of all the money.
+---@param amount integer The amount of money to recieve from each player.
+---@param reason string The reason for getting the money.
+function UMGame:collectFromEachPlayer(creditor, amount, reason)
+    for _, player in ipairs(self.players) do
+        if player ~= creditor then
+            self:createDebt(player, creditor, amount, reason)
+        end
+    end
+end
+
+---Gives money to everyone else from an unlucky player.
+---@param debtor UMPlayer The player paying for all this.
+---@param amount integer The amount of money to give each player.
+---@param reason string The reason for paying the money
+function UMGame:payEachPlayer(debtor, amount, reason)
+    for _, player in ipairs(self.players) do
+        if player ~= debtor then
+            self:createDebt(debtor, player, amount, reason)
+        end
+    end
+end
+
 ---Gives the player the property and deducts the cost from them.
 ---@param buyer UMPlayer The player buying the property. If nil, the current player.
 ---@param property Property The sold property. If nil, the buyer's location.
