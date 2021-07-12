@@ -1,7 +1,7 @@
 --- A game of Ultimate Monopoly.
 ---@class UMGame
 ---@field board Board The game board.
----@field players table<number, UMPlayer> The players of the game.
+---@field players UMPlayer[] The players of the game.
 ---@field players_by_color table<string, UMPlayer> The players of the game by color.
 ---@field current_turn_index integer The current player.
 ---@field waiting_on UMPlayer The player who is holding up progression of the game.
