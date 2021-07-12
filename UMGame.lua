@@ -319,7 +319,14 @@ end
 ---Pays off a debt. Will raise an error if the debtor can't pay it off.
 ---@param debt Debt A debt to be paid.
 function UMGame:payDebt(debt)
-    assert(debt:isPayable(), "Debtor is too poor: " .. debt:tostring())
+    assert(debt:isPayable(), "Debtor is too poor: " .. debt:tostring() .. ". Debtor has $" .. debt.debtor.money)
+    debt.debtor.money = debt.debtor.money - debt.amount
+    if debt.creditor then
+        debt.creditor.money = debt.creditor.money + debt.amount
+    end
+    if self.money_changed_handler then
+        self.money_changed_handler(debt)
+    end
 end
 
 ---Gives the player the property and deducts the cost from them.
