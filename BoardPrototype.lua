@@ -115,7 +115,15 @@ local function createHollandTunnelPrototype(track, is_inner)
     local suffix = is_inner and " Inner" or " Outer"
     table.insert(track, {
         name = Names.holland .. suffix,
-        action = function(space, game, player) print("Holland!") end
+        action = function(space, game, player)
+            if is_inner then
+                game:moveDirectlyTo(game.board.spaces[Names.holland .. " Outer"])
+                broadcastToAll(player:getName() .. " took the Holland Tunnel to the Outer track", player.color)
+            else
+                game:moveDirectlyTo(game.board.spaces[Names.holland .. " Inner"])
+                broadcastToAll(player:getName() .. " took the Holland Tunnel to the Inner track", player.color)
+            end
+        end
     })
 end
 
