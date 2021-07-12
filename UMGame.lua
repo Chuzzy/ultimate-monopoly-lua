@@ -141,6 +141,13 @@ function UMGame:submitDiceRoll(die1, die2, speed_die)
     self:movePlayer(self:whoseTurn(), destination)
 end
 
+---Moves the current player directly to the specified space.
+---Players do not pass salary squares or the like.
+---@param destination Space The space to move the player to.
+function UMGame:moveDirectlyTo(destination)
+    self:movePlayer(self:whoseTurn(), destination)
+end
+
 ---Called when the current player lands on a new space.
 function UMGame:handleSpaceAction()
     self:whoseTurn():act(self)
