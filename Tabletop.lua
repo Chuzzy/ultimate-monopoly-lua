@@ -34,11 +34,8 @@ function onLoad()
         end
     end
     TheGame.property_changed_handler = function (property)
-        if property.group == "rail" then
-            spawnAvatarOnSpace(property.owner.color, property.name .. " Outer")
-        else
-            spawnAvatarOnSpace(property.owner.color, property.name)
-        end
+        --TODO: Replace existing avatar
+        spawnAvatarOnSpace(property.owner.color, Utils.propertyToSpace(property.name))
     end
     TheGame.player_moved_handler = movePlayerToken
     TheGame:start("Blue")
