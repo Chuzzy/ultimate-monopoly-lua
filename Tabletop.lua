@@ -336,7 +336,13 @@ end
 
 local function rollRegularDice()
     if #Rigged == 1 then
-        
+        TheGame:moveDirectlyTo(board.spaces[Rigged[1]])
+        broadcastToAll(TheGame:whoseTurn():getName() .. " \"moved\" to " .. TheGame:whoseTurn().location.name, TheGame:whoseTurn().color)
+        Wait.time(function()
+            showActionButtons()
+            TheGame:handleSpaceAction()
+        end, 2)
+        return
     elseif #Rigged == 2 then
         TheGame:submitDiceRoll(Rigged[2], 0, 0)
         broadcastToAll(TheGame:whoseTurn():getName() .. " \"landed\" on " .. TheGame:whoseTurn().location.name, TheGame:whoseTurn().color)
