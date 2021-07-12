@@ -40,6 +40,7 @@ function Debt:isPayable()
 end
 
 ---Returns a string representation of this Debt.
+---It looks like `Somebody owes Someone $21 <reason>`
 ---@param has_paid boolean true to use the word "paid" in place of "owes".
 ---@return string
 function Debt:tostring(has_paid)
