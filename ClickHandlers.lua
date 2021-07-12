@@ -7,7 +7,7 @@ function endTurnClick(player)
         TheGame:hidePropertyInfo()
         InGameObjects.gameboard.clearButtons()
         for _, die in ipairs({InGameObjects.dice.normal1, InGameObjects.dice.normal2, InGameObjects.dice.speed}) do
-            die.scale(0.5)
+            die.setScale({1, 1, 1})
             die.setLock(false)
             die.interactable = true
         end
