@@ -143,7 +143,7 @@ end
 
 ---Moves the current player directly to the specified space.
 ---Players do not pass salary squares or the like.
----@param destination Space The space to move the player to.
+---@param destination Space The space to move the player.
 function UMGame:moveDirectlyTo(destination)
     self:movePlayer(self:whoseTurn(), destination)
 end
