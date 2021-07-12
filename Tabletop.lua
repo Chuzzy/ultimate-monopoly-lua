@@ -25,12 +25,16 @@ function onLoad()
         if debt.debtor then
             UI.setValue(debt.debtor.color .. "Money", "$" .. debt.debtor.money)
             broadcastToAll(debt:tostring(true), debt.debtor.color)
+        else
+            UI.setValue("CashPool", "$" .. TheGame.cash_pool)
         end
         if debt.creditor then
             UI.setValue(debt.creditor.color .. "Money", "$" .. debt.creditor.money)
             if not debt.debtor then
                 broadcastToAll(debt:tostring(true), debt.creditor.color)
             end
+        else
+            UI.setValue("CashPool", "$" .. TheGame.cash_pool)
         end
     end
     TheGame.property_changed_handler = function (property)
