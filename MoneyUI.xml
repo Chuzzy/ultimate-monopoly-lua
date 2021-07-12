@@ -1,5 +1,5 @@
 <!-- Money panel -->
-<HorizontalLayout id="moneyMain" offsetXY="80 0" width="60%" height="60" rectAlignment="LowerCenter">
+<HorizontalLayout id="moneyMain" offsetXY="80 0" width="61%" height="60" rectAlignment="LowerCenter">
     <Panel id="WhiteMoneyPanel" color="White">
         <VerticalLayout>
             <Text id="WhiteName">White Player</Text>
@@ -58,6 +58,12 @@
         <VerticalLayout>
             <Text id="PinkName">Pink Player</Text>
             <Text id="PinkMoney" class="moneyText">$3200</Text>
+        </VerticalLayout>
+    </Panel>
+    <Panel id="CashPoolPanel" color="Gray">
+        <VerticalLayout>
+            <Text>Cash Pool</Text>
+            <Text id="CashPool" class="moneyText">$0</Text>
         </VerticalLayout>
     </Panel>
 </HorizontalLayout>
