@@ -330,6 +330,8 @@ function UMGame:payDebt(debt)
     debt.debtor.money = debt.debtor.money - debt.amount
     if debt.creditor then
         debt.creditor.money = debt.creditor.money + debt.amount
+    else
+        self.cash_pool = self.cash_pool + debt.amount
     end
     if self.money_changed_handler then
         self.money_changed_handler(debt)
