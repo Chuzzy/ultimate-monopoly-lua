@@ -6,7 +6,7 @@
 ---@field current_turn_index integer The current player.
 ---@field waiting_on UMPlayer The player who is holding up progression of the game.
 ---@field turn_count integer The number of turns.
----@field debts table<number, Debt> Array of unpaid debts.
+---@field debts Debt[] Array of unpaid debts.
 ---@field properties table<string, Property> Array of all properties.
 ---@field cash_pool integer Number of dollars in the cash pool.
 ---@field house_count integer Number of remaining houses.
