@@ -183,7 +183,9 @@ local function createLuxuryTaxPrototype(track)
     table.insert(track, {
         name = Names.luxury,
         action = function(space, game, player)
-            print("Good ol' Uncle Sam.")
+            ---@type UMGame
+            game = game
+            game:createDebt(player, nil, 75, "in Luxury Tax")
         end
     })
 end
