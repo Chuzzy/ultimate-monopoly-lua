@@ -31,6 +31,14 @@ function Debt.new(debtor, creditor, amount, reason)
     return self
 end
 
+---Returns whether this debt can be paid off right now.
+---In the case where the debtor is nil (The Bank) this method
+---always returns true.
+---@return boolean is_payable
+function Debt:isPayable()
+    return not self.debtor or self.debtor.money >= self.amount
+end
+
 ---Returns a string representation of this Debt.
 ---@param has_paid boolean true to use the word "paid" in place of "owes".
 ---@return string
