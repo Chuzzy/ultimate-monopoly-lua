@@ -35,7 +35,7 @@ function onLoad()
     end
     TheGame.property_changed_handler = function (property)
         --TODO: Replace existing avatar
-        spawnAvatarOnSpace(property.owner.color, Utils.propertyToSpace(property.name))
+        spawnAvatarOnSpace(property.owner.color, Utils.propertyToSpace(property, TheGame))
     end
     TheGame.player_moved_handler = movePlayerToken
     TheGame:start("Blue")
@@ -416,9 +416,8 @@ function onObjectPickUp(player_color, object)
     end
 end
 
-function spawnAvatarOnSpace(color, space_name)
+function spawnAvatarOnSpace(color, space)
     local player_id = Player[color].steam_id
-    local space = board.spaces[space_name]
     WebRequest.get("https://steamcommunity.com/profiles/" .. player_id ..
                        "?xml=1",
     -- TODO: Fallback when the steam avatar can't be fetched
