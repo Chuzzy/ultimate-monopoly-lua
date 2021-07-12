@@ -308,6 +308,15 @@ function UMGame:payFromBank(creditor, amount, reason)
     end
 end
 
+---Gives a player money from the cash pool.
+---@param creditor UMPlayer The recipient of the money.
+---@param amount integer The amount of money to be paid.
+---@param reason string The reason for getting paid.
+function UMGame:payFromPool(creditor, amount, reason)
+    self.cash_pool = self.cash_pool - amount
+    self:payFromBank(creditor, amount, reason)
+end
+
 ---Creates a new debt. If it can be paid off right now, it is paid off.
 ---Otherwise it is added to the list of unpaid debts.
 ---@param debtor UMPlayer
