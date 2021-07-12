@@ -301,6 +301,27 @@ function UMGame:payFromBank(creditor, amount, reason)
     end
 end
 
+---Creates a new debt. If it can be paid off right now, it is paid off.
+---Otherwise it is added to the list of unpaid debts.
+---@param debtor UMPlayer
+---@param creditor UMPlayer
+---@param amount integer
+---@param reason string
+function UMGame:createDebt(debtor, creditor, amount, reason)
+    local debt = Debt.new(debtor, creditor, amount, reason)
+    if debt:isPayable() then
+        self:payDebt(debt)
+    else
+        table.insert(self.debts, debt)
+    end
+end
+
+---Pays off a debt. Will raise an error if the debtor can't pay it off.
+---@param debt Debt A debt to be paid.
+function UMGame:payDebt(debt)
+    assert(debt:isPayable(), "Debtor is too poor: " .. debt:tostring())
+end
+
 ---Gives the player the property and deducts the cost from them.
 ---@param buyer UMPlayer The player buying the property. If nil, the current player.
 ---@param property Property The sold property. If nil, the buyer's location.
