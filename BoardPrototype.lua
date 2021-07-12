@@ -39,7 +39,63 @@ end
 local function createSqueezePlayPrototype(track)
     table.insert(track, {
         name = Names.squeeze,
-        action = function(space, game, player) print("Lucky you!") end
+        action = function(space, game, player)
+            rollDieRoutine(InGameObjects.dice.normal1)
+            rollDieRoutine(InGameObjects.dice.normal2)
+
+            local function centerDiceAndBroadcastResult()
+                local die_positions = {{-1, 3.5, 0}, {1, 3.5, 0}}
+                do
+                    local i = 1
+                    for name, die in pairs(InGameObjects.dice) do
+                        if name ~= "normal3" and name ~= "speed" and name ~= "voucher" then
+                            die.setScale({2, 2, 2})
+                            die.setPositionSmooth(die_positions[i], false)
+                            -- "Straighten" the die by getting its current value
+                            -- then looping through all rotation values until the
+                            -- current die value is found, then set the die's rotation
+                            for _, rot_value in ipairs(die.getRotationValues()) do
+                                if rot_value.value == die.getValue() then
+                                    die.setRotationSmooth(rot_value.rotation)
+                                end
+                            end
+                            i = i + 1
+                        end
+                    end
+                end
+
+                local total_rolled = InGameObjects.dice.normal1.getValue() + InGameObjects.dice.normal2.getValue()
+                broadcastToAll(player:getName() .. " rolled " .. InGameObjects.dice.normal1.getValue() .. " and " .. InGameObjects.dice.normal2.getValue() .. " = " .. total_rolled, player.color)
+                Wait.frames(function()
+                    InGameObjects.dice.normal1.setLock(true)
+                    InGameObjects.dice.normal2.setLock(true)
+                end)
+                -- Calculate the squeeze play result
+                local amount
+                if total_rolled == 2 or total_rolled == 12 then
+                    amount = 200
+                elseif total_rolled == 3 or total_rolled == 4 or total_rolled == 10 or total_rolled == 11 then
+                    amount = 100
+                else
+                    amount = 50
+                end
+                game:collectFromEachPlayer(player, amount, "for a Squeeze Play")
+            end
+
+            local function bothDiceAreResting()
+                return InGameObjects.dice.normal1.resting and InGameObjects.dice.normal2.resting
+            end
+
+            local function broadcastErrorMessage()
+                broadcastToAll("Could not get the die result", "Red")
+            end
+
+            broadcastToAll(player:getName() .. " is rolling for a Squeeze Play", player.color)
+            Wait.frames(function()
+                Wait.condition(centerDiceAndBroadcastResult, bothDiceAreResting, 7,
+                               broadcastErrorMessage)
+            end)
+        end
     })
 end
 

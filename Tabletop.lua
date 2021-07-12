@@ -225,7 +225,7 @@ end
 
 local die_launch_radius = 15
 
-local function rollDieRoutine(die)
+function rollDieRoutine(die)
     local twopi = 2 * math.pi
 
     -- First, generate a random angle
