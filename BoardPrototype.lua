@@ -175,7 +175,10 @@ end
 local function createIncomeTaxPrototype(track)
     table.insert(track, {
         name = Names.income,
-        action = function(space, game, player) print("Taxes due.") end
+        action = function(space, game, player)
+            --TODO: Offer the choice of 10%
+            game:createDebt(player, nil, 200, "in Income Tax")
+        end
     })
 end
 
