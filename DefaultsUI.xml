@@ -12,6 +12,7 @@
     <Text class="bidAmount" fontSize="24" />
 
     <!-- Money UI -->
+    <Panel class="moneyPanel" tooltipPosition="Above"/>
     <Text class="moneyText" fontStyle="bold" resizeTextForBestFit="true" resizeTextMaxSize="26"/>
 
     <!-- Property UI -->
