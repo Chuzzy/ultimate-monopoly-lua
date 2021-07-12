@@ -40,6 +40,7 @@ function onLoad()
     TheGame.player_moved_handler = movePlayerToken
     TheGame:start("Blue")
     hideActionButtons()
+    hideUnusedMoneyPanels()
 end
 
 function registerNewPlayer(color, token_guid)
@@ -273,6 +274,14 @@ end
 function hideActionButtons()
     UI.setAttribute("tradeBtn", "visibility", "0")
     UI.setAttribute("endTurnBtn", "visibility", "0")
+end
+
+function hideUnusedMoneyPanels()
+    for _, color in ipairs(Player.getColors()) do
+        if not TheGame.players_by_color[color] then
+            UI.hide(color .. "MoneyPanel")
+        end
+    end
 end
 
 ---Called when the token has finished moving.
