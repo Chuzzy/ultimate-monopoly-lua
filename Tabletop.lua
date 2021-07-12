@@ -12,7 +12,7 @@ local board = TheGame.board
 local board_btns = {}
 local mutated_btns = {}
 local player_tokens = {}
-Rigged = { force = 0 }
+Rigged = {}
 
 function onLoad()
     populateInGameObjects(GUIDs)
@@ -335,8 +335,8 @@ local function animateDiceRoll(start, roll)
 end
 
 local function rollRegularDice()
-    if Rigged.force > 0 then
-        TheGame:submitDiceRoll(Rigged.force, 0, 0)
+    if #Rigged == 4 then
+        TheGame:submitDiceRoll(Rigged[4], 0, 0)
         broadcastToAll(TheGame:whoseTurn():getName() .. " \"landed\" on " .. TheGame:whoseTurn().location.name, TheGame:whoseTurn().color)
         Wait.time(function()
             showActionButtons()
