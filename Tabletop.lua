@@ -299,8 +299,8 @@ local function postMoveHandler()
     end, 2)
 end
 
-local function animateDiceRoll(start, roll)
-    local visited_spaces = board:diceRoll(board.spaces[start], roll, false)
+local function animateDiceRoll(start, roll, backwards)
+    local visited_spaces = board:diceRoll(board.spaces[start], roll, backwards)
     local current_index = 1
     local last_space_was_transit = false
     local transit_count = 0
@@ -395,7 +395,7 @@ local function rollRegularDice()
             InGameObjects.dice.speed.setLock(true)
         end)
         -- Move the player to the spot
-        animateDiceRoll(TheGame:whoseTurn().location.name, total_rolled)
+        animateDiceRoll(TheGame:whoseTurn().location.name, total_rolled, TheGame:whoseTurn().reversed)
     end
 
     local function allThreeDiceAreResting()

@@ -110,7 +110,7 @@ function UMGame:submitDiceRoll(die1, die2, speed_die)
         total = total + speed_die
     end
     self.dice_total = total
-    local visited_spaces = self.board:diceRoll(self:whoseTurn().location, total)
+    local visited_spaces = self.board:diceRoll(self:whoseTurn().location, total, self:whoseTurn().reversed)
     local destination = visited_spaces[#visited_spaces]
     -- Handle passing Go, Payday and Bonus
     local has_passed_go, has_passed_payday, has_passed_bonus
@@ -139,6 +139,12 @@ function UMGame:submitDiceRoll(die1, die2, speed_die)
         self:payFromBank(self:whoseTurn(), 250, "for passing Bonus")
     end
     self:movePlayer(self:whoseTurn(), destination)
+    if self:whoseTurn().reversed then
+        self:whoseTurn().reversed = false
+        if speed_die == 6 then
+            broadcastToAll(self:whoseTurn():getName() .. " has missed the bus!")
+        end
+    end
 end
 
 ---Moves the current player directly to the specified space.
