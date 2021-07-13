@@ -126,7 +126,8 @@ local function createReverseDirectionPrototype(track)
     table.insert(track, {
         name = Names.reverse,
         action = function(space, game, player)
-            print("Moving backwards.")
+            player.reversed = true
+            getObjectFromGUID(player.token_guid).rotate({0, 180, 0})
         end
     })
 end
