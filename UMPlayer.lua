@@ -5,6 +5,7 @@
 ---@field money integer The amount of money this player has.
 ---@field location Space The space this player is currently on.
 ---@field lost_turns integer The number of turns this player is set to "lose".
+---@field reversed boolean Whether this player is going backwards.
 ---@field turns_in_jail integer The number of turns this player has spent in jail.
 ---@field owned_properties table<string, Property> The properties owned by this player.
 ---@field action_cards table<integer, ActionCard> The action cards owned by this player.
@@ -30,6 +31,7 @@ function UMPlayer.new(color, token_guid, starting_money, location)
     self.location = location
     assert(self.location, "self.location is nil")
     self.lost_turns = 0
+    self.reversed = false
     self.turns_in_jail = 0
     self.owned_properties = {}
     self.action_cards = {}
