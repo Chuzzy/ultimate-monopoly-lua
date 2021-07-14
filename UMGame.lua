@@ -110,8 +110,10 @@ function UMGame:submitDiceRoll(die1, die2, speed_die)
         total = total + speed_die
     end
     self.dice_total = total
+
     local visited_spaces = self.board:diceRoll(self:whoseTurn().location, total, self:whoseTurn().reversed)
     local destination = visited_spaces[#visited_spaces]
+
     -- Handle passing Go, Payday and Bonus
     local has_passed_go, has_passed_payday, has_passed_bonus
     for _, space in ipairs(visited_spaces) do
@@ -125,9 +127,11 @@ function UMGame:submitDiceRoll(die1, die2, speed_die)
             has_passed_bonus = true
         end
     end
+
     if has_passed_go then
         self:payFromBank(self:whoseTurn(), 200, "for passing Go")
     end
+
     if has_passed_payday and destination ~= self.board.spaces[Names.payday] then
         if total % 2 == 0 then
             self:payFromBank(self:whoseTurn(), 400, "for passing Payday with an even roll")
@@ -135,10 +139,13 @@ function UMGame:submitDiceRoll(die1, die2, speed_die)
             self:payFromBank(self:whoseTurn(), 300, "for passing Payday with an odd roll")
         end
     end
+
     if has_passed_bonus and destination ~= self.board.spaces[Names.bonus] then
         self:payFromBank(self:whoseTurn(), 250, "for passing Bonus")
     end
+
     self:movePlayer(self:whoseTurn(), destination)
+
     if self:whoseTurn().reversed then
         self:whoseTurn().reversed = false
         if speed_die == 6 then
