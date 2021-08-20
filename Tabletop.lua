@@ -329,7 +329,7 @@ local function animateDiceRoll(start, roll, backwards)
 
         if current_index < #visited_spaces then
             current_index = current_index + 1
-            Wait.frames(animateSpaces, 10)
+            Wait.time(animateSpaces, 0.05)
         else
             Wait.time(postMoveHandler, 1.5)
         end
