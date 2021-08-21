@@ -294,7 +294,7 @@ local function postMoveHandler()
     TheGame:submitDiceRoll(InGameObjects.dice.normal1.getValue(), InGameObjects.dice.normal2.getValue(), InGameObjects.dice.speed.getValue())
     broadcastToAll(TheGame:whoseTurn():getName() .. " landed on " .. TheGame:whoseTurn().location.name, TheGame:whoseTurn().color)
     Wait.time(function()
-       showActionButtons()
+       showActionButtons() -- TODO: Remove this unless debugging
        TheGame:handleSpaceAction()
     end, 2)
 end
