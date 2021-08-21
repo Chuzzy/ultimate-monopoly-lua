@@ -251,6 +251,7 @@ function UMGame:showPropertyInfo(property, show_controls_to, show_purchase_contr
             UI.setAttribute("DowngradeBtn", "tooltip", "Put " .. property.name .. " up for auction")
             UI.setAttribute("UpgradeBtn", "text", "Buy $" .. property.cost)
             UI.setAttribute("UpgradeBtn", "tooltip", "Buy " .. property.name .. " for $" .. property.cost)
+            -- Bind the purchase/auction actions to the buttons underneath the property
             UI.setAttribute("UpgradeBtn", "onClick", "buyCurrentProperty")
             -- Use PropertyMortgagedRow to show improvement costs instead of mortgage information
             if property.improvement_cost then
