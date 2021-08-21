@@ -42,10 +42,13 @@ end
 ---Returns a string representation of this Debt.
 ---It looks like `Somebody owes Someone $21 <reason>`
 ---@param has_paid boolean true to use the word "paid" in place of "owes".
+---@param is_pool boolean true to use "The Pool" instead of "The Bank".
 ---@return string
-function Debt:tostring(has_paid)
-    return (self.debtor and self.debtor:getName() or "The Bank") ..
-    (has_paid and " paid " or " owes ") ..
-    (self.creditor and self.creditor:getName() or "The Bank") .. " $" ..
-    self.amount .. (self.reason and " " .. self.reason or "")
+function Debt:tostring(has_paid, is_pool)
+    return (self.debtor and self.debtor:getName() or
+               (is_pool and "The Pool" or "The Bank")) ..
+               (has_paid and " paid " or " owes ") ..
+               (self.creditor and self.creditor:getName() or
+                   (is_pool and "The Pool" or "The Bank")) .. " $" ..
+               self.amount .. (self.reason and " " .. self.reason or "")
 end
