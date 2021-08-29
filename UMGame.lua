@@ -13,6 +13,8 @@
 ---@field hotel_count integer Number of remaining hotels.
 ---@field skyscraper_count integer Number of remaining skyscrapers.
 ---@field state GameState The current game state.
+---@field selected_property Property The property that the player has chosen.
+---@field transactions table<Property, integer> Array of transactions that have yet to be committed.
 ---@field dice_roll integer[] The values of the dice that were rolled this turn.
 ---@field dice_total integer The sum of the values of the dice.
 ---@field money_changed_handler function Event handler that is called when money changes hands.
@@ -276,6 +278,9 @@ function UMGame:showPropertyInfo(property, show_controls_to, show_purchase_contr
             UI.setAttribute("DowngradeBtn", "tooltip", "Sell a building")
             UI.setAttribute("UpgradeBtn", "text", "-$" .. property.improvement_cost)
             UI.setAttribute("UpgradeBtn", "tooltip", "Buy a building")
+            -- Bind the upgrade/downgrade actions to the buttons underneath the property
+            UI.setAttribute("DowngradeBtn", "onClick", "downgradeProperty")
+            UI.setAttribute("UpgradeBtn", "onClick", "upgradeProperty")
         end
         --Weird bug: changing the text also changes the text color to black.
         --Hence the text color is reset.
@@ -283,10 +288,34 @@ function UMGame:showPropertyInfo(property, show_controls_to, show_purchase_contr
         UI.setAttribute("UpgradeBtn", "textColor", "White")
     end
     UI.setAttribute("PropertyCard", "active", "true")
+    self.selected_property = property
 end
 
 function UMGame:hidePropertyInfo()
     UI.setAttribute("PropertyCard", "active", "false")
+    self.selected_property = nil
+end
+
+---Puts the selected property up for auction.
+function UMGame:downgradeProperty()
+    if not self.selected_property then
+        error("No property is currently selected")
+    end
+    if not self.transactions then
+        --TODO: Rename top buttons
+        self.transactions = {}
+    end
+end
+
+function UMGame:upgradeProperty()
+    if not self.selected_property then
+        error("No property is currently selected")
+    end
+    if not self.transactions then
+        --TODO: Rename top buttons
+        self.transactions = {}
+    end
+    self.transactions[self.selected_property] = (self.transactions[self.selected_property] or 0) + 1
 end
 
 ---Moves a player to a new position on the board.

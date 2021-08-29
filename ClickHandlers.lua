@@ -20,3 +20,11 @@ function buyCurrentProperty(player)
     TheGame.state = GameState.POST_MOVEMENT
     createManagementBoardButtons(TheGame.players_by_color[player.color])
 end
+
+function downgradeProperty(player)
+    TheGame:downgradeProperty()
+end
+
+function upgradeProperty()
+    TheGame:upgradeProperty()
+end
