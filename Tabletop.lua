@@ -7,7 +7,6 @@ require("InGameObjects")
 require("ClickHandlers")
 
 function doNothing() end
-local board = UMGame.board
 local board_btns = {}
 local mutated_btns = {}
 local player_tokens = {}
@@ -50,7 +49,7 @@ function registerNewPlayer(color, token_guid)
     player_tokens[color] = getObjectFromGUID(token_guid)
     player_tokens[color].setColorTint(color)
     player_tokens[color].interactable = false
-    movePlayerToken(UMGame.createPlayer(color, token_guid, 3200), board.spaces[Names.go])
+    movePlayerToken(UMGame.createPlayer(color, token_guid, 3200), Board.spaces[Names.go])
 end
 
 ---Moves a token to the specified space.
@@ -71,7 +70,7 @@ end
 function createAllBoardButtons()
     -- TODO: Allow creation of buttons on specific spaces
     local i = 0
-    for name, space in pairs(board.spaces) do
+    for name, space in pairs(Board.spaces) do
         -- Create a global function for the space event
         _G[name .. "_click"] = function(_, player_color)
             resetBoardButtons()
@@ -85,7 +84,7 @@ function createAllBoardButtons()
             end
             ]]
             local roll = 12
-            local visited_spaces = board:diceRoll(board.spaces[name], roll,
+            local visited_spaces = Board.diceRoll(Board.spaces[name], roll,
                                                   false)
             local current_index = 1
             local last_space_was_transit = false
@@ -299,7 +298,7 @@ local function postMoveHandler()
 end
 
 local function animateDiceRoll(start, roll, backwards)
-    local visited_spaces = board:diceRoll(board.spaces[start], roll, backwards)
+    local visited_spaces = Board.diceRoll(Board.spaces[start], roll, backwards)
     local current_index = 1
     local last_space_was_transit = false
     local transit_count = 0
@@ -339,7 +338,7 @@ end
 
 local function rollRegularDice()
     if #Rigged == 1 then
-        UMGame.moveDirectlyTo(board.spaces[Rigged[1]])
+        UMGame.moveDirectlyTo(Board.spaces[Rigged[1]])
         broadcastToAll(UMGame.whoseTurn():getName() .. " \"moved\" to " .. UMGame.whoseTurn().location.name, UMGame.whoseTurn().color)
         Wait.time(function()
             showActionButtons()

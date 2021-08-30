@@ -181,10 +181,10 @@ local function createHollandTunnelPrototype(track, is_inner)
         name = Names.holland .. suffix,
         action = function(space, player)
             if is_inner then
-                UMGame.moveDirectlyTo(UMGame.board.spaces[Names.holland .. " Outer"])
+                UMGame.moveDirectlyTo(Board.spaces[Names.holland .. " Outer"])
                 broadcastToAll(player:getName() .. " took the Holland Tunnel to the Outer track", player.color)
             else
-                UMGame.moveDirectlyTo(UMGame.board.spaces[Names.holland .. " Inner"])
+                UMGame.moveDirectlyTo(Board.spaces[Names.holland .. " Inner"])
                 broadcastToAll(player:getName() .. " took the Holland Tunnel to the Inner track", player.color)
             end
         end

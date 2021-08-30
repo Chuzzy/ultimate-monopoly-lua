@@ -59,9 +59,9 @@ Utils = {
     end,
     propertyToSpace = function(property, game)
         if property.group == "rail" then
-            return game.board.spaces[property.name .. " Outer"]
+            return Board.spaces[property.name .. " Outer"]
         else
-            return game.board.spaces[property.name]
+            return Board.spaces[property.name]
         end
     end,
     -- The board's local scale is different to the

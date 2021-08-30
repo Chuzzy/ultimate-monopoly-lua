@@ -6,7 +6,6 @@ require("Debt")
 
 --- The game of Ultimate Monopoly.
 ---@class UMGame
----@field board Board The game board.
 ---@field players UMPlayer[] The players of the game.
 ---@field players_by_color table<string, UMPlayer> The players of the game by color.
 ---@field current_turn_index integer The current player.
@@ -27,7 +26,6 @@ require("Debt")
 ---@field property_changed_handler function Event handler that is called when property changes owners.
 ---@field player_moved_handler function Event handler that is called when players move.
 UMGame = {
-    board = Board.new(),
     players = {},
     players_by_color = {},
     turn_count = 0,
@@ -55,7 +53,7 @@ end
 ---@return UMPlayer new_player The new player.
 function UMGame.createPlayer(color, token_guid, starting_money)
     assert(UMGame.state.name == GameState.UNBEGUN, "cannot create player when the game has started")
-    local new_player = UMPlayer.new(color, token_guid, starting_money, UMGame.board.spaces[Names.go])
+    local new_player = UMPlayer.new(color, token_guid, starting_money, Board.spaces[Names.go])
     table.insert(UMGame.players, new_player)
     UMGame.players_by_color[color] = new_player
     return new_player
@@ -107,7 +105,7 @@ function UMGame.submitDiceRoll(die1, die2, speed_die)
     end
     UMGame.dice_total = total
 
-    local visited_spaces = UMGame.board:diceRoll(UMGame.whoseTurn().location, total, UMGame.whoseTurn().reversed)
+    local visited_spaces = Board.diceRoll(UMGame.whoseTurn().location, total, UMGame.whoseTurn().reversed)
     local destination = visited_spaces[#visited_spaces]
 
     -- Handle passing Go, Payday and Bonus
@@ -128,7 +126,7 @@ function UMGame.submitDiceRoll(die1, die2, speed_die)
         UMGame.payFromBank(UMGame.whoseTurn(), 200, "for passing Go")
     end
 
-    if has_passed_payday and destination ~= UMGame.board.spaces[Names.payday] then
+    if has_passed_payday and destination ~= Board.spaces[Names.payday] then
         if total % 2 == 0 then
             UMGame.payFromBank(UMGame.whoseTurn(), 400, "for passing Payday with an even roll")
         else
@@ -136,7 +134,7 @@ function UMGame.submitDiceRoll(die1, die2, speed_die)
         end
     end
 
-    if has_passed_bonus and destination ~= UMGame.board.spaces[Names.bonus] then
+    if has_passed_bonus and destination ~= Board.spaces[Names.bonus] then
         UMGame.payFromBank(UMGame.whoseTurn(), 250, "for passing Bonus")
     end
 
