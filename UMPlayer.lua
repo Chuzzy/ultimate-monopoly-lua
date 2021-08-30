@@ -43,8 +43,8 @@ function UMPlayer:getName()
     return Player[self.color] and Player[self.color].steam_name or self.color
 end
 
-function UMPlayer:act(game)
-    self.location:act(game, self)
+function UMPlayer:act()
+    self.location:act(self)
 end
 
 function UMPlayer:countPropertiesOwnedInGroup(group)
