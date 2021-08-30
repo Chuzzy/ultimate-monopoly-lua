@@ -194,7 +194,7 @@ end
 ---@param space Space
 ---@param player UMPlayer
 local function propertyAction(space, player)
-    local property = Utils.spaceToProperty(space, UMGame)
+    local property = Utils.spaceToProperty(space)
     if not property.owner then
         broadcastToColor(property.name .. " is for sale for $" .. property.cost .. ". You want it?", player.color, player.color)
         UMGame.showPropertyInfo(property, UMGame.whoseTurn(), true)

@@ -411,7 +411,7 @@ end
 ---@param property Property The sold property. If nil, the buyer's location.
 function UMGame.sellPropertyTo(buyer, property)
     buyer = buyer or UMGame.whoseTurn()
-    property = property or Utils.spaceToProperty(buyer.location, UMGame)
+    property = property or Utils.spaceToProperty(buyer.location)
     assert(buyer.money >= property.cost, buyer:getName() .. " can't afford " .. property.name)
     buyer.money = buyer.money - property.cost
     buyer.owned_properties[property.name] = property

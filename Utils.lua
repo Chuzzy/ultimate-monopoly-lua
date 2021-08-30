@@ -49,15 +49,15 @@ Utils = {
         Wait.time(toggleLights, 0.5, 14)
         Wait.time(normalLight, 7)
     end,
-    spaceToProperty = function(space, game)
+    spaceToProperty = function(space)
         if space.transit_type then
             -- Removes the " Outer" or " Inner" at the end of the transit station's name
-            return game.properties[space.name:sub(0, space.name:len() - 6)]
+            return UMGame.properties[space.name:sub(0, space.name:len() - 6)]
         else
-            return game.properties[space.name]
+            return UMGame.properties[space.name]
         end
     end,
-    propertyToSpace = function(property, game)
+    propertyToSpace = function(property)
         if property.group == "rail" then
             return Board.spaces[property.name .. " Outer"]
         else

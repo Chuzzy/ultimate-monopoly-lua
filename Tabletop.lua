@@ -37,7 +37,7 @@ function onLoad()
     end
     UMGame.property_changed_handler = function(property)
         --TODO: Replace existing avatar
-        spawnAvatarOnSpace(property.owner.color, Utils.propertyToSpace(property, UMGame))
+        spawnAvatarOnSpace(property.owner.color, Utils.propertyToSpace(property))
     end
     UMGame.player_moved_handler = movePlayerToken
     UMGame.start("Blue")
@@ -197,7 +197,7 @@ end
 function createManagementBoardButtons(player)
     local i = 0
     for name, property in pairs(player.owned_properties) do
-        local space = Utils.propertyToSpace(property, UMGame)
+        local space = Utils.propertyToSpace(property)
         -- Create the event handler when the button is clicked
         _G[name .. " Clicked"] = function (_, player_color)
             UMGame.showPropertyInfo(property, player)
