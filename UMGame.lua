@@ -297,6 +297,8 @@ function UMGame.downgradeProperty()
         --TODO: Rename top buttons
         UMGame.transactions = {}
     end
+    UMGame.transactions[UMGame.selected_property] = (UMGame.transactions[UMGame.selected_property] or 0) - 1
+    UMGame.updateSideTextWithTransactions()
 end
 
 function UMGame.upgradeProperty()
@@ -308,6 +310,36 @@ function UMGame.upgradeProperty()
         UMGame.transactions = {}
     end
     UMGame.transactions[UMGame.selected_property] = (UMGame.transactions[UMGame.selected_property] or 0) + 1
+    UMGame.updateSideTextWithTransactions()
+end
+
+---Updates the text on the side with info about
+function UMGame.updateSideTextWithTransactions()
+    local result = {}
+    local net_profit = 0
+    for property, upgrade_count in pairs(UMGame.transactions) do
+        if upgrade_count ~= 0 then
+            local buy_or_sell_text
+            local cost_or_gain_text
+
+            if upgrade_count > 0 then
+                buy_or_sell_text = "[00FF00]Buy[-]"
+                cost_or_gain_text = property.improvement_cost * upgrade_count
+                net_profit = net_profit - cost_or_gain_text
+            else
+                buy_or_sell_text = "[CC0000]Sell[-]"
+                cost_or_gain_text = property.improvement_cost / 2 * upgrade_count * -1
+                net_profit = net_profit + cost_or_gain_text
+            end
+
+            upgrade_count = math.abs(upgrade_count)
+            local buildings_text = upgrade_count == 1 and "building" or "buildings"
+
+            table.insert(result, string.format("%s %i %s on %s for $%s", buy_or_sell_text, upgrade_count, buildings_text, property.name, cost_or_gain_text))
+        end
+    end
+    table.insert(result, "\nTotal: $" .. net_profit)
+    Notes.setNotes(table.concat(result, "\n"))
 end
 
 ---Moves a player to a new position on the board.
