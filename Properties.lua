@@ -70,10 +70,10 @@ function Property.generateUMProperties()
         ["B&O Railroad"] = Property.new("B&O Railroad", 200, "rail", {25, 50, 100, 200}, 100),
         ["Short Line"] = Property.new("Short Line", 200, "rail", {25, 50, 100, 200}, 100),
         -- Cab Companies
-        ["Checker Cab Company"] = Property.new("Checker Cab Company", 300, "rail", {30, 60, 120, 240}, 150),
-        ["Black & White Cab Company"] = Property.new("Black & White Cab Company", 300, "rail", {30, 60, 120, 240}, 150),
-        ["Yellow Cab Company"] = Property.new("Yellow Cab Company", 300, "rail", {30, 60, 120, 240}, 150),
-        ["Ute Cab Company"] = Property.new("Ute Cab Company", 300, "rail", {30, 60, 120, 240}, 150),
+        ["Checker Cab Company"] = Property.new("Checker Cab Company", 300, "cab", {30, 60, 120, 240}, 150),
+        ["Black & White Cab Company"] = Property.new("Black & White Cab Company", 300, "cab", {30, 60, 120, 240}, 150),
+        ["Yellow Cab Company"] = Property.new("Yellow Cab Company", 300, "cab", {30, 60, 120, 240}, 150),
+        ["Ute Cab Company"] = Property.new("Ute Cab Company", 300, "cab", {30, 60, 120, 240}, 150),
         -- Utilities
         ["Electric Company"] = Property.new("Electric Company", 150, "utility", {4, 10, 20, 40, 80, 100, 120, 150}),
         ["Water Works"] = Property.new("Water Works", 150, "utility", {4, 10, 20, 40, 80, 100, 120, 150}),

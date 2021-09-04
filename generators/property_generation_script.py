@@ -15,7 +15,7 @@ with open("Properties.lua", "w") as lua_file:
     
     lua_file.write("        -- Cab Companies\n")
     for cabco in ["Checker Cab Company", "Black & White Cab Company", "Yellow Cab Company", "Ute Cab Company"]:
-        lua_file.write(f"        [\"{cabco}\"] = Property.new(\"{cabco}\", 300, \"rail\", {{30, 60, 120, 240}}, 150),\n")
+        lua_file.write(f"        [\"{cabco}\"] = Property.new(\"{cabco}\", 300, \"cab\", {{30, 60, 120, 240}}, 150),\n")
 
     
     lua_file.write("        -- Utilities\n")
