@@ -475,7 +475,7 @@ function spawnAvatarOnSpace(color, space)
             local image_url = assert(response.text:match(regex),
             "Unable to fetch the steam avatar of " ..
             Player[color].steam_name)
-            spawnTile(response.text)
+            spawnTile(image_url)
         end)
     end
     if not pcall(attemptToFetchPlayerAvatar) then
