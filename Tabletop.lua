@@ -5,6 +5,7 @@ require("Utils")
 require("UMGame")
 require("InGameObjects")
 require("ClickHandlers")
+require("Debug")
 
 function doNothing() end
 local board_btns = {}
@@ -27,7 +28,8 @@ function onLoad()
             UI.setValue("CashPool", "$" .. UMGame.cash_pool)
         end
         if debt.creditor then
-            UI.setValue(debt.creditor.color .. "Money", "$" .. debt.creditor.money)
+            UI.setValue(debt.creditor.color .. "Money",
+                        "$" .. debt.creditor.money)
             if not debt.debtor then
                 broadcastToAll(debt:tostring(true), debt.creditor.color)
             end
@@ -36,20 +38,22 @@ function onLoad()
         end
     end
     UMGame.property_changed_handler = function(property)
-        --TODO: Replace existing avatar
+        -- TODO: Replace existing avatar
         spawnAvatarOnSpace(property.owner.color, Utils.propertyToSpace(property))
     end
     UMGame.player_moved_handler = movePlayerToken
     UMGame.start("Blue")
     hideActionButtons()
     hideUnusedMoneyPanels()
+    Debug.handOut()
 end
 
 function registerNewPlayer(color, token_guid)
     player_tokens[color] = getObjectFromGUID(token_guid)
     player_tokens[color].setColorTint(color)
     player_tokens[color].interactable = false
-    movePlayerToken(UMGame.createPlayer(color, token_guid, 3200), Board.spaces[Names.go])
+    movePlayerToken(UMGame.createPlayer(color, token_guid, 3200),
+                    Board.spaces[Names.go])
 end
 
 ---Moves a token to the specified space.
@@ -59,14 +63,15 @@ function movePlayerToken(player, destination)
     local occupant_position_index = #UMGame.getOccupantsOnSpace(destination)
     assert(destination, "destination is nil")
     local player_color = player.color
-    player_tokens[player_color].setPositionSmooth(destination.occupant_positions[occupant_position_index])
+    player_tokens[player_color].setPositionSmooth(
+        destination.occupant_positions[occupant_position_index])
     player_tokens[player_color].setRotationSmooth(destination.direction.vector)
     if Player[player_color].seated then
         Player[player_color].pingTable(destination.camera_pos)
     end
 end
 
---#region Board button CUD
+-- #region Board button CUD
 function createAllBoardButtons()
     -- TODO: Allow creation of buttons on specific spaces
     local i = 0
@@ -177,7 +182,10 @@ function resetBoardButtons()
 end
 
 function colorBoardButton(name, new_color)
-    InGameObjects.gameboard.editButton({index = board_btns[name], color = new_color})
+    InGameObjects.gameboard.editButton({
+        index = board_btns[name],
+        color = new_color
+    })
     mutated_btns[name] = true
 end
 
@@ -199,7 +207,7 @@ function createManagementBoardButtons(player)
     for name, property in pairs(player.owned_properties) do
         local space = Utils.propertyToSpace(property)
         -- Create the event handler when the button is clicked
-        _G[name .. " Clicked"] = function (_, player_color)
+        _G[name .. " Clicked"] = function(_, player_color)
             UMGame.showPropertyInfo(property, player)
         end
 
@@ -219,7 +227,7 @@ function createManagementBoardButtons(player)
         i = i + 1
     end
 end
---#endregion Board Button CUD
+-- #endregion Board Button CUD
 
 local die_launch_radius = 15
 
@@ -289,11 +297,15 @@ end
 ---Called when the token has finished moving.
 local function postMoveHandler()
     InGameObjects.gameboard.clearButtons()
-    UMGame.submitDiceRoll(InGameObjects.dice.normal1.getValue(), InGameObjects.dice.normal2.getValue(), InGameObjects.dice.speed.getValue())
-    broadcastToAll(UMGame.whoseTurn():getName() .. " landed on " .. UMGame.whoseTurn().location.name, UMGame.whoseTurn().color)
+    UMGame.submitDiceRoll(InGameObjects.dice.normal1.getValue(),
+                          InGameObjects.dice.normal2.getValue(),
+                          InGameObjects.dice.speed.getValue())
+    broadcastToAll(UMGame.whoseTurn():getName() .. " landed on " ..
+                       UMGame.whoseTurn().location.name,
+                   UMGame.whoseTurn().color)
     Wait.time(function()
-       showActionButtons() -- TODO: Remove this unless debugging
-       UMGame.handleSpaceAction()
+        showActionButtons() -- TODO: Remove this unless debugging
+        UMGame.handleSpaceAction()
     end, 2)
 end
 
@@ -319,7 +331,8 @@ local function animateDiceRoll(start, roll, backwards)
             color = UMGame.whoseTurn().color,
             label = current_index - transit_count,
             font_size = 100,
-            position = Vector(current_space.camera_pos):scale(Utils.board_scale_vector),
+            position = Vector(current_space.camera_pos):scale(
+                Utils.board_scale_vector),
             rotation = current_space.direction.vector,
             width = 300,
             height = 300
@@ -339,7 +352,9 @@ end
 local function rollRegularDice()
     if #Rigged == 1 then
         UMGame.moveDirectlyTo(Board.spaces[Rigged[1]])
-        broadcastToAll(UMGame.whoseTurn():getName() .. " \"moved\" to " .. UMGame.whoseTurn().location.name, UMGame.whoseTurn().color)
+        broadcastToAll(UMGame.whoseTurn():getName() .. " \"moved\" to " ..
+                           UMGame.whoseTurn().location.name,
+                       UMGame.whoseTurn().color)
         Wait.time(function()
             showActionButtons()
             UMGame.handleSpaceAction()
@@ -347,7 +362,9 @@ local function rollRegularDice()
         return
     elseif #Rigged == 2 then
         UMGame.submitDiceRoll(Rigged[2], 0, 0)
-        broadcastToAll(UMGame.whoseTurn():getName() .. " \"landed\" on " .. UMGame.whoseTurn().location.name, UMGame.whoseTurn().color)
+        broadcastToAll(UMGame.whoseTurn():getName() .. " \"landed\" on " ..
+                           UMGame.whoseTurn().location.name,
+                       UMGame.whoseTurn().color)
         Wait.time(function()
             showActionButtons()
             UMGame.handleSpaceAction()
@@ -384,20 +401,29 @@ local function rollRegularDice()
             end
         end
 
-        local total_rolled = InGameObjects.dice.normal1.getValue() + InGameObjects.dice.normal2.getValue() + UMGame.speedDieValue(InGameObjects.dice.speed.getValue())
-        broadcastToAll(UMGame.whoseTurn():getName() .. " rolled " .. InGameObjects.dice.normal1.getValue() .. ", " ..
-                           InGameObjects.dice.normal2.getValue() .. " and " .. speedDieString() .. " = " .. total_rolled, UMGame.whoseTurn().color)
+        local total_rolled = InGameObjects.dice.normal1.getValue() +
+                                 InGameObjects.dice.normal2.getValue() +
+                                 UMGame.speedDieValue(
+                                     InGameObjects.dice.speed.getValue())
+        broadcastToAll(UMGame.whoseTurn():getName() .. " rolled " ..
+                           InGameObjects.dice.normal1.getValue() .. ", " ..
+                           InGameObjects.dice.normal2.getValue() .. " and " ..
+                           speedDieString() .. " = " .. total_rolled,
+                       UMGame.whoseTurn().color)
         Wait.frames(function()
             InGameObjects.dice.normal1.setLock(true)
             InGameObjects.dice.normal2.setLock(true)
             InGameObjects.dice.speed.setLock(true)
         end)
         -- Move the player to the spot
-        animateDiceRoll(UMGame.whoseTurn().location.name, total_rolled, UMGame.whoseTurn().reversed)
+        animateDiceRoll(UMGame.whoseTurn().location.name, total_rolled,
+                        UMGame.whoseTurn().reversed)
     end
 
     local function allThreeDiceAreResting()
-        return InGameObjects.dice.normal1.resting and InGameObjects.dice.normal2.resting and InGameObjects.dice.speed.resting
+        return InGameObjects.dice.normal1.resting and
+                   InGameObjects.dice.normal2.resting and
+                   InGameObjects.dice.speed.resting
     end
 
     local function broadcastErrorMessage()
@@ -417,11 +443,12 @@ function onObjectPickUp(player_color, object)
         if player_color == UMGame.whoseTurn().color then
             rollRegularDice()
         else
-            --TODO: Specify what is being waited on
-            --e.g. Blue is waiting to roll the dice
-            --Yellow is considering the trade offer
-            --Green is building stuff
-            broadcastToColor("It is " .. UMGame.whoseTurn():getName() .. "'s turn right now.", player_color, "Red")
+            -- TODO: Specify what is being waited on
+            -- e.g. Blue is waiting to roll the dice
+            -- Yellow is considering the trade offer
+            -- Green is building stuff
+            broadcastToColor("It is " .. UMGame.whoseTurn():getName() ..
+                                 "'s turn right now.", player_color, "Red")
         end
     end
 end
