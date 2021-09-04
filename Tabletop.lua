@@ -428,17 +428,10 @@ end
 
 function spawnAvatarOnSpace(color, space)
     local player_id = Player[color].steam_id
-    WebRequest.get("https://steamcommunity.com/profiles/" .. player_id ..
-                       "?xml=1",
-    -- TODO: Fallback when the steam avatar can't be fetched
-                   function(response)
-        local regex = "<avatarFull><!%[CDATA%[([%w%p]+)%]%]></avatarFull>"
-        local image_url = assert(response.text:match(regex),
-                                 "Unable to fetch the steam avatar of " ..
-                                        Player[color].steam_name)
+    local function spawnTile(image_url)
         local customCard = spawnObject({
             type = "Custom_Tile",
-            position = Vector(space.avatar_pos):add(Vector{0, 4, 0}),
+            position = Vector(space.avatar_pos):add(Vector {0, 4, 0}),
             rotation = Vector(space.direction.clockwise().clockwise().vector),
             sound = false,
             scale = {0.36, 1, 0.36}
@@ -446,8 +439,33 @@ function spawnAvatarOnSpace(color, space)
         customCard.setColorTint(color)
         customCard.setCustomObject({image = image_url, thickness = 0.03})
         customCard.interactable = false
-        Wait.time(function () customCard.setLock(true) end, 2)
-    end)
+        Wait.time(function() customCard.setLock(true) end, 2)
+    end
+    local function attemptToFetchPlayerAvatar()
+        WebRequest.get("https://steamcommunity.com/profiles/" .. player_id ..
+        "?xml=1", function(response)
+            local regex = "<avatarFull><!%[CDATA%[([%w%p]+)%]%]></avatarFull>"
+            local image_url = assert(response.text:match(regex),
+            "Unable to fetch the steam avatar of " ..
+            Player[color].steam_name)
+            spawnTile(response.text)
+        end)
+    end
+    if not pcall(attemptToFetchPlayerAvatar) then
+        local fallback_avatars = {
+            White = "http://cloud-3.steamusercontent.com/ugc/1710788776987068375/B3FD8417EE2B7C66F842B064F7C8134568BB5072/",
+            Brown = "http://cloud-3.steamusercontent.com/ugc/1710788776987067892/1FA42AA5E9815AFCD205D73A2417CBFAED38B13B/",
+            Red = "http://cloud-3.steamusercontent.com/ugc/1710788776987068225/4BF57CAFAD8B2792AC1C85F61ABC2B9A08367C78/",
+            Orange = "http://cloud-3.steamusercontent.com/ugc/1710788776987068027/E559D83CB77074DF8295B85E94ADC57585F94223/",
+            Yellow = "http://cloud-3.steamusercontent.com/ugc/1710788776987068475/B2BA82DE46C802B7F005C80D8DC5249CBE666434/",
+            Green = "http://cloud-3.steamusercontent.com/ugc/1710788776987067956/E2D330A18C2052D2514E0D18B14C7C7E6D4249DC/",
+            Teal = "http://cloud-3.steamusercontent.com/ugc/1710788776987068302/B2A1428714EA8E43F2AEA0B3C5550665578E66E0/",
+            Blue = "http://cloud-3.steamusercontent.com/ugc/1710788776987067825/E5643D5F6A4B44DEE1CDFAD2F4B1C73B276B5457/",
+            Purple = "http://cloud-3.steamusercontent.com/ugc/1710788776987068159/3D24BEB8128175896B085C94AA3E5825D5D107CE/",
+            Pink = "http://cloud-3.steamusercontent.com/ugc/1710788776987068091/AFEE6ABA9B88CD81963E9B6CC334BD73C6285427/"
+        }
+        spawnTile(fallback_avatars[color])
+    end
 end
 
 function lookAtJail(color)
