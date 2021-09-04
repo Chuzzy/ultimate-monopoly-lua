@@ -1,4 +1,6 @@
-Debug = {}
+Debug = {
+    let_anyone_roll = false
+}
 
 ---Sells a fixed list of properties to Blue, Green and Yellow.
 function Debug.handOut()
@@ -26,4 +28,9 @@ function Debug.handOut()
             UMGame.sellPropertyTo(UMGame.players_by_color[player_color], UMGame.properties[property_name])
         end
     end
+end
+
+function Debug.toggleLetAnyoneRoll()
+    Debug.let_anyone_roll = not Debug.let_anyone_roll
+    print(Debug.let_anyone_roll and "Anyone can roll." or "Only one player can roll.")
 end

@@ -46,6 +46,7 @@ function onLoad()
     hideActionButtons()
     hideUnusedMoneyPanels()
     Debug.handOut()
+    Debug.toggleLetAnyoneRoll()
 end
 
 function registerNewPlayer(color, token_guid)
@@ -440,7 +441,7 @@ end
 function onObjectPickUp(player_color, object)
     if Utils.equalsAny(object.getGUID(), GUIDs.dice) then
         object.drop()
-        if player_color == UMGame.whoseTurn().color then
+        if Debug.let_anyone_roll or player_color == UMGame.whoseTurn().color then
             rollRegularDice()
         else
             -- TODO: Specify what is being waited on
