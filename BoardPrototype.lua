@@ -196,7 +196,7 @@ end
 local function propertyAction(space, player)
     local property = Utils.spaceToProperty(space)
     if not property.owner then
-        broadcastToColor(property.name .. " is for sale for $" .. property.cost .. ". You want it?", player.color, player.color)
+        Utils.safeMsg(property.name .. " is for sale for $" .. property.cost .. ". You want it?", player.color, player.color)
         UMGame.showPropertyInfo(property, UMGame.whoseTurn(), true)
         UMGame.state = GameState.PROPERTY_SALE
     else

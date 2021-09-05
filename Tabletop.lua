@@ -448,8 +448,8 @@ function onObjectPickUp(player_color, object)
             -- e.g. Blue is waiting to roll the dice
             -- Yellow is considering the trade offer
             -- Green is building stuff
-            broadcastToColor("It is " .. UMGame.whoseTurn():getName() ..
-                                 "'s turn right now.", player_color, "Red")
+            Utils.safeMsg("It is " .. UMGame.whoseTurn():getName() ..
+                                 "'s turn right now.", "Red", player_color)
         end
     end
 end
