@@ -22,8 +22,8 @@ function Debt.new(debtor, creditor, amount, reason)
     local self = setmetatable({}, Debt)
     self.debtor = debtor
     self.creditor = creditor
-    if not debtor and not creditor then
-        error("debtor and creditor cannot both be nil", 2)
+    if debtor == creditor then
+        error("debtor and creditor cannot be the same", 2)
     end
     if amount < 1 then error("amount must be larger than 1", 2) end
     self.amount = amount
