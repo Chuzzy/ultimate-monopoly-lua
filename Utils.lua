@@ -94,5 +94,21 @@ Utils = {
                 fives=fives,
                 ones=value
             }
+    end,
+    ---Safely broadcasts a message.
+    ---@param message string The message to broadcast.
+    ---@param text_color any Color of the text
+    ---@param player_color any The color of the player to broadcast to.
+    ---@return boolean success true if a message was broadcast.
+    safeMsg = function (message, text_color, player_color)
+        if player_color then
+            if Player[player_color] then
+                broadcastToColor(message, player_color, text_color)
+                return true
+            end
+        else
+            broadcastToAll(message, text_color)
+            return true
+        end
     end
 }
