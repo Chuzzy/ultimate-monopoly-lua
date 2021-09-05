@@ -158,6 +158,8 @@ end
 ---Called when the current player lands on a new space.
 function UMGame.handleSpaceAction()
     UMGame.whoseTurn():act()
+    --TODO: Call this only when game state is post move
+    createManagementBoardButtons(UMGame.whoseTurn())
 end
 
 ---Shows the property UI.
