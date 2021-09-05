@@ -200,7 +200,7 @@ local function propertyAction(space, player)
         UMGame.showPropertyInfo(property, UMGame.whoseTurn(), true)
         UMGame.state = GameState.PROPERTY_SALE
     else
-        local rent_owed = property:rent(UMGame.dice_total)
+        local rent_owed = player == property.owner and 0 or property:rent(UMGame.dice_total)
         if rent_owed > 0 then
             UMGame.createDebt(player, property.owner, rent_owed, "rent for landing on " .. property.name)
         end
