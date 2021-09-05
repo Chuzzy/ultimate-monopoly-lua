@@ -46,7 +46,7 @@ function onLoad()
     hideActionButtons()
     hideUnusedMoneyPanels()
     Debug.handOut()
-    Debug.toggleLetAnyoneRoll()
+    Debug.toggleLetAnyoneAct()
 end
 
 function registerNewPlayer(color, token_guid)
@@ -278,8 +278,8 @@ local function speedDieString()
 end
 
 function showActionButtons()
-    UI.setAttribute("tradeBtn", "visibility", UMGame.whoseTurn().color)
-    UI.setAttribute("endTurnBtn", "visibility", UMGame.whoseTurn().color)
+    UI.setAttribute("tradeBtn", "visibility", Debug.let_anyone_act and "" or UMGame.whoseTurn().color)
+    UI.setAttribute("endTurnBtn", "visibility", Debug.let_anyone_act and "" or UMGame.whoseTurn().color)
 end
 
 function hideActionButtons()
@@ -441,7 +441,7 @@ end
 function onObjectPickUp(player_color, object)
     if Utils.equalsAny(object.getGUID(), GUIDs.dice) then
         object.drop()
-        if Debug.let_anyone_roll or player_color == UMGame.whoseTurn().color then
+        if Debug.let_anyone_act or player_color == UMGame.whoseTurn().color then
             rollRegularDice()
         else
             -- TODO: Specify what is being waited on

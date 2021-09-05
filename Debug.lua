@@ -1,5 +1,5 @@
 Debug = {
-    let_anyone_roll = false
+    let_anyone_act = false,
 }
 
 ---Sells a fixed list of properties to Blue, Green and Yellow.
@@ -30,7 +30,7 @@ function Debug.handOut()
     end
 end
 
-function Debug.toggleLetAnyoneRoll()
-    Debug.let_anyone_roll = not Debug.let_anyone_roll
-    print(Debug.let_anyone_roll and "Anyone can roll." or "Only one player can roll.")
+function Debug.toggleLetAnyoneAct()
+    Debug.let_anyone_act = not Debug.let_anyone_act
+    log(Debug.let_anyone_act and "Anyone can act." or "Only one player can act.", "Debug.toggleLetAnyoneAct", "debug")
 end

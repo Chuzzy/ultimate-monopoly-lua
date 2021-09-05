@@ -1,5 +1,5 @@
 function endTurnClick(player)
-    if player.color == UMGame.whoseTurn().color then
+    if Debug.let_anyone_act or player.color == UMGame.whoseTurn().color then
         UMGame.nextTurn()
         broadcastToAll(UMGame.whoseTurn():getName() .. "'s turn starts now.",
                        UMGame.whoseTurn().color)
@@ -18,7 +18,7 @@ function buyCurrentProperty(player)
     UMGame.sellPropertyTo()
     UMGame.hidePropertyInfo()
     UMGame.state = GameState.POST_MOVEMENT
-    createManagementBoardButtons(UMGame.players_by_color[player.color])
+    createManagementBoardButtons(UMGame.whoseTurn())
 end
 
 function downgradeProperty(player)
