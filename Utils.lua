@@ -102,7 +102,7 @@ Utils = {
     ---@return boolean success true if a message was broadcast.
     safeMsg = function (message, text_color, player_color)
         if player_color then
-            if Player[player_color] then
+            if Player[player_color].seated then
                 broadcastToColor(message, player_color, text_color)
                 return true
             end
