@@ -110,5 +110,21 @@ Utils = {
             broadcastToAll(message, text_color)
             return true
         end
-    end
+    end,
+    ---Converts a number to its ordinal representation.
+    ---@param n integer
+    ---@return string ordinal
+    toOrdinal = function(n)
+        if n % 100 == 11 or n % 100 == 12 or n % 100 == 13 then
+            return n .. "th"
+        elseif n % 10 == 1 then
+            return n .. "st"
+        elseif n % 10 == 2 then
+            return n .. "nd"
+        elseif n % 10 == 3 then
+            return n .. "rd"
+        else
+            return n .. "th"
+        end
+    end,
 }
