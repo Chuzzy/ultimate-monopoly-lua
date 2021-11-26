@@ -340,7 +340,8 @@ function UMGame.updateSideTextWithTransactions()
             table.insert(result, string.format("%s %i %s on %s for $%s", buy_or_sell_text, upgrade_count, buildings_text, property.name, cost_or_gain_text))
         end
     end
-    table.insert(result, "\nTotal: $" .. net_profit)
+    local net_profit_prefix = net_profit < 0 and "-$" or "+$"
+    table.insert(result, "\nTotal: " .. net_profit_prefix .. math.abs(net_profit))
     Notes.setNotes(table.concat(result, "\n"))
 end
 
