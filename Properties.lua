@@ -75,13 +75,13 @@ function Property.generateUMProperties()
         ["Yellow Cab Company"] = Property.new("Yellow Cab Company", 300, "cab", {30, 60, 120, 240}, 150, 1),
         ["Ute Cab Company"] = Property.new("Ute Cab Company", 300, "cab", {30, 60, 120, 240}, 150, 1),
         -- Utilities
-        ["Electric Company"] = Property.new("Electric Company", 150, "utility", {4, 10, 20, 40, 80, 100, 120, 150}, 0),
-        ["Water Works"] = Property.new("Water Works", 150, "utility", {4, 10, 20, 40, 80, 100, 120, 150}, 0),
-        ["Cable Company"] = Property.new("Cable Company", 150, "utility", {4, 10, 20, 40, 80, 100, 120, 150}, 0),
-        ["Internet Service Provider"] = Property.new("Internet Service Provider", 150, "utility", {4, 10, 20, 40, 80, 100, 120, 150}, 0),
-        ["Trash Collector"] = Property.new("Trash Collector", 150, "utility", {4, 10, 20, 40, 80, 100, 120, 150}, 0),
-        ["Sewage System"] = Property.new("Sewage System", 150, "utility", {4, 10, 20, 40, 80, 100, 120, 150}, 0),
-        ["Telephone Company"] = Property.new("Telephone Company", 150, "utility", {4, 10, 20, 40, 80, 100, 120, 150}, 0),
-        ["Gas Company"] = Property.new("Gas Company", 150, "utility", {4, 10, 20, 40, 80, 100, 120, 150}, 0),
+        ["Electric Company"] = Property.new("Electric Company", 150, "utility", {4, 10, 20, 40, 80, 100, 120, 150}),
+        ["Water Works"] = Property.new("Water Works", 150, "utility", {4, 10, 20, 40, 80, 100, 120, 150}),
+        ["Cable Company"] = Property.new("Cable Company", 150, "utility", {4, 10, 20, 40, 80, 100, 120, 150}),
+        ["Internet Service Provider"] = Property.new("Internet Service Provider", 150, "utility", {4, 10, 20, 40, 80, 100, 120, 150}),
+        ["Trash Collector"] = Property.new("Trash Collector", 150, "utility", {4, 10, 20, 40, 80, 100, 120, 150}),
+        ["Sewage System"] = Property.new("Sewage System", 150, "utility", {4, 10, 20, 40, 80, 100, 120, 150}),
+        ["Telephone Company"] = Property.new("Telephone Company", 150, "utility", {4, 10, 20, 40, 80, 100, 120, 150}),
+        ["Gas Company"] = Property.new("Gas Company", 150, "utility", {4, 10, 20, 40, 80, 100, 120, 150}),
     }
 end

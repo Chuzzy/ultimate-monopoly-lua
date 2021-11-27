@@ -32,7 +32,7 @@ function Property.new(name, cost, group, rent_values, improvement_cost, max_impr
     self.group = group
     self.rent_values = rent_values
     self.improvement_cost = improvement_cost
-    self.max_improvements = max_improvements
+    self.max_improvements = max_improvements or 0
     self.improvements = 0
     self.mortgage_value = math.floor(cost / 2)
     self.unmortgage_cost = math.floor(cost * 0.55)

@@ -20,6 +20,6 @@ with open("Properties.lua", "w") as lua_file:
     
     lua_file.write("        -- Utilities\n")
     for utility in ["Electric Company", "Water Works", "Cable Company", "Internet Service Provider", "Trash Collector", "Sewage System", "Telephone Company", "Gas Company"]:
-        lua_file.write(f"        [\"{utility}\"] = Property.new(\"{utility}\", 150, \"utility\", {{4, 10, 20, 40, 80, 100, 120, 150}}, 0),\n")
+        lua_file.write(f"        [\"{utility}\"] = Property.new(\"{utility}\", 150, \"utility\", {{4, 10, 20, 40, 80, 100, 120, 150}}),\n")
 
     lua_file.writelines("    }\nend")
