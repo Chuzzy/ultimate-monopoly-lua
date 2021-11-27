@@ -5,6 +5,7 @@
 ---@field group string The name of the group this property belongs to.
 ---@field rent_values integer[] The amounts of rent owed on this property.
 ---@field improvement_cost integer The cost to build an improvement.
+---@field max_improvements integer The maximum number of improvements - 6 on normal properties and 1 on railroads and cab companies.
 ---@field improvements integer The number of improvements.
 ---@field owner UMPlayer The owner of the property.
 Property = {}
@@ -20,14 +21,16 @@ Property.properties_in_group = {}
 ---@param group string
 ---@param rent_values table
 ---@param improvement_cost integer
+---@param max_improvements integer
 ---@return Property
-function Property.new(name, cost, group, rent_values, improvement_cost)
+function Property.new(name, cost, group, rent_values, improvement_cost, max_improvements)
     local self = setmetatable({}, Property)
     self.name = name
     self.cost = cost
     self.group = group
     self.rent_values = rent_values
     self.improvement_cost = improvement_cost
+    self.max_improvements = max_improvements
     self.improvements = 0
     Property.counts[self.group] = (Property.counts[self.group] or 0) + 1
     Property.properties_in_group[self.group] = Property.properties_in_group[self.group] or {}
