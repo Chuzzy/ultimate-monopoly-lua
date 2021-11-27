@@ -78,6 +78,22 @@ Property.bright_colors = {
     cab = true,
 }
 
+--- Calculates the rent multiplier on this property.
+--- This determines whether a player collects triple rent
+--- for a monopoly or double rent for a majority.
+---@return integer
+function Property:rent_multiplier()
+    local rent_multiplier = 1
+    local properties_owned_in_group = self.owner:countPropertiesOwnedInGroup(self.group)
+    local properties_in_group = Property.counts[self.group]
+    if properties_owned_in_group == properties_in_group then
+        rent_multiplier = 3
+    elseif properties_owned_in_group > properties_in_group / 2 then
+        rent_multiplier = 2
+    end
+    return rent_multiplier
+end
+
 --- Calculate the rent on this property.
 ---@param dice_total integer
 ---@return integer
@@ -92,15 +108,6 @@ function Property:rent(dice_total)
     elseif self.improvements > 1 then -- If property has buildings
         return self.rent_values[self.improvements]
     else
-        local unimproved_rent = self.rent_values[1]
-        local rent_multiplier = 1
-        local properties_owned_in_group = self.owner:countPropertiesOwnedInGroup(self.group)
-        local properties_in_group = Property.counts[self.group]
-        if properties_owned_in_group == properties_in_group then
-            rent_multiplier = 3
-        elseif properties_owned_in_group > properties_in_group / 2 then
-            rent_multiplier = 2
-        end
-        return unimproved_rent * rent_multiplier
+        return self.rent_values[1] * self:rent_multiplier()
     end
 end
