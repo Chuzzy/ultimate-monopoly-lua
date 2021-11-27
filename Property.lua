@@ -7,6 +7,8 @@
 ---@field improvement_cost integer The cost to build an improvement.
 ---@field max_improvements integer The maximum number of improvements - 6 on normal properties and 1 on railroads and cab companies.
 ---@field improvements integer The number of improvements.
+---@field mortgage_value integer The income when the property is mortgaged.
+---@field unmortgage_cost integer The cost to unmortgage the property.
 ---@field owner UMPlayer The owner of the property.
 Property = {}
 Property.__index = Property
@@ -32,6 +34,8 @@ function Property.new(name, cost, group, rent_values, improvement_cost, max_impr
     self.improvement_cost = improvement_cost
     self.max_improvements = max_improvements
     self.improvements = 0
+    self.mortgage_value = math.floor(cost / 2)
+    self.unmortgage_cost = math.floor(cost * 0.55)
     Property.counts[self.group] = (Property.counts[self.group] or 0) + 1
     Property.properties_in_group[self.group] = Property.properties_in_group[self.group] or {}
     table.insert(Property.properties_in_group[self.group], self)
