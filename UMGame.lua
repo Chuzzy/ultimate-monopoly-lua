@@ -355,7 +355,7 @@ function UMGame.movePlayer(player, destination)
     local old_location = player.location
     player.location = destination
     if UMGame.player_moved_handler then
-        UMGame.player_moved_handler(player, destination, old_location)
+        UMGame.player_moved_handler(player, destination)
     end
 end
 
