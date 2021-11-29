@@ -2,6 +2,7 @@ require("GameState")
 require("UMPlayer")
 require("Property")
 require("Properties")
+require("PropertyUI")
 require("Debt")
 
 --- The game of Ultimate Monopoly.
@@ -18,7 +19,6 @@ require("Debt")
 ---@field hotel_count integer Number of remaining hotels.
 ---@field skyscraper_count integer Number of remaining skyscrapers.
 ---@field state GameState The current game state.
----@field selected_property Property The property that the player has chosen.
 ---@field transactions table<Property, integer> Array of transactions that have yet to be committed.
 ---@field dice_roll integer[] The values of the dice that were rolled this turn.
 ---@field dice_total integer The sum of the values of the dice.
@@ -162,157 +162,48 @@ function UMGame.handleSpaceAction()
     createManagementBoardButtons(UMGame.whoseTurn())
 end
 
----Shows the property UI.
----@param property Property The property to display.
----@param show_controls_to UMPlayer The player to show the building controls to, if any.
----@param show_purchase_controls boolean True to show buy/auction controls instead of building.
-function UMGame.showPropertyInfo(property, show_controls_to, show_purchase_controls)
-    UI.setValue("PropertyName", property.name)
-    UI.setAttribute("PropertyTitle", "color", Property.colors[property.group])
-    UI.setAttribute("PropertyName", "color", Property.bright_colors[property.group] and "Black" or "White")
-
-    if property.group == "rail" then
-        UI.setAttribute("RentMajorityRow", "active", "false")
-        UI.setAttribute("RentMonopolyRow", "active", "false")
-        UI.setAttribute("Rent5Row", "active", "false")
-        UI.setAttribute("Rent6Row", "active", "false")
-        UI.setAttribute("Rent7Row", "active", "false")
-        UI.setValue("Rent2Label", "With Two Railroads")
-        UI.setValue("Rent3Label", "With Three Railroads")
-        UI.setValue("Rent4Label", "With Four Railroads")
-
-        for i, rent in ipairs(property.rent_values) do
-            UI.setValue("Rent" .. i .. "Value", "$" .. rent)
-        end
-    elseif property.group == "cab" then
-        UI.setAttribute("RentMajorityRow", "active", "false")
-        UI.setAttribute("RentMonopolyRow", "active", "false")
-        UI.setAttribute("Rent5Row", "active", "false")
-        UI.setAttribute("Rent6Row", "active", "false")
-        UI.setAttribute("Rent7Row", "active", "false")
-        UI.setValue("Rent2Label", "With Two Cab Companies")
-        UI.setValue("Rent3Label", "With Three Cab Companies")
-        UI.setValue("Rent4Label", "With Four Companies")
-
-        for i, rent in ipairs(property.rent_values) do
-            UI.setValue("Rent" .. i .. "Value", "$" .. rent)
-        end
-    elseif property.group == "utility" then
-        UI.setAttribute("RentMajorityRow", "active", "true")
-        UI.setAttribute("RentMonopolyRow", "active", "true")
-        UI.setAttribute("Rent5Row", "active", "true")
-        UI.setAttribute("Rent6Row", "active", "true")
-        UI.setAttribute("Rent7Row", "active", "false")
-        UI.setValue("RentMajorityLabel", "With Two Utilities")
-        UI.setValue("RentMonopolyLabel", "With Three Utilities")
-        UI.setValue("Rent2Label", "With Four Utilities")
-        UI.setValue("Rent3Label", "With Five Utilities")
-        UI.setValue("Rent4Label", "With Six Utilities")
-        UI.setValue("Rent5Label", "With Seven Utilities")
-        UI.setValue("Rent6Label", "With Eight Utilities")
-
-        for i, id in ipairs({"Rent1Value", "RentMajorityValue", "RentMonopolyValue", "Rent2Value", "Rent3Value", "Rent4Value", "Rent5Value", "Rent6Value"}) do
-            UI.setValue(id, property.rent_values[i] .. "x")
-        end
-    else
-        UI.setAttribute("RentMajorityRow", "active", "true")
-        UI.setAttribute("RentMonopolyRow", "active", "true")
-        UI.setAttribute("Rent5Row", "active", "true")
-        UI.setAttribute("Rent6Row", "active", "true")
-        UI.setAttribute("Rent7Row", "active", "true")
-        UI.setValue("RentMajorityLabel", "With Majority")
-        UI.setValue("RentMonopolyLabel", "With Monopoly")
-        UI.setValue("Rent2Label", "With 1 House")
-        UI.setValue("Rent3Label", "With 2 Houses")
-        UI.setValue("Rent4Label", "With 3 Houses")
-        UI.setValue("Rent5Label", "With 4 Houses")
-        UI.setValue("Rent6Label", "With Hotel")
-        UI.setValue("Rent7Label", "With Skyscraper")
-        UI.setValue("RentMajorityValue", "$" .. property.rent_values[1] * 2)
-        UI.setValue("RentMonopolyValue", "$" .. property.rent_values[1] * 3)
-
-        for i, rent in ipairs(property.rent_values) do
-            UI.setValue("Rent" .. i .. "Value", "$" .. rent)
-        end
-        if Property.counts[property.group] == 2 then
-            UI.setAttribute("RentMajorityRow", "active", "false")
-        else
-            UI.setAttribute("RentMajorityRow", "active", "true")
-        end
-    end
-    if show_controls_to then
-        UI.setAttribute("PropertyControlsRow", "visibility", Debug.let_anyone_act and "" or show_controls_to.color)
-        if show_purchase_controls then
-            UI.setAttribute("DowngradeBtn", "text", "Auction")
-            UI.setAttribute("DowngradeBtn", "tooltip", "Put " .. property.name .. " up for auction")
-            UI.setAttribute("UpgradeBtn", "text", "Buy $" .. property.cost)
-            UI.setAttribute("UpgradeBtn", "tooltip", "Buy " .. property.name .. " for $" .. property.cost)
-            -- Bind the purchase/auction actions to the buttons underneath the property
-            UI.setAttribute("UpgradeBtn", "onClick", "buyCurrentProperty")
-            -- Use PropertyMortgagedRow to show improvement costs instead of mortgage information
-            if property.improvement_cost then
-                UI.setAttribute("PropertyMortgagedRow", "color", "White")
-                UI.setAttribute("PropertyMortgagedText", "color", "Black")
-                UI.setValue("PropertyMortgagedText", "Improvements cost $" .. property.improvement_cost .. " each")
-                UI.setAttribute("PropertyMortgagedRow", "active", "true")
-            else
-                UI.setAttribute("PropertyMortgagedRow", "active", "false")
-            end
-        else
-            UI.setAttribute("PropertyMortgagedRow", "color", "Red")
-            UI.setAttribute("PropertyMortgagedText", "color", "White")
-            UI.setValue("PropertyMortgagedText", "MORTGAGED")
-            if property.improvements == -1 then
-                UI.setAttribute("PropertyMortgagedRow", "active", "true")
-            else
-                UI.setAttribute("PropertyMortgagedRow", "active", "false")
-            end
-            --TODO: enable/disable buttons when property is mortgaged/has skyscraper
-            UI.setAttribute("DowngradeBtn", "text", "+$" .. property.improvement_cost / 2)
-            UI.setAttribute("DowngradeBtn", "tooltip", "Sell a building")
-            UI.setAttribute("UpgradeBtn", "text", "-$" .. property.improvement_cost)
-            UI.setAttribute("UpgradeBtn", "tooltip", "Buy a building")
-            -- Bind the upgrade/downgrade actions to the buttons underneath the property
-            UI.setAttribute("DowngradeBtn", "onClick", "downgradeProperty")
-            UI.setAttribute("UpgradeBtn", "onClick", "upgradeProperty")
-        end
-        --Weird bug: changing the text also changes the text color to black.
-        --Hence the text color is reset.
-        UI.setAttribute("DowngradeBtn", "textColor", "White")
-        UI.setAttribute("UpgradeBtn", "textColor", "White")
-    end
-    UI.setAttribute("PropertyCard", "active", "true")
-    UMGame.selected_property = property
-end
-
-function UMGame.hidePropertyInfo()
-    UI.setAttribute("PropertyCard", "active", "false")
-    UMGame.selected_property = nil
-end
-
----Puts the selected property up for auction.
+---Downgrades the selected property.
 function UMGame.downgradeProperty()
-    if not UMGame.selected_property then
-        error("No property is currently selected")
-    end
+    assert(PropertyUI.selected_property, "No property is currently selected to be downgraded")
     if not UMGame.transactions then
-        --TODO: Rename top buttons
+        changeActionButtonsToImprovementMode()
         UMGame.transactions = {}
     end
-    UMGame.transactions[UMGame.selected_property] = (UMGame.transactions[UMGame.selected_property] or 0) - 1
+    if PropertyUI.selected_property.improvements + (UMGame.transactions[PropertyUI.selected_property] or 0) == -1 then
+        Utils.safeMsg(PropertyUI.selected_property.name .. " is already mortgaged.", Color.Red, UMGame.whoseTurn().color)
+        return
+    end
+    UMGame.transactions[PropertyUI.selected_property] = (UMGame.transactions[PropertyUI.selected_property] or 0) - 1
     UMGame.updateSideTextWithTransactions()
+    UMGame.updatePropertyUI()
 end
 
+---Upgrades the selected property.
 function UMGame.upgradeProperty()
-    if not UMGame.selected_property then
-        error("No property is currently selected")
-    end
+    assert(PropertyUI.selected_property, "No property is currently selected to be upgraded")
     if not UMGame.transactions then
-        --TODO: Rename top buttons
+        changeActionButtonsToImprovementMode()
         UMGame.transactions = {}
     end
-    UMGame.transactions[UMGame.selected_property] = (UMGame.transactions[UMGame.selected_property] or 0) + 1
+    if PropertyUI.selected_property.improvements + (UMGame.transactions[PropertyUI.selected_property] or 0) == PropertyUI.selected_property.max_improvements then
+        Utils.safeMsg(PropertyUI.selected_property.name .. " is already at the maximum number of buildings.", Color.Red, UMGame.whoseTurn().color)
+        return
+    end
+    UMGame.transactions[PropertyUI.selected_property] = (UMGame.transactions[PropertyUI.selected_property] or 0) + 1
     UMGame.updateSideTextWithTransactions()
+    UMGame.updatePropertyUI()
+end
+
+function UMGame.cancelImprovements()
+    PropertyUI.hide()
+    resetActionButtons()
+    UMGame.transactions = nil
+    Notes.setNotes("")
+end
+
+function UMGame.confirmImprovements()
+   --TODO: Validate even build rule
+   --TODO: Implement UMGame.confirmImprovements 
 end
 
 ---Updates the text on the side with info about
@@ -343,6 +234,49 @@ function UMGame.updateSideTextWithTransactions()
     local net_profit_prefix = net_profit < 0 and "-$" or "+$"
     table.insert(result, "\nTotal: " .. net_profit_prefix .. math.abs(net_profit))
     Notes.setNotes(table.concat(result, "\n"))
+end
+
+function UMGame.updatePropertyUI()
+    -- The final number of improvements the player wants to have on this property once they confirm the transcations.
+    local proposed_improvement_count = PropertyUI.selected_property.improvements + (UMGame.transactions and UMGame.transactions[PropertyUI.selected_property] or 0)
+    local property_is_mortgaged = proposed_improvement_count == -1
+    local property_is_maxed_out = proposed_improvement_count == PropertyUI.selected_property.max_improvements
+
+    PropertyUI.setMortgaged(property_is_mortgaged)
+
+    -- Highlight the correct rent row based on the proposed improvement count
+    -- TODO: Calculate transport properties correctly
+    if not property_is_mortgaged then
+        if proposed_improvement_count == 0 then
+            local rent_multiplier = PropertyUI.selected_property:rent_multiplier()
+            if rent_multiplier == 3 then
+                PropertyUI.setActiveRentRow("Monopoly")
+            elseif rent_multiplier == 2 then
+                PropertyUI.setActiveRentRow("Majority")
+            else
+                PropertyUI.setActiveRentRow(0)
+            end
+        else
+            PropertyUI.setActiveRentRow(proposed_improvement_count + 1)
+        end
+    end
+
+    if property_is_mortgaged then
+        PropertyUI.setUpgradeButtonUnmortgage()
+    else
+        PropertyUI.setUpgradeButtonBuy()
+        if proposed_improvement_count == 0 then
+            PropertyUI.setDowngradeButtonMortgage()
+        else
+            PropertyUI.setDowngradeButtonSell()
+        end
+    end
+
+    -- Show the upgrade button if fewer than the max amount of improvements are present
+    PropertyUI.setUpgradeButtonVisible(not property_is_maxed_out)
+
+    -- Show the downgrade button if the property is not mortgaged
+    PropertyUI.setDowngradeButtonVisible(not property_is_mortgaged)
 end
 
 ---Moves a player to a new position on the board.

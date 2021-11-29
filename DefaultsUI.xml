@@ -16,7 +16,11 @@
     <Text class="moneyText" fontStyle="bold" resizeTextForBestFit="true" resizeTextMaxSize="26"/>
 
     <!-- Property UI -->
+    <Row class="inactiveRent" dontUseTableRowBackground="true" color="White"/>
+    <Cell class="inactiveRent" dontUseTableCellBackground="true" color="White"/>
+    <Text class="inactiveRent" />
+
     <Row class="activeRent" dontUseTableRowBackground="true" color="Green"/>
-    <Cell class="activeRent" dontUseTableCellBackground="true"/>
+    <Cell class="activeRent" dontUseTableCellBackground="true" color="Green"/>
     <Text class="activeRent" color="White"/>
 </Defaults>

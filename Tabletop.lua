@@ -209,7 +209,9 @@ function createManagementBoardButtons(player)
         local space = Utils.propertyToSpace(property)
         -- Create the event handler when the button is clicked
         _G[name .. " Clicked"] = function(_, player_color)
-            UMGame.showPropertyInfo(property, player)
+            PropertyUI.show(property)
+            PropertyUI.showBuildControlsTo(player)
+            UMGame.updatePropertyUI()
         end
 
         -- Create the board button
@@ -280,6 +282,20 @@ end
 function showActionButtons()
     UI.setAttribute("tradeBtn", "visibility", Debug.let_anyone_act and "" or UMGame.whoseTurn().color)
     UI.setAttribute("endTurnBtn", "visibility", Debug.let_anyone_act and "" or UMGame.whoseTurn().color)
+end
+
+function changeActionButtonsToImprovementMode()
+    UI.setAttribute("tradeBtn", "text", "Cancel")
+    UI.setAttribute("endTurnBtn", "text", "Confirm")
+    UI.setAttribute("tradeBtn", "onClick", "cancelImprovements")
+    UI.setAttribute("endTurnBtn", "onClick", "confirmImprovements")
+end
+
+function resetActionButtons()
+    UI.setAttribute("tradeBtn", "text", "Trade")
+    UI.setAttribute("endTurnBtn", "text", "End Turn")
+    UI.setAttribute("tradeBtn", "onClick", "doNothing")
+    UI.setAttribute("endTurnBtn", "onClick", "endTurnClick")
 end
 
 function hideActionButtons()

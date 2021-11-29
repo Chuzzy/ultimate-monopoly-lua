@@ -28,3 +28,11 @@ end
 function upgradeProperty()
     UMGame.upgradeProperty()
 end
+
+function cancelImprovements()
+    UMGame.cancelImprovements()
+end
+
+function confirmImprovements()
+    UMGame.confirmImprovements()
+end

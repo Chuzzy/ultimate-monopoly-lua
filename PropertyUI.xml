@@ -29,7 +29,7 @@
             <Text id="RentMonopolyValue"></Text>
         </Cell>
     </Row>
-    <Row id="Rent2Row">
+    <Row id="Rent2Row" color="Green">
         <Cell id="Rent2LabelCell">
             <Text id="Rent2Label">With 1 House</Text>
         </Cell>
@@ -83,7 +83,7 @@
             <Text id="PropertyMortgagedText" color="White">Improvements cost $21 each</Text>
         </Cell>
     </Row>
-    <Row id="PropertyControlsRow" visibility="0">
+    <Row id="PropertyControlsRow" visibility="0" preferredHeight="30">
         <Cell columnSpan="2">
             <Button id="DowngradeBtn" image="" color="Red" textColor="White" tooltip="Sell a building" tooltipPosition="Below" text="+$100"/>
             <Button id="UpgradeBtn" image="" color="Green" textColor="White" tooltip="Buy a building" tooltipPosition="Below" text="-$200"/>
