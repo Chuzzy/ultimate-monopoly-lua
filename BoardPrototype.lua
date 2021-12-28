@@ -197,7 +197,8 @@ local function propertyAction(space, player)
     local property = Utils.spaceToProperty(space)
     if not property.owner then
         Utils.safeMsg(property.name .. " is for sale for $" .. property.cost .. ". You want it?", player.color, player.color)
-        UMGame.showPropertyInfo(property, UMGame.whoseTurn(), true)
+        PropertyUI.show(property)
+        PropertyUI.showPurchaseControlsTo(player)
         UMGame.state = GameState.PROPERTY_SALE
     else
         local rent_owed = player == property.owner and 0 or property:rent(UMGame.dice_total)

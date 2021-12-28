@@ -4,7 +4,7 @@ function endTurnClick(player)
         broadcastToAll(UMGame.whoseTurn():getName() .. "'s turn starts now.",
                        UMGame.whoseTurn().color)
         hideActionButtons()
-        UMGame.hidePropertyInfo()
+        PropertyUI.hide()
         InGameObjects.gameboard.clearButtons()
         for _, die in ipairs({InGameObjects.dice.normal1, InGameObjects.dice.normal2, InGameObjects.dice.speed}) do
             die.setScale({1, 1, 1})
@@ -16,7 +16,7 @@ end
 
 function buyCurrentProperty(player)
     UMGame.sellPropertyTo()
-    UMGame.hidePropertyInfo()
+    PropertyUI.hide()
     UMGame.state = GameState.POST_MOVEMENT
     createManagementBoardButtons(UMGame.whoseTurn())
 end

@@ -56,6 +56,7 @@ function PropertyUI.show(property)
     UI.setAttribute("PropertyName", "color",
                     Property.bright_colors[property.group] and "Black" or
                         "White")
+    UI.setAttribute("PropertyCard", "active", "true")
     if property.group == "rail" or property.group == "cab" then
         PropertyUI.shown_property_type = property.group
         PropertyUI.showTransportInfo(property)
@@ -67,7 +68,6 @@ function PropertyUI.show(property)
         PropertyUI.showNormalPropertyInfo(property)
     end
     PropertyUI.setMortgaged(property.improvements == -1)
-    UI.setAttribute("PropertyCard", "active", "true")
     PropertyUI.selected_property = property
 end
 
@@ -109,13 +109,19 @@ function PropertyUI.showTransportInfo(transport)
     for _, row_id in ipairs(PropertyUI.transport_unused_row_ids) do
         UI.setAttribute(row_id, "active", "false")
     end
-    for row_id, text in ipairs(transport.group == "rail" and
+    for row_id, text in pairs(transport.group == "rail" and
                                    PropertyUI.rail_rent_labels or
                                    PropertyUI.cab_rent_labels) do
         UI.setValue(row_id, text)
     end
     for i, rent in ipairs(transport.rent_values) do
         UI.setValue("Rent" .. i .. "Value", "$" .. rent)
+    end
+end
+
+function PropertyUI.multiplyTransportRentValues(multiplier)
+    for i, rent in ipairs(PropertyUI.selected_property.rent_values) do
+        UI.setValue("Rent" .. i .. "Value", "$" .. multiplier * rent)
     end
 end
 
@@ -126,12 +132,10 @@ function PropertyUI.setActiveRentRow(row_index)
         end
         PropertyUI.enableActiveRentOnRow(row_index)
         PropertyUI.row_index = row_index
-        print(PropertyUI.row_index)
     end
 end
 
 function PropertyUI.disableActiveRentOnRow(row_index)
-    print("disableActiveRentOnRow " .. row_index)
     for _, suffix in pairs(PropertyUI.rent_row_element_id_suffixes) do
         local id = "Rent" .. row_index .. suffix
         UI.setClass(id, "inactiveRent")
@@ -139,7 +143,6 @@ function PropertyUI.disableActiveRentOnRow(row_index)
 end
 
 function PropertyUI.enableActiveRentOnRow(row_index)
-    print("enableActiveRentOnRow " .. row_index)
     for _, suffix in pairs(PropertyUI.rent_row_element_id_suffixes) do
         local id = "Rent" .. row_index .. suffix
         UI.setClass(id, "activeRent")
@@ -169,8 +172,8 @@ function PropertyUI.setMortgaged(is_mortgaged)
             for _, row_id in ipairs(PropertyUI.transport_unused_row_ids) do
                 UI.setAttribute(row_id, "active", "true")
             end
-            if PropertyUI.shown_property_type ~= "utility" then
-                UI.setAttribute("Rent7Row", "active", "true")
+            if PropertyUI.shown_property_type == "utility" then
+                UI.setAttribute("Rent7Row", "active", "false")
             end
         end
     end
@@ -186,10 +189,10 @@ function PropertyUI.showBuildControlsTo(player)
                     Debug.let_anyone_act and "" or player.color)
 
     UI.setAttribute("DowngradeBtn", "text",
-                    "+$" .. property.improvement_cost / 2)
+                    "+$" .. (property.improvement_cost or 0) / 2)
     UI.setAttribute("DowngradeBtn", "tooltip", "Sell a building")
 
-    UI.setAttribute("UpgradeBtn", "text", "-$" .. property.improvement_cost)
+    UI.setAttribute("UpgradeBtn", "text", "-$" .. (property.improvement_cost or 0))
     UI.setAttribute("UpgradeBtn", "tooltip", "Buy a building")
 
     UI.setAttribute("DowngradeBtn", "onClick", "downgradeProperty")
@@ -213,7 +216,7 @@ function PropertyUI.setDowngradeButtonMortgage()
 end
 
 function PropertyUI.setDowngradeButtonSell()
-    UI.setAttribute("DowngradeBtn", "text", "+$" .. PropertyUI.selected_property.improvement_cost / 2)
+    UI.setAttribute("DowngradeBtn", "text", "+$" .. (PropertyUI.selected_property.improvement_cost or 0) / 2)
     UI.setAttribute("DowngradeBtn", "tooltip", "Sell a building")
     UI.setAttribute("DowngradeBtn", "textColor", "White")
 end
@@ -230,7 +233,7 @@ function PropertyUI.setUpgradeButtonUnmortgage()
 end
 
 function PropertyUI.setUpgradeButtonBuy()
-    UI.setAttribute("UpgradeBtn", "text", "-$" .. PropertyUI.selected_property.improvement_cost)
+    UI.setAttribute("UpgradeBtn", "text", "-$" .. (PropertyUI.selected_property.improvement_cost or 0))
     UI.setAttribute("UpgradeBtn", "tooltip", "Buy a building")
     UI.setAttribute("UpgradeBtn", "textColor", "White")
 end

@@ -203,7 +203,7 @@ end
 
 function UMGame.confirmImprovements()
    --TODO: Validate even build rule
-   --TODO: Implement UMGame.confirmImprovements 
+   --TODO: Implement UMGame.confirmImprovements
 end
 
 ---Updates the text on the side with info about
@@ -227,8 +227,8 @@ function UMGame.updateSideTextWithTransactions()
 
             upgrade_count = math.abs(upgrade_count)
             local buildings_text = upgrade_count == 1 and "building" or "buildings"
-
-            table.insert(result, string.format("%s %i %s on %s for $%s", buy_or_sell_text, upgrade_count, buildings_text, property.name, cost_or_gain_text))
+            local property_text = string.format("[%s]%s[-]", Property.colors[property.group]:sub(2), property.name)
+            table.insert(result, string.format("%s %i %s on %s for $%s", buy_or_sell_text, upgrade_count, buildings_text, property_text, cost_or_gain_text))
         end
     end
     local net_profit_prefix = net_profit < 0 and "-$" or "+$"
@@ -247,14 +247,17 @@ function UMGame.updatePropertyUI()
     -- Highlight the correct rent row based on the proposed improvement count
     -- TODO: Calculate transport properties correctly
     if not property_is_mortgaged then
-        if proposed_improvement_count == 0 then
+        if PropertyUI.selected_property.group == "rail" or PropertyUI.selected_property.group == "cab" then
+            PropertyUI.multiplyTransportRentValues(1 + proposed_improvement_count)
+            PropertyUI.setActiveRentRow(PropertyUI.selected_property.owner:countPropertiesOwnedInGroup(PropertyUI.selected_property.group))
+        elseif proposed_improvement_count == 0 then
             local rent_multiplier = PropertyUI.selected_property:rent_multiplier()
             if rent_multiplier == 3 then
                 PropertyUI.setActiveRentRow("Monopoly")
             elseif rent_multiplier == 2 then
                 PropertyUI.setActiveRentRow("Majority")
             else
-                PropertyUI.setActiveRentRow(0)
+                PropertyUI.setActiveRentRow(1)
             end
         else
             PropertyUI.setActiveRentRow(proposed_improvement_count + 1)

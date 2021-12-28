@@ -42,7 +42,7 @@ function onLoad()
         spawnAvatarOnSpace(property.owner.color, Utils.propertyToSpace(property))
     end
     UMGame.player_moved_handler = movePlayerToken
-    UMGame.start("Blue")
+    UMGame.start("Green")
     hideActionButtons()
     hideUnusedMoneyPanels()
     Debug.handOut()
